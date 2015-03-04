@@ -956,21 +956,21 @@ msgstr "Zatvori"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:332
 msgid "Select a single file or one directory"
-msgstr "Odabrati jedni datoteku ili jednu mapu"
+msgstr "Odaberi jedni datoteku ili jednu mapu"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:334
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:347
 msgid "Select a single file"
-msgstr "Odabrati jednu datoteku"
+msgstr "Odaberi jednu datoteku"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:336
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:352
 msgid "Select a single directory"
-msgstr "Odabrati jednu mapu"
+msgstr "Odaberi jednu mapu"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:353
 msgid "Select folder"
-msgstr "Odabrati mapu"
+msgstr "Odaberi mapu"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:367
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryFilesTableMediator.java:939
@@ -3520,7 +3520,7 @@ msgstr "Nova inačica FrostWirea je dostupna."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/UpdateDialog.java:161
 msgid "Update Now"
-msgstr "Ažuriraj sada"
+msgstr "Ažurirati sada"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/UpdateDialog.java:164
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/UpdateDialog.java:197
@@ -3576,7 +3576,7 @@ msgstr "Otvara magnet poveznicu ili torrent datoteku"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:86
 msgid "Download .Torrent or Magnet or YouTube video link"
-msgstr "Preuzeti .torrent datoteku, magnet ili YouTube video poveznicu"
+msgstr "Preuzmi .torrent datoteku, magnet ili YouTube video poveznicu"
 
 #. panel.add(new MultiLineLabel(I18n.tr("Type a magnet link, the file path or web address of a torrent file, or a YouTube Web address and FrostWire will start downloading it for you."),
 #. true), constraints);
@@ -3602,11 +3602,11 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:310
 msgid "&Close"
-msgstr "Zatvoriti"
+msgstr "Zatvori"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:311
 msgid "Close the program's main window"
-msgstr "Zatvoriti glavni prozor programa"
+msgstr "Zatvori glavni prozor programa"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:322
 msgid "E&xit"
@@ -3633,7 +3633,7 @@ msgstr "Traži ključne riječi: {0}"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/actions/SearchAction.java:45
 #, java-format
 msgid "Search for: {0}"
-msgstr "Tražiti: {0}"
+msgstr "Traži: {0}"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/bugs/BugManager.java:81
 msgid "Internal Error"
@@ -3672,11 +3672,11 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/bugs/BugManager.java:368
 msgid "Review"
-msgstr "Pregledati"
+msgstr "Pregledaj"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/bugs/BugManager.java:382
 msgid "Discard"
-msgstr "Odbaciti"
+msgstr "Odbaci"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/bugs/BugManager.java:399
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/BugsPaneItem.java:96
@@ -3832,7 +3832,7 @@ msgstr "Zaboravili ste izabrati postavke \"Dijeljenja\" za završena preuzimanja
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/init/BitTorrentSettingsWindow.java:112
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/HelpMenu.java:52
 msgid "What is \"Seeding\"?"
-msgstr "Što je \"dijeljenje\"?"
+msgstr "Što je \"seedanje\"?"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/init/BitTorrentSettingsWindow.java:127
 #, java-format
@@ -3898,7 +3898,7 @@ msgstr "Podizanje sustava"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/init/MiscWindow.java:72
 msgid "Start Automatically"
-msgstr "Automatski pokrenuti"
+msgstr "Automatski pokreći"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/init/MiscWindow.java:75
 msgid ""
@@ -3927,7 +3927,7 @@ msgstr "Završiti"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/init/SetupWindow.java:140
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/AbstractPaneItem.java:80
 msgid "Learn more about this option..."
-msgstr "Naučiti više o ovoj opciji..."
+msgstr "Nauči više o ovoj opciji..."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/init/WelcomeWindow.java:39
 msgid ""
@@ -4005,7 +4005,7 @@ msgstr "Dobijte FrostWire na vašem Android mobilnom telefonu, tabletu ili Googl
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/HelpMenu.java:52
 msgid "Learn about BitTorrent Seeding"
-msgstr "Naučiti više o BitTorrent dijeljenju"
+msgstr "Naučiti više o BitTorrent seedanju"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/HelpMenu.java:54
 msgid "What is a VPN?"
@@ -4019,7 +4019,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/HelpMenu.java:58
 msgid "Order FrostWire Stickers"
-msgstr "Naruči FrostWire naljepnice"
+msgstr "Naručiti FrostWire naljepnice"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/HelpMenu.java:58
 msgid "Order FrostWire stickers, we ship worldwide."
@@ -4130,7 +4130,7 @@ msgstr "P&ostavke"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:89
 msgid "Display the Options Screen"
-msgstr "Pokazati postavke"
+msgstr "Pokaži postavke"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:102
 msgid "&Update FrostWire"
@@ -4154,7 +4154,7 @@ msgstr "Instaliraj nadogradnju"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:131
 msgid "Check for update"
-msgstr "Potražiti nadogradnje"
+msgstr "Potraži nadogradnje"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/ViewMenu.java:42
 msgid "&View"
@@ -4664,7 +4664,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/PartialFileSharingPaneItem.java:26
 msgid "Allow Partial Sharing:"
-msgstr "Dozvoliti djelomično dijeljenje"
+msgstr "Dozvoli djelomično dijeljenje:"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/PlayerPaneItem.java:36
 msgid "FrostWire Media Player"
@@ -4972,7 +4972,7 @@ msgid ""
 "file(s). Pieces of the seeded file(s) will be available to everybody. While "
 "downloading pieces are always available to other peers in the swarm."
 msgstr ""
-"Dijeljenje je proces spajanja na torrent kada imate cijelu/e "
+"Seedanje je proces spajanja na torrent kada imate cijelu/e "
 "datoteku/e. Dijelovi dijeljene/ih datoteke/a će biti dostupne svima. Tijekom "
 "preuzimanja dijelovi su uvijek dostupni drugim preuzimateljima u roju."
 
