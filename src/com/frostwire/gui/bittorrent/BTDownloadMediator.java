@@ -29,7 +29,6 @@ import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.theme.SkinMenu;
 import com.frostwire.gui.theme.SkinMenuItem;
 import com.frostwire.gui.theme.SkinPopupMenu;
-import com.frostwire.gui.transfers.PeerHttpUpload;
 import com.frostwire.logging.Logger;
 import com.frostwire.search.soundcloud.SoundCloudRedirectResponse;
 import com.frostwire.search.soundcloud.SoundcloudItem;

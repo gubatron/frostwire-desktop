@@ -28,7 +28,7 @@ import java.util.Map;
 import com.frostwire.core.FileDescriptor;
 import com.frostwire.gui.Librarian;
 import com.frostwire.gui.bittorrent.BTDownloadMediator;
-import com.frostwire.gui.transfers.PeerHttpUpload;
+import com.frostwire.gui.bittorrent.PeerHttpUpload;
 import com.frostwire.logging.Logger;
 import com.frostwire.util.URLUtils;
 import com.sun.net.httpserver.HttpExchange;

@@ -16,15 +16,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.frostwire.gui.transfers;
+package com.frostwire.gui.bittorrent;
 
+import java.io.File;
 import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
 import com.frostwire.core.FileDescriptor;
-import com.limegroup.gnutella.gui.I18n;
+import com.frostwire.transfers.TransferItem;
+import com.frostwire.transfers.TransferState;
+import com.frostwire.transfers.UploadTransfer;
 
 /**
  * @author gubatron
@@ -76,8 +79,9 @@ public class PeerHttpUpload implements UploadTransfer {
         return fd.title;
     }
 
-    public String getStatus() {
-        return getStatusString(status);
+    @Override
+    public String getName() {
+        return getDisplayName();
     }
 
     public int getProgress() {
@@ -88,7 +92,7 @@ public class PeerHttpUpload implements UploadTransfer {
         return fd.fileSize;
     }
 
-    public Date getDateCreated() {
+    public Date getCreated() {
         return dateCreated;
     }
 
@@ -121,11 +125,11 @@ public class PeerHttpUpload implements UploadTransfer {
         return status == STATUS_UPLOADING;
     }
 
-    public List<? extends TransferItem> getItems() {
+    public List<TransferItem> getItems() {
         return Collections.emptyList();
     }
 
-    public void cancel() {
+    public void remove() {
         if (status != STATUS_COMPLETE) {
             status = STATUS_CANCELLED;
         }
@@ -139,30 +143,24 @@ public class PeerHttpUpload implements UploadTransfer {
 
     public void complete() {
         status = STATUS_COMPLETE;
-        cancel();
+        remove();
     }
 
     public boolean isCanceled() {
         return status == STATUS_CANCELLED;
     }
 
-    private String getStatusString(int status) {
-        String resId;
+    public TransferState getState() {
         switch (status) {
         case STATUS_UPLOADING:
-            resId = (getUploadSpeed() < 102400) ? I18n.tr("Streaming") : I18n.tr("Uploading");
-            break;
+            return (getUploadSpeed() < 102400) ? TransferState.STREAMING  : TransferState.UPLOADING;
         case STATUS_COMPLETE:
-            resId = I18n.tr("Complete");
-            break;
+            return TransferState.COMPLETE;
         case STATUS_CANCELLED:
-            resId = I18n.tr("Cancelled");
-            break;
+            return TransferState.CANCELED;
         default:
-            resId = I18n.tr("Unknown");
-            break;
+            return TransferState.UNKNOWN;
         }
-        return String.valueOf(resId);
     }
 
     private void updateAverageUploadSpeed() {
@@ -194,5 +192,10 @@ public class PeerHttpUpload implements UploadTransfer {
             // just in case, synchronization and collections errors, remove it in the future
             return 0;
         }
+    }
+
+    @Override
+    public File getSavePath() {
+        return null;
     }
 }

@@ -22,7 +22,6 @@ import java.io.File;
 import java.util.Date;
 
 import com.frostwire.core.FileDescriptor;
-import com.frostwire.gui.transfers.PeerHttpUpload;
 import com.frostwire.torrent.CopyrightLicenseBroker;
 import com.frostwire.torrent.PaymentOptions;
 import com.frostwire.transfers.TransferState;
@@ -81,12 +80,12 @@ public class BTPeerHttpUpload implements BTDownload {
 
     @Override
     public void remove() {
-        upload.cancel();
+        upload.remove();
     }
 
     @Override
     public void pause() {
-        upload.cancel();
+        upload.remove();
     }
 
     @Override
@@ -168,7 +167,7 @@ public class BTPeerHttpUpload implements BTDownload {
 
     @Override
     public Date getDateCreated() {
-        return upload.getDateCreated();
+        return upload.getCreated();
     }
 
     @Override
