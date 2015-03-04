@@ -161,30 +161,30 @@ msgstr "Pauziraj označena preuzimanja"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadActions.java:300
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadActions.java:301
 msgid "Remove Torrent and Data"
-msgstr "Ukloni torrent i datoteke"
+msgstr "Ukloniti torrent i datoteke"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadActions.java:302
 msgid "Remove Torrent and Data from selected downloads"
-msgstr "Ukloni torrent i datoteke odabranih preuzimanja"
+msgstr "Ukloniti torrent i datoteke odabranih preuzimanja"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadActions.java:304
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadActions.java:305
 msgid "Remove Torrent"
-msgstr "Ukloni torrent"
+msgstr "Ukloniti torrent"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadActions.java:306
 msgid "Remove Torrent from selected downloads"
-msgstr "Ukloni torrent odabranih preuzimanja"
+msgstr "Ukloniti torrent odabranih preuzimanja"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadActions.java:308
 msgid "Remove Download"
-msgstr "Ukloni preuzimanje"
+msgstr "Ukloniti preuzimanje"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadActions.java:309
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/RemoveLibraryDirectoryAction.java:39
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/ListEditor.java:296
 msgid "Remove"
-msgstr "Ukloni"
+msgstr "Ukloniti"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadActions.java:310
 msgid "Remove Selected Downloads"
@@ -223,7 +223,7 @@ msgstr "Očisti neaktivne"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadActions.java:356
 msgid "Clear Inactive (completed) transfers from the Transfers list."
-msgstr "Očisti neaktivne (završene) prijenose sa liste prijenosa."
+msgstr "Očistiti neaktivne (završene) prijenose sa liste prijenosa."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadActions.java:375
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadActions.java:376
@@ -1780,11 +1780,11 @@ msgstr "Stvara novu listu pjesama"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryPlaylists.java:432
 msgid "Open Playlist (.m3u)"
-msgstr "Otvori listu pjesama (.m3u)"
+msgstr "Otvoriti listu pjesama (.m3u)"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryPlaylists.java:504
 msgid "Save Playlist As"
-msgstr "Spremi listu pjesama kao"
+msgstr "Spremiti listu pjesama kao"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryPlaylists.java:515
 #, java-format
@@ -1798,7 +1798,7 @@ msgstr ""
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryPlaylists.java:714
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:841
 msgid "Refresh Audio Properties"
-msgstr "Osvježi zvučna svojstva"
+msgstr "Osvježiti zvučna svojstva"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryPlaylists.java:715
 msgid "Refresh the audio properties based on ID3 tags of selected items"
@@ -2100,15 +2100,15 @@ msgstr "Sviram pjesmu iz"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/player/MediaPlayerComponent.java:1033
 msgid "Open YouTube source page"
-msgstr "Otvori YouTube stranicu izvora"
+msgstr "Otvoriti YouTube stranicu izvora"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/player/MediaPlayerComponent.java:1037
 msgid "Open SoundCloud source page"
-msgstr "Otvori SoundCloud stranicu izvora"
+msgstr "Otvoriti SoundCloud stranicu izvora"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/player/MediaPlayerComponent.java:1041
 msgid "Open Archive.org source page"
-msgstr "Otvori Archive.org stranicu izvora"
+msgstr "Otvoriti Archive.org stranicu izvora"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/player/MediaPlayerComponent.java:1045
 msgid "Playing Internet Radio"
@@ -2375,7 +2375,7 @@ msgstr "Prekinuto"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/updates/InstallerUpdater.java:188
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/updates/UpdateMediator.java:177
 msgid "Update"
-msgstr "Nadogradi"
+msgstr "Nadograditi"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/updates/PortableUpdater.java:77
 msgid "Uncompressing files"
@@ -2815,12 +2815,12 @@ msgstr "U redu"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/OptionsButtonPanel.java:43
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/OptionsButtonPanel.java:45
 msgid "Apply Operation"
-msgstr "Primjeniti radnju"
+msgstr "Primjeni radnju"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/InputFieldDialog.java:93
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/OptionsButtonPanel.java:44
 msgid "Cancel Operation"
-msgstr "Odustati od radnje"
+msgstr "Odustaj od radnje"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/JavaVersionNotice.java:68
 msgid ""
@@ -2862,7 +2862,7 @@ msgstr "Posjeti"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/JavaVersionNotice.java:118
 msgid "Upgrade Later"
-msgstr "Nadogradi Javu"
+msgstr "Nadograditi Javu"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/JavaVersionNotice.java:119
 msgid "Exit FrostWire"
@@ -2918,7 +2918,7 @@ msgstr "Ne pokazuj ovu poruku ponovno"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/MessageService.java:706
 msgid "Always use this answer"
-msgstr "Uvijek koristi ovaj odgovor"
+msgstr "Uvijek koristiti ovaj odgovor"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/SaveDirectoryHandler.java:126
 #, java-format
