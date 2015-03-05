@@ -134,6 +134,11 @@ public class InstallerUpdater implements Runnable {
             } catch (HttpRangeException e) {
                 // recovery in case the server does not support resume
                 httpClient.save(_updateMessage.getInstallerUrl(), installerFileLocation, false);
+            } catch (IOException e2) {
+                if (e2.getMessage().contains("416")) {
+                    // HTTP Request Range error came through IOException.
+                    httpClient.save(_updateMessage.getInstallerUrl(), installerFileLocation, false);
+                }
             }
             isDownloadingUpdate = false;
             saveMetaData();
