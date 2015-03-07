@@ -44,7 +44,6 @@ sourceSets {
             srcDir '../frostwire-common/jmdns'
             srcDir '../frostwire-common/json'
             srcDir '../frostwire-common/mp4parser'
-            srcDir '../frostwire-common/vuze'
             srcDir '../frostwire-common/core'
 
             // frostwire-jlibtorrent
