@@ -207,7 +207,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
         ThemeMediator.fixKeyStrokes(_textTrackers);
         _textTrackers.setToolTipText(_labelTrackers.getToolTipText());
         _textTrackers.setLineWrap(false);
-        _textTrackers.setText("udp://tracker.openbittorrent.com:80/announce");
+        _textTrackers.setText("udp://open.demonii.com:1337\nudp://tracker.coppersurfer.tk:6969\nudp://tracker.leechers-paradise.org:6969\nudp://exodus.desync.com:6969\nudp://tracker.pomf.se");
         _textTrackersScrollPane = new JScrollPane(_textTrackers);
         torrentTrackingPanel.add(_textTrackersScrollPane, "gapright 5, gapleft 80, gapbottom 5, hmin 165px, growx 60, growy, wrap");
 
