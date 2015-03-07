@@ -43,9 +43,6 @@ import javax.swing.JPanel;
 import javax.swing.ToolTipManager;
 
 import com.frostwire.jlibtorrent.TorrentInfo;
-import org.gudy.azureus2.core3.torrent.TOTorrent;
-import org.gudy.azureus2.core3.torrent.TOTorrentException;
-import org.gudy.azureus2.core3.torrent.TOTorrentFile;
 import org.gudy.azureus2.core3.util.UrlUtils;
 import org.limewire.concurrent.ThreadExecutor;
 

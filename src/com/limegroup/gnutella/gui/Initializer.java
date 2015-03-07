@@ -31,7 +31,6 @@ import com.limegroup.gnutella.settings.ConnectionSettings;
 import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.settings.StartupSettings;
 import com.limegroup.gnutella.util.MacOSXUtils;
-import org.gudy.azureus2.core3.util.protocol.AzURLStreamHandlerFactory;
 import org.limewire.service.ErrorService;
 import org.limewire.util.CommonUtils;
 import org.limewire.util.I18NConvert;
@@ -448,9 +447,6 @@ public final class Initializer {
     }
 
     private void startBittorrentCore() {
-        // this hack is only due to the remaining vuze TOTorrent code
-        URL.setURLStreamHandlerFactory(new AzURLStreamHandlerFactory());
-
         SharingSettings.initTorrentDataDirSetting();
         SharingSettings.initTorrentsDirSetting();
 

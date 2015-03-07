@@ -33,8 +33,6 @@ import com.limegroup.gnutella.gui.*;
 import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.util.FrostWireUtils;
 import net.miginfocom.swing.MigLayout;
-import org.gudy.azureus2.core3.torrent.TOTorrentException;
-import org.gudy.azureus2.core3.torrent.TOTorrentProgressListener;
 import org.gudy.azureus2.core3.util.Debug;
 
 import javax.swing.*;
@@ -63,7 +61,7 @@ import java.util.regex.Pattern;
  *
  */
 @SuppressWarnings("serial")
-public class CreateTorrentDialog extends JDialog implements TOTorrentProgressListener {
+public class CreateTorrentDialog extends JDialog {
     private static final String TT_EXTERNAL_DEFAULT = "http://";
     private final static String COMMENT = I18n.tr("Torrent File Created with FrostWire http://www.frostwire.com");
     private boolean create_from_dir;
@@ -622,15 +620,8 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
         } catch (Throwable e) {
             result = false;
             revertSaveCloseButtons();
-            if (e instanceof TOTorrentException) {
-                TOTorrentException te = (TOTorrentException) e;
-                if (te.getReason() != TOTorrentException.RT_CANCELLED) {
-                    reportCurrentTask(I18n.tr("Operation failed."));
-                }
-            } else {
-                Debug.printStackTrace(e);
-                reportCurrentTask(I18n.tr("Operation failed."));
-            }
+            Debug.printStackTrace(e);
+            reportCurrentTask(I18n.tr("Operation failed."));
         }
 
         return result;
@@ -769,7 +760,6 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
         });
     }
 
-    @Override
     public void reportProgress(final int percent_complete) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -780,7 +770,6 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
         });
     }
 
-    @Override
     public void reportCurrentTask(final String task_description) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
