@@ -38,34 +38,22 @@ public class SystemUtils {
      */
     private static boolean isLoaded;
     
-	static {
-		boolean canLoad = false;
-		try {
-			if ((OSUtils.isWindows() && OSUtils.isGoodWindows()) || ( OSUtils.isMacOSX() ) ) {
-				System.loadLibrary("SystemUtilities");
-				canLoad = true;
-			}
-		} catch (UnsatisfiedLinkError noGo) {
-			System.out.println("ERROR: " + noGo.getMessage());
-			canLoad = false;
-		}
-		isLoaded = canLoad;
-	}
+    static {
+        boolean canLoad = false;
+        try {
+            if ((OSUtils.isWindows() && OSUtils.isGoodWindows()) || OSUtils.isMacOSX()) {
+                System.loadLibrary("SystemUtilities");
+                canLoad = true;
+            }
+        } catch (UnsatisfiedLinkError noGo) {
+            System.out.println("ERROR: " + noGo.getMessage());
+            canLoad = false;
+        }
+        isLoaded = canLoad;
+    }
     
     private SystemUtils() {}
     
-    
-    /**
-     * Retrieves the amount of time the system has been idle, where
-     * idle means the user has not pressed a key, mouse button, or moved
-     * the mouse.  The time returned is in milliseconds.
-     */
-    public static long getIdleTime() {
-    	if(supportsIdleTime()) 
-            return idleTime();
-
-        return 0;
-    }
     
     /**
      * Returns whether or not the idle time function is supported on this
@@ -75,24 +63,7 @@ public class SystemUtils {
      *  operating system, otherwise <tt>false</tt>
      */
     public static boolean supportsIdleTime() {
-        if(isLoaded) {
-            if(OSUtils.isGoodWindows())
-                return true;
-            else if(OSUtils.isMacOSX())
-                return true;
-        }
-            
-        return false;
-    }
-    
-    /**
-     * Sets the number of open files, if supported.
-     */
-    public static long setOpenFileLimit(int max) {
-        if(isLoaded && OSUtils.isMacOSX())
-            return setOpenFileLimit0(max);
-        else
-            return -1;
+        return isLoaded && (OSUtils.isGoodWindows() || OSUtils.isMacOSX());
     }
     
     /**
@@ -100,28 +71,25 @@ public class SystemUtils {
      * the filename given should ideally be a canonicalized filename.
      */
     static void setWriteable(String fileName) {
-        if(isLoaded && (OSUtils.isWindows() || OSUtils.isMacOSX()))
+        if (isLoaded && (OSUtils.isWindows() || OSUtils.isMacOSX())) {
             setFileWriteable(fileName);
+        }
     }
 
-    private static final native int setOpenFileLimit0(int max);
-
-	/**
-	 * Gets the path to the Windows launcher .exe file that is us running right now.
-	 * 
-	 * @return A String like "c:\Program Files\LimeWire\LimeWire.exe".
-	 *         null on error.
-	 */
+    /**
+     * Gets the path to the Windows launcher .exe file that is us running right now.
+     * 
+     * @return A String like "c:\Program Files\LimeWire\LimeWire.exe".
+     *         null on error.
+     */
     public static final String getRunningPath() {
         try {
             if (OSUtils.isWindows() && isLoaded) {
                 String path = getRunningPathNative();
-                if (path.equals(""))
-                    return null;
-                else
-                    return path;
+                return (path.equals("")) ? null : path;
             }
             return null;
+        
         } catch (Throwable e) {
             return null;
         }
@@ -148,29 +116,31 @@ public class SystemUtils {
     }
 
     /**
-	 * Gets the complete path to a special folder in the platform operating system shell.
-	 * 
-	 * The returned path is specific to the current user, and current to how the user has customized it.
-	 * Here are the given special folder names and example return paths this method currently supports on Windows:
-	 * 
-	 * <pre>
-	 * Documents         C:\Documents and Settings\UserName\My Documents
-	 * ApplicationData   C:\Documents and Settings\UserName\Application Data
-	 * Desktop           C:\Documents and Settings\UserName\Desktop
-	 * StartMenu         C:\Documents and Settings\UserName\Start Menu
-	 * StartMenuPrograms C:\Documents and Settings\UserName\Start Menu\Programs
-	 * StartMenuStartup  C:\Documents and Settings\UserName\Start Menu\Programs\Startup
-	 * </pre>
-	 * 
-	 * @param name The name of a special folder
-	 * @return     The path to that folder, or null on error
-	 */
+     * Gets the complete path to a special folder in the platform operating system shell.
+     * 
+     * The returned path is specific to the current user, and current to how the user has customized it.
+     * Here are the given special folder names and example return paths this method currently supports on Windows:
+     * 
+     * <pre>
+     * Documents         C:\Documents and Settings\UserName\My Documents
+     * ApplicationData   C:\Documents and Settings\UserName\Application Data
+     * Desktop           C:\Documents and Settings\UserName\Desktop
+     * StartMenu         C:\Documents and Settings\UserName\Start Menu
+     * StartMenuPrograms C:\Documents and Settings\UserName\Start Menu\Programs
+     * StartMenuStartup  C:\Documents and Settings\UserName\Start Menu\Programs\Startup
+     * </pre>
+     * 
+     * @param name The name of a special folder
+     * @return     The path to that folder, or null on error
+     */
     public static final String getSpecialPath(SpecialLocations location) {
-    	if (OSUtils.isWindows() && isLoaded) {
+        if (OSUtils.isWindows() && isLoaded) {
             try {
-        		String path = getSpecialPathNative(location.getName());
-        		if(!path.equals(""))
+                String path = getSpecialPathNative(location.getName());
+                if (!path.equals("")) {
                     return path;
+                }
+            
             } catch(UnsatisfiedLinkError error) {
                 // Must catch the error because earlier versions of the dll didn't
                 // include this method, and installs that happen to have not
@@ -178,9 +148,10 @@ public class SystemUtils {
                 // otherwise.
                 LOG.error("Unable to use getSpecialPath!", error);
             }
-    	}
-    	return null;
-    }    
+        }
+        
+        return null;
+    }
 
     /**
      * Changes the icon of a window.
@@ -189,22 +160,22 @@ public class SystemUtils {
      * 
      * @param frame The AWT Component, like a JFrame, that is backed by a native window
      * @param icon  The path to a .exe or .ico file on the disk
-     * @return      False on error
+    * @return      False on error
      */
     public static final boolean setWindowIcon(Component frame, File icon) {
-    	if (OSUtils.isWindows() && isLoaded) {
-    		String result = setWindowIconNative(frame, System.getProperty("sun.boot.library.path"), icon.getPath());
-    	    return result.equals(""); // Returns blank on success, or information about an error
-    	}
+        if (OSUtils.isWindows() && isLoaded) {
+            String result = setWindowIconNative(frame, System.getProperty("sun.boot.library.path"), icon.getPath());
+            return result.equals(""); // Returns blank on success, or information about an error
+        }
         
-    	return false;
+        return false;
     }
     
     /**
      * Sets a Component to be topmost.
      */
     public static final boolean setWindowTopMost(Component frame) {
-        if(isLoaded && OSUtils.isWindows()) {
+        if (isLoaded && OSUtils.isWindows()) {
             String result = setWindowTopMostNative(frame, System.getProperty("sun.boot.library.path"));
             return result.equals("");
         }
@@ -213,11 +184,7 @@ public class SystemUtils {
     }
     
     public static final boolean toggleFullScreen(long hwnd) {
-        if(isLoaded && (OSUtils.isWindows() || OSUtils.isLinux()) ) {
-            return toggleFullScreenNative(hwnd);
-        }
-        
-        return false;
+        return (isLoaded && (OSUtils.isWindows() || OSUtils.isLinux())) ? toggleFullScreenNative(hwnd) : false;
     }
     
     /**
@@ -225,25 +192,7 @@ public class SystemUtils {
      * with the current-most icon.
      */
     public static final boolean flushIconCache() {
-        if(isLoaded && OSUtils.isWindows()) {
-            return flushIconCacheNative();
-        }
-        
-        return false;
-    }
-
-    /**
-     * Reads a numerical value stored in the Windows Registry.
-     * 
-     * @param root The name of the root registry key, like "HKEY_LOCAL_MACHINE"
-     * @param path The path to the registry key with backslashes as separators, like "Software\\Microsoft\\Windows"
-     * @param name The name of the variable within that key, or blank to access the key's default value
-     * @return     The number value stored there, or 0 on error
-     */
-    public static final int registryReadNumber(String root, String path, String name) throws IOException {
-    	if (OSUtils.isWindows() && isLoaded)
-    		return registryReadNumberNative(root, path, name);
-    	throw new IOException(" not supported ");
+        return (isLoaded && OSUtils.isWindows()) ? flushIconCacheNative() : false;
     }
 
     /**
@@ -255,9 +204,10 @@ public class SystemUtils {
      * @return     The text value stored there or blank on error
      */
     public static final String registryReadText(String root, String path, String name) throws IOException {
-    	if (OSUtils.isWindows() && isLoaded)
-    		return registryReadTextNative(root, path, name);
-    	throw new IOException(" not supported ");
+        if (OSUtils.isWindows() && isLoaded) {
+            return registryReadTextNative(root, path, name);
+        }
+        throw new IOException(" not supported ");
     }
 
     /**
@@ -270,10 +220,7 @@ public class SystemUtils {
      * @return      False on error
      */
     public static final boolean registryWriteNumber(String root, String path, String name, int value) {
-    	if (OSUtils.isWindows() && isLoaded)
-    		return registryWriteNumberNative(root, path, name, value);
-    	else
-    		return false;
+        return (OSUtils.isWindows() && isLoaded) ? registryWriteNumberNative(root, path, name, value) : false;
     }
 
     /**
@@ -286,10 +233,7 @@ public class SystemUtils {
      * @return      False on error
      */
     public static final boolean registryWriteText(String root, String path, String name, String value) {
-    	if (OSUtils.isWindows() && isLoaded)
-    		return registryWriteTextNative(root, path, name, value);
-    	else
-    		return false;
+        return (OSUtils.isWindows() && isLoaded) ? registryWriteTextNative(root, path, name, value) : false;
     }
 
     /**
@@ -300,10 +244,7 @@ public class SystemUtils {
      * @return     False on error
      */
     public static final boolean registryDelete(String root, String path) {
-    	if (OSUtils.isWindows() && isLoaded)
-    		return registryDeleteNative(root, path);
-    	else
-    		return false;
+        return (OSUtils.isWindows() && isLoaded) ? registryDeleteNative(root, path) : false;
     }
 
     /**
@@ -312,9 +253,7 @@ public class SystemUtils {
      * @return True if it does, false if it does not or there was an error
      */
     public static final boolean isFirewallPresent() {
-    	if (OSUtils.isWindows() && isLoaded)
-    		return firewallPresentNative();
-    	return false;
+        return (OSUtils.isWindows() && isLoaded) ? firewallPresentNative() : false;
     }
 
     /**
@@ -322,25 +261,10 @@ public class SystemUtils {
      * 
      * @return True if the setting on the "General" tab is "On (recommended)".
      *         False if the setting on the "General" tab is "Off (not recommended)".
-     *         False on error.
+    *         False on error.
      */
     public static final boolean isFirewallEnabled() {
-    	if (OSUtils.isWindows() && isLoaded)
-    	    return firewallEnabledNative();
-    	return false;
-    }
-
-    /**
-     * Determine if the Windows Firewall is on with no exceptions.
-     * 
-     * @return True if the box on the "General" tab "Don't allow exceptions" is checked.
-     *         False if the box is not checked.
-     *         False on error.
-     */
-    public static final boolean isFirewallExceptionsNotAllowed() {
-    	if (OSUtils.isWindows() && isLoaded)
-    		return firewallExceptionsNotAllowedNative();
-    	return false;
+        return (OSUtils.isWindows() && isLoaded) ? firewallEnabledNative() : false;
     }
 
     /**
@@ -350,21 +274,7 @@ public class SystemUtils {
      * @return     True if it has a listing on the Exceptions list, false if not or on error
      */
     public static final boolean isProgramListedOnFirewall(String path) {
-    	if (OSUtils.isWindows() && isLoaded)
-    		return firewallIsProgramListedNative(path);
-    	return false;
-    }
-
-    /**
-     * Determine if a program's listing on the Windows Firewall exceptions list has a check box making it enabled.
-     * 
-     * @param path The path to the program, like "C:\Program Files\LimeWire\LimeWire.exe"
-     * @return     True if it's listing's check box is checked, false if not or on error
-     */
-    public static final boolean isProgramEnabledOnFirewall(String path) {
-    	if (OSUtils.isWindows() && isLoaded)
-    		return firewallIsProgramEnabledNative(path);
-    	return false;
+        return (OSUtils.isWindows() && isLoaded) ? firewallIsProgramListedNative(path) : false;
     }
 
     /**
@@ -375,9 +285,7 @@ public class SystemUtils {
      * @return     False if error
      */
     public static final boolean addProgramToFirewall(String path, String name) {
-    	if (OSUtils.isWindows() && isLoaded)
-    		return firewallAddNative(path, name);
-    	return false;
+        return (OSUtils.isWindows() && isLoaded) ? firewallAddNative(path, name) : false;
     }
 
     /**
@@ -387,9 +295,7 @@ public class SystemUtils {
      * @return     False if error.
      */
     public static final boolean removeProgramFromFirewall(String path) {
-    	if (OSUtils.isWindows() && isLoaded)
-    		return firewallRemoveNative(path);
-    	return false;
+        return (OSUtils.isWindows() && isLoaded) ? firewallRemoveNative(path) : false;
     }
 
     /**
@@ -402,7 +308,7 @@ public class SystemUtils {
      * @return    0, in place of the process exit code
      */
     public static int openURL(String url) throws IOException {
-        if(OSUtils.isWindows() && isLoaded) {
+        if (OSUtils.isWindows() && isLoaded) {
             openURLNative(url);
             return 0; // program's still running, no way of getting an exit code.
         }
@@ -424,7 +330,7 @@ public class SystemUtils {
      * @return     0, in place of the process exit code
      */
     public static int openFile(String path) throws IOException {
-        if(OSUtils.isWindows() && isLoaded) {
+        if (OSUtils.isWindows() && isLoaded) {
             openFileNative(path);
             return 0; // program's running, no way to get exit code.
         }
@@ -450,7 +356,7 @@ public class SystemUtils {
      * @return     0, in place of the process exit code
      */
     public static int openFile(String path, String params) throws IOException {
-        if(OSUtils.isWindows() && isLoaded) {
+        if (OSUtils.isWindows() && isLoaded) {
             openFileParamsNative(path, params);
             return 0; // program's running, no way to get exit code.
         }
@@ -459,11 +365,7 @@ public class SystemUtils {
     }
     
     public static String getShortFileName(String fileName) {
-        	if(OSUtils.isWindows() && isLoaded) {
-        		return getShortFileNameNative(fileName);
-        	} else {
-        		return fileName;
-        	}
+        return (OSUtils.isWindows() && isLoaded) ? getShortFileNameNative(fileName) : fileName;
     }
     
     /**
@@ -473,31 +375,26 @@ public class SystemUtils {
      * @return     True on success
      */
     public static boolean recycle(File file) {
-    	if (OSUtils.isWindows() && isLoaded) {
+        if (OSUtils.isWindows() && isLoaded) {
+            // Get the path to the file
+            String path = null;
+            try {
+                path = file.getCanonicalPath();
+            } catch (IOException err) {
+                LOG.error("IOException", err);
+                path = file.getAbsolutePath();
+            }
 
-    		// Get the path to the file
-    		String path = null;
-			try {
-				path = file.getCanonicalPath();
-			} catch (IOException err) {
-				LOG.error("IOException", err);
-				path = file.getAbsolutePath();
-			}
+            // Use native code to move the file at that path to the recycle bin
+            return recycleNative(path);
 
-			// Use native code to move the file at that path to the recycle bin
-			return recycleNative(path);
-
-    	} else {
-    		return false;
-    	}
+        } else {
+            return false;
+        }
     }
     
     public static boolean verifyExecutableSignature(String executablePath, byte[] expectedCertificate) {
-    	if (OSUtils.isWindows() && isLoaded) {
-    		return verifyExecutableSignatureNative(executablePath, expectedCertificate);
-    	} else {
-    		return false;
-    	}
+        return (OSUtils.isWindows() && isLoaded) ? verifyExecutableSignatureNative(executablePath, expectedCertificate) : false;
     }
     
     /**
@@ -506,20 +403,20 @@ public class SystemUtils {
      * Only supported on windows.
      */
     public static String getDefaultExtentionHandler(String extention) {
-    	if (!OSUtils.isWindows() || !isLoaded)
-    		return null;
+        if (!OSUtils.isWindows() || !isLoaded) {
+            return null;
+        }
 
-    	if (!extention.startsWith("."))
-    		extention = "."+extention;
-    	try {
-    		String progId = registryReadText("HKEY_CLASSES_ROOT", extention,"");
-    		if ("".equals(progId))
-    			return "";
-    		return registryReadText("HKEY_CLASSES_ROOT",
-    				progId+"\\shell\\open\\command","");
-    	} catch (IOException iox) {
-    		return null;
-    	}
+        if (!extention.startsWith(".")) {
+            extention = "."+extention;
+        }
+        
+        try {
+            String progId = registryReadText("HKEY_CLASSES_ROOT", extention,"");
+            return ("".equals(progId)) ? "" : registryReadText("HKEY_CLASSES_ROOT",progId+"\\shell\\open\\command","");
+        } catch (IOException iox) {
+            return null;
+        }
     }
     
     /**
@@ -528,20 +425,18 @@ public class SystemUtils {
      * Only supported on windows.
      */
     public static String getDefaultMimeHandler(String mimeType) {
-    	if (!OSUtils.isWindows() || !isLoaded)
-    		return null;
-    	String extention = "";
-    	try {
-    		extention = registryReadText("HKEY_CLASSES_ROOT", 
-    				"MIME\\Database\\Content Type\\"+mimeType, 
-    				"Extension");
-    	} catch (IOException iox) {
-    		return null;
-    	}
-    	
-    	if ("".equals(extention))
-    		return "";
-    	return getDefaultExtentionHandler(extention);
+        if (!OSUtils.isWindows() || !isLoaded) {
+            return null;
+        }
+
+        String extention = "";
+        try {
+            extention = registryReadText("HKEY_CLASSES_ROOT","MIME\\Database\\Content Type\\" + mimeType,"Extension");
+        } catch (IOException iox) {
+            return null;
+        }
+
+        return ("".equals(extention)) ? "" : getDefaultExtentionHandler(extention);
     }
 
     /*
