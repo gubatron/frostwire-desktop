@@ -106,15 +106,17 @@ public class StringUtils {
 
             //2. Match pattern[i..j-1] against input[last...].
             int k = subset(pattern, i, j, input, last, ignoreCase);
-            if (k < 0)
+            if (k < 0) {
                 return false;
+            }
 
             //3. Reset the starting search index if got ' ' or '+'.
             //Otherwise increment past the match in input.
-            if (c == ' ' || c == '+')
+            if (c == ' ' || c == '+') {
                 last = 0;
-            else if (c == '*')
+            } else if (c == '*') {
                 last = k + j - i;
+            }
             i = j + 1;
         }
         return true;
@@ -124,8 +126,9 @@ public class StringUtils {
         char[] inputChars = input.toCharArray();
         Arrays.sort(inputChars);
         for (int i = 0; i < chars.length; i++) {
-            if (Arrays.binarySearch(inputChars, chars[i]) >= 0)
+            if (Arrays.binarySearch(inputChars, chars[i]) >= 0) {
                 return true;
+            }
         }
         return false;
     }
@@ -151,8 +154,9 @@ public class StringUtils {
                 for (int j = 0; j < n2; j++) {
                     char c1 = big.charAt(i + j);
                     char c2 = little.charAt(littleStart + j);
-                    if (c1 != c2 && c1 != toOtherCase(c2)) //Ignore case. See below.
+                    if (c1 != c2 && c1 != toOtherCase(c2)) { //Ignore case. See below.
                         continue outerLoop;
+                    }
                 }
                 return i;
             }
@@ -164,8 +168,9 @@ public class StringUtils {
                 for (int j = 0; j < n2; j++) {
                     char c1 = big.charAt(i + j);
                     char c2 = little.charAt(littleStart + j);
-                    if (c1 != c2) //Consider case.  See above.
+                    if (c1 != c2) { //Consider case.  See above.
                         continue outerLoop;
+                    }
                 }
                 return i;
             }
@@ -186,17 +191,17 @@ public class StringUtils {
         final int z = 'z'; //122
         final int SHIFT = a - A;
 
-        if (i < A) //non alphabetic
+        if (i < A) { //non alphabetic
             return c;
-        else if (i <= Z) //upper-case
+        } else if (i <= Z) { //upper-case
             return (char) (i + SHIFT);
-        else if (i < a) //non alphabetic
+        } else if (i < a) { //non alphabetic
             return c;
-        else if (i <= z) //lower-case
+        } else if (i <= z) { //lower-case
             return (char) (i - SHIFT);
-        else
-            //non alphabetic
+        } else { //non alphabetic
             return c;
+        }
     }
 
     /**
@@ -217,7 +222,7 @@ public class StringUtils {
      *  </pre>
      *
      * <b>Note that whitespace is preserved if it is not part of the delimiter.</b>
-     * An older version of this trim()'ed each token of whitespace.  
+     * An older version of this trim()'ed each token of whitespace.
      */
     public static String[] split(String s, String delimiters) {
         //Tokenize s based on delimiters, adding to buffer.
@@ -265,8 +270,9 @@ public class StringUtils {
             //Is token a delimiter?
             if (token.length() == 1 && delimiters.indexOf(token) >= 0) {
                 //If so, add blank only if last token was a delimiter.
-                if (gotDelimiter)
+                if (gotDelimiter) {
                     tokens.add("");
+                }
                 gotDelimiter = true;
             } else {
                 //If not, add "real" token.
@@ -289,31 +295,6 @@ public class StringUtils {
      */
     public static int compareFullPrimary(String s1, String s2) {
         return COLLATOR.compare(s1, s2);
-    }
-
-    /** 
-     * Returns true iff s starts with prefix, ignoring case.
-     * @return true iff s.toUpperCase().startsWith(prefix.toUpperCase())
-     */
-    public static boolean startsWithIgnoreCase(String s, String prefix) {
-        final int pl = prefix.length();
-        if (s.length() < pl)
-            return false;
-        for (int i = 0; i < pl; i++) {
-            char sc = s.charAt(i);
-            char pc = prefix.charAt(i);
-            if (sc != pc) {
-                sc = Character.toUpperCase(sc);
-                pc = Character.toUpperCase(pc);
-                if (sc != pc) {
-                    sc = Character.toLowerCase(sc);
-                    pc = Character.toLowerCase(pc);
-                    if (sc != pc)
-                        return false;
-                }
-            }
-        }
-        return true;
     }
 
     /**
@@ -343,10 +324,7 @@ public class StringUtils {
      * Returns a truncated string, up to the maximum number of characters
      */
     public static String truncate(final String string, final int maxLen) {
-        if (string.length() <= maxLen)
-            return string;
-        else
-            return string.substring(0, maxLen);
+        return (string.length() <= maxLen) ? string : string.substring(0, maxLen);
     }
 
     /**
