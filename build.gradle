@@ -56,7 +56,7 @@ sourceSets {
             exclude "**/ant/gettext/*.java"
 
             srcDir 'lib/jars-src/lucene-3.5.0'
-            srcDir 'lib/jars-src/h2-1.3.164'
+            srcDir 'lib/jars-src/h2-1.4.186'
             srcDir 'lib/jars-src/jaudiotagger/src'
             srcDir 'lib/jars-src/metadata-extractor-2.6.2-src/Source'
 
