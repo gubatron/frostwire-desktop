@@ -1935,17 +1935,14 @@ public class FilePane extends JPanel implements PropertyChangeListener {
                 // For single click, we handle editing file name
                 if (evt.getClickCount() == 1 && source instanceof JList) {
                     if ((!fc.isMultiSelectionEnabled() || fc.getSelectedFiles().length <= 1)
-                        && index >= 0 && listSelectionModel.isSelectedIndex(index)
+                        && listSelectionModel.isSelectedIndex(index)
                         && getEditIndex() == index && editFile == null) {
 
                         editFileName(index);
                     } else {
-                        if (index >= 0) {
-                            setEditIndex(index);
-                        } else {
-                            resetEditIndex();
-                        }
+                        setEditIndex(index);
                     }
+
                 } else if (evt.getClickCount() == 2) {
                     // on double click (open or drill down one directory) be
                     // sure to clear the edit index
