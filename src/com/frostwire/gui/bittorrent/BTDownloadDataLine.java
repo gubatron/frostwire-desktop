@@ -26,7 +26,6 @@ import javax.swing.Action;
 import javax.swing.Icon;
 
 import com.frostwire.transfers.TransferState;
-import org.limewire.util.OSUtils;
 
 import com.frostwire.gui.library.LibraryMediator;
 import com.frostwire.torrent.PaymentOptions;
@@ -34,7 +33,6 @@ import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.IconManager;
-import com.limegroup.gnutella.gui.iTunesMediator;
 import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.gui.notify.Notification;
 import com.limegroup.gnutella.gui.notify.NotifyUserProxy;
@@ -178,11 +176,14 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
 
     static final int LICENSE_INDEX = 15;
     static final LimeTableColumn LICENSE_COLUMN = new LimeTableColumn(LICENSE_INDEX, "LICENSE_COLUMN", I18n.tr("License"), 80, false, String.class);
+
+    static final int ACTIONS_INDEX = 16;
+    private static final LimeTableColumn ACTIONS_COLUMN = new LimeTableColumn(ACTIONS_INDEX, "TRANSFER_ACTIONS", I18n.tr("Actions"), 63, true, TransferHolder.class);
     
     /**
      * Number of columns to display
      */
-    static final int NUMBER_OF_COLUMNS = 16;
+    static final int NUMBER_OF_COLUMNS = 17;
 
     // Implements DataLine interface
     public int getColumnCount() {
@@ -252,52 +253,54 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
      */
     public Object getValueAt(int index) {
         switch (index) {
-        case FILE_INDEX:
-            return new IconAndNameHolderImpl(getIcon(), initializer.getDisplayName());
-        case PAYMENT_OPTIONS_INDEX:
-            return paymentOptions;
-        case SIZE_INDEX:
-            if (initializer.isPartialDownload()) {
-                return new SizeHolder(_size, PARTIAL_DOWNLOAD_TEXT);
-            } else {
-                return new SizeHolder(_size);
-            }
-        case STATUS_INDEX:
-            String status = TRANSFER_STATE_STRING_MAP.get(_transferState);
-            if (status == null) {
-                status = I18n.tr("Unknown status");
-            }
-            return status;
-        case PROGRESS_INDEX:
-            return Integer.valueOf(_progress);
-        case BYTES_DOWNLOADED_INDEX:
-            return new SizeHolder(_download);
-        case BYTES_UPLOADED_INDEX:
-            return new SizeHolder(_upload);
-        case DOWNLOAD_SPEED_INDEX:
-            return new Double(_downloadSpeed);
-        case UPLOAD_SPEED_INDEX:
-            return new Double(_uploadSpeed);
-        case TIME_INDEX:
-            if (initializer.isCompleted()) {
-                return new TimeRemainingHolder(0);
-            } else if (_downloadSpeed < 0.001 && !(initializer instanceof BTPeerHttpUpload)) {
-                return new TimeRemainingHolder(-1);
-            } else {
-                return new TimeRemainingHolder(_timeLeft);
-            }
-        case SEEDS_INDEX:
-            return new SeedsHolder(_seeds);
-        case PEERS_INDEX:
-            return _peers;
-        case SHARE_RATIO_INDEX:
-            return _shareRatio;
-        case SEED_TO_PEER_RATIO_INDEX:
-            return _seedToPeerRatio;
-        case DATE_CREATED_INDEX:
-            return dateCreated;
-        case LICENSE_INDEX:
-            return license;
+            case FILE_INDEX:
+                return new IconAndNameHolderImpl(getIcon(), initializer.getDisplayName());
+            case PAYMENT_OPTIONS_INDEX:
+                return paymentOptions;
+            case SIZE_INDEX:
+                if (initializer.isPartialDownload()) {
+                    return new SizeHolder(_size, PARTIAL_DOWNLOAD_TEXT);
+                } else {
+                    return new SizeHolder(_size);
+                }
+            case STATUS_INDEX:
+                String status = TRANSFER_STATE_STRING_MAP.get(_transferState);
+                if (status == null) {
+                    status = I18n.tr("Unknown status");
+                }
+                return status;
+            case PROGRESS_INDEX:
+                return Integer.valueOf(_progress);
+            case BYTES_DOWNLOADED_INDEX:
+                return new SizeHolder(_download);
+            case BYTES_UPLOADED_INDEX:
+                return new SizeHolder(_upload);
+            case DOWNLOAD_SPEED_INDEX:
+                return new Double(_downloadSpeed);
+            case UPLOAD_SPEED_INDEX:
+                return new Double(_uploadSpeed);
+            case TIME_INDEX:
+                if (initializer.isCompleted()) {
+                    return new TimeRemainingHolder(0);
+                } else if (_downloadSpeed < 0.001 && !(initializer instanceof BTPeerHttpUpload)) {
+                    return new TimeRemainingHolder(-1);
+                } else {
+                    return new TimeRemainingHolder(_timeLeft);
+                }
+            case SEEDS_INDEX:
+                return new SeedsHolder(_seeds);
+            case PEERS_INDEX:
+                return _peers;
+            case SHARE_RATIO_INDEX:
+                return _shareRatio;
+            case SEED_TO_PEER_RATIO_INDEX:
+                return _seedToPeerRatio;
+            case DATE_CREATED_INDEX:
+                return dateCreated;
+            case LICENSE_INDEX:
+                return license;
+            case ACTIONS_INDEX:
+                return new TransferHolder(initializer);
         }
         return null;
     }
@@ -311,38 +314,40 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
 
     static LimeTableColumn staticGetColumn(int idx) {
         switch (idx) {
-        case FILE_INDEX:
-            return FILE_COLUMN;
-        case PAYMENT_OPTIONS_INDEX:
-            return PAYMENT_OPTIONS_COLUMN;
-        case SIZE_INDEX:
-            return SIZE_COLUMN;
-        case STATUS_INDEX:
-            return STATUS_COLUMN;
-        case PROGRESS_INDEX:
-            return PROGRESS_COLUMN;
-        case BYTES_DOWNLOADED_INDEX:
-            return BYTES_DOWNLOADED_COLUMN;
-        case BYTES_UPLOADED_INDEX:
-            return BYTES_UPLOADED_COLUMN;
-        case DOWNLOAD_SPEED_INDEX:
-            return DOWNLOAD_SPEED_COLUMN;
-        case UPLOAD_SPEED_INDEX:
-            return UPLOAD_SPEED_COLUMN;
-        case TIME_INDEX:
-            return TIME_COLUMN;
-        case SEEDS_INDEX:
-            return SEEDS_COLUMN;
-        case PEERS_INDEX:
-            return PEERS_COLUMN;
-        case SHARE_RATIO_INDEX:
-            return SHARE_RATIO_COLUMN;
-        case SEED_TO_PEER_RATIO_INDEX:
-            return SEED_TO_PEER_RATIO_COLUMN;
-        case DATE_CREATED_INDEX:
-            return DATE_CREATED_COLUMN;
-        case LICENSE_INDEX:
-            return LICENSE_COLUMN;
+            case FILE_INDEX:
+                return FILE_COLUMN;
+            case PAYMENT_OPTIONS_INDEX:
+                return PAYMENT_OPTIONS_COLUMN;
+            case SIZE_INDEX:
+                return SIZE_COLUMN;
+            case STATUS_INDEX:
+                return STATUS_COLUMN;
+            case PROGRESS_INDEX:
+                return PROGRESS_COLUMN;
+            case BYTES_DOWNLOADED_INDEX:
+                return BYTES_DOWNLOADED_COLUMN;
+            case BYTES_UPLOADED_INDEX:
+                return BYTES_UPLOADED_COLUMN;
+            case DOWNLOAD_SPEED_INDEX:
+                return DOWNLOAD_SPEED_COLUMN;
+            case UPLOAD_SPEED_INDEX:
+                return UPLOAD_SPEED_COLUMN;
+            case TIME_INDEX:
+                return TIME_COLUMN;
+            case SEEDS_INDEX:
+                return SEEDS_COLUMN;
+            case PEERS_INDEX:
+                return PEERS_COLUMN;
+            case SHARE_RATIO_INDEX:
+                return SHARE_RATIO_COLUMN;
+            case SEED_TO_PEER_RATIO_INDEX:
+                return SEED_TO_PEER_RATIO_COLUMN;
+            case DATE_CREATED_INDEX:
+                return DATE_CREATED_COLUMN;
+            case LICENSE_INDEX:
+                return LICENSE_COLUMN;
+            case ACTIONS_INDEX:
+                return ACTIONS_COLUMN;
         }
         return null;
     }

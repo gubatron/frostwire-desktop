@@ -421,24 +421,6 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         GUIMediator.launchExplorer(toExplore);
     }
 
-    FileTransfer[] getSelectedFileTransfers() {
-        int[] sel = TABLE.getSelectedRows();
-        ArrayList<FileTransfer> transfers = new ArrayList<FileTransfer>(sel.length);
-        //    	for (int i = 0; i < sel.length; i++) {
-        //    		DownloadDataLine line = DATA_MODEL.get(sel[i]);
-        //    		Downloader downloader = line.getDownloader();
-        //    		// ignore if save file of complete downloader has already been moved
-        //    		if (downloader.getState() == DownloadStatus.COMPLETE
-        //    				&& !downloader.getSaveFile().exists()) {
-        //    			continue;
-        //    		}
-        //        	if (downloader.isLaunchable()) {
-        //        		transfers.add(line.getFileTransfer());
-        //        	}
-        //    	}
-        return transfers.toArray(new FileTransfer[transfers.size()]);
-    }
-
     public BTDownload[] getSelectedBTDownloads() {
         int[] sel = TABLE.getSelectedRows();
         ArrayList<BTDownload> btdownloadList = new ArrayList<BTDownload>(sel.length);
@@ -676,14 +658,19 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     protected void setDefaultRenderers() {
         super.setDefaultRenderers();
         TABLE.setDefaultRenderer(PaymentOptions.class, new PaymentOptionsRenderer());
+        TABLE.setDefaultRenderer(TransferHolder.class, new TransferActionsRenderer());
     }
 
     @Override
     protected void setDefaultEditors() {
         TableColumnModel model = TABLE.getColumnModel();
         TableColumn tc;
+
         tc = model.getColumn(BTDownloadDataLine.PAYMENT_OPTIONS_INDEX);
         tc.setCellEditor(new GenericCellEditor(new PaymentOptionsRenderer()));
+
+        tc = model.getColumn(BTDownloadDataLine.ACTIONS_INDEX);
+        tc.setCellEditor(new GenericCellEditor(getTransferActionsRenderer()));
     }
 
     public void openTorrentFile(final File torrentFile, final boolean partialDownload, final Runnable onOpenRunnableForUIThread) {

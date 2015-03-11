@@ -15,6 +15,7 @@
 
 package com.limegroup.gnutella.gui.tables;
 
+import com.frostwire.gui.bittorrent.TransferActionsRenderer;
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.GUIConstants;
 import com.limegroup.gnutella.gui.PaddedPanel;
@@ -158,11 +159,8 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
     
     
     private static NameHolderRenderer NAME_HOLDER_RENDERER;
-    
-    /**
-     * A zero dimension to be used in all tables.
-     */
-    protected static final Dimension ZERO_DIMENSION = new Dimension(0, 0);
+
+    private static TransferActionsRenderer TRANSFER_ACTIONS_RENDERER;
 
     /**
      * Resorter -- for doing real-time resorts.
@@ -993,11 +991,17 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
         return DATE_RENDERER;
     }
     
-    private TableCellRenderer getNameHolderRenderer() {
+    protected TableCellRenderer getNameHolderRenderer() {
         if (NAME_HOLDER_RENDERER == null) {
             NAME_HOLDER_RENDERER = new NameHolderRenderer();
         }
         return NAME_HOLDER_RENDERER;
     }
 
+    protected TransferActionsRenderer getTransferActionsRenderer() {
+        if (TRANSFER_ACTIONS_RENDERER == null) {
+            TRANSFER_ACTIONS_RENDERER = new TransferActionsRenderer();
+        }
+        return TRANSFER_ACTIONS_RENDERER;
+    }
 }

@@ -12,11 +12,6 @@ import com.limegroup.gnutella.gui.tables.BasicDataLineModel;
  */
 public class BTDownloadModel extends BasicDataLineModel<BTDownloadDataLine, BTDownload> {
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 8163563369069283107L;
-
     private HashSet<String> _hashDownloads;
 
     /**
@@ -135,6 +130,6 @@ public class BTDownloadModel extends BasicDataLineModel<BTDownloadDataLine, BTDo
     
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        return columnIndex == BTDownloadDataLine.PAYMENT_OPTIONS_INDEX;
+        return columnIndex == BTDownloadDataLine.PAYMENT_OPTIONS_INDEX || columnIndex == BTDownloadDataLine.ACTIONS_INDEX;
     }
 }
