@@ -483,8 +483,6 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
 
     private final class ShowInLibraryAction extends AbstractAction {
 
-        private static final long serialVersionUID = -6177511216279954853L;
-
         private File file;
 
         public ShowInLibraryAction(File file) {

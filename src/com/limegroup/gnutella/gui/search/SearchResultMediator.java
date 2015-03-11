@@ -81,11 +81,6 @@ public final class SearchResultMediator extends AbstractTableMediator<TableRowFi
 
     protected static final String SEARCH_TABLE = "SEARCH_TABLE";
 
-    private static final DateRenderer DATE_RENDERER = new DateRenderer();
-    private static final PercentageRenderer PERCENTAGE_RENDERER = new PercentageRenderer();
-    private static final NameHolderRenderer SEARCH_RESULT_NAME_RENDERER = new NameHolderRenderer();
-    private static final SearchResultActionsRenderer SEARCH_RESULT_ACTIONS_RENDERER = new SearchResultActionsRenderer();
-
     /**
      * The TableSettings that all ResultPanels will use.
      */
