@@ -204,6 +204,13 @@
       <JAVADOC />
       <SOURCES />
     </library>
+    <library name="h2-1.4.186">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/lib/jars/h2-1.4.186.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
     <library name="messages">
       <CLASSES>
         <root url="jar://$PROJECT_DIR$/lib/jars/messages.jar!/" />
