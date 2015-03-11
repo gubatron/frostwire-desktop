@@ -43,10 +43,6 @@ public final class SearchResultNameHolder extends NameHolder {
         return AbstractTableMediator.compare(sr.getDisplayName(), o.sr.getDisplayName());
     }
 
-    public UISearchResult getSearchResult() {
-        return sr;
-    }
-
     public String toString() {
         return displayName;
     }

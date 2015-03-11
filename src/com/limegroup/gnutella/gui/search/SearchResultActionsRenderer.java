@@ -60,7 +60,6 @@ public final class SearchResultActionsRenderer extends FWAbstractJPanelTableCell
     private JLabel labelDownload;
     private UISearchResult searchResult;
     private boolean showSolid;
-    private SearchResultActionsHolder actionsHolder;
 
     static {
         play_solid = GUIMediator.getThemeImage("search_result_play_over");
@@ -128,8 +127,7 @@ public final class SearchResultActionsRenderer extends FWAbstractJPanelTableCell
         updateUIData((SearchResultActionsHolder) dataHolder, table, row, column);
     }
 
-    private void updateUIData(SearchResultActionsHolder value, JTable table, int row, int column) {
-        actionsHolder = value;
+    private void updateUIData(SearchResultActionsHolder actionsHolder, JTable table, int row, int column) {
         searchResult = actionsHolder.getSearchResult();
         showSolid = mouseIsOverRow(table, row);
         updatePlayButton();

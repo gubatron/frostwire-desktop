@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011-2014, FrostWire(R). All rights reserved.
+ * Copyright (c) 2011-2015, FrostWire(R). All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,27 +18,20 @@
 
 package com.limegroup.gnutella.gui.search;
 
-import com.frostwire.gui.LocaleLabel.LocaleString;
 import com.limegroup.gnutella.gui.tables.AbstractTableMediator;
 
 /**
- * 
  * @author gubatron
  * @author aldenml
- * 
  */
 public final class SearchResultActionsHolder implements Comparable<SearchResultActionsHolder> {
 
     private final UISearchResult sr;
     private final String displayName;
-    private final String html;
-    private final LocaleString localeString;
 
     public SearchResultActionsHolder(final UISearchResult sr) {
         this.sr = sr;
         this.displayName = sr.getDisplayName();
-        this.html = "<html><div width=\"1000000px\">" + simpleHighlighter(sr.getQuery(), displayName) + "</div></html>";
-        this.localeString = new LocaleString(html);
     }
 
     public int compareTo(SearchResultActionsHolder o) {
@@ -49,40 +42,7 @@ public final class SearchResultActionsHolder implements Comparable<SearchResultA
         return sr;
     }
 
-    public String getHtml() {
-        return html;
-    }
-
-    public LocaleString getLocaleString() {
-        return localeString;
-    }
-
     public String toString() {
         return displayName;
-    }
-
-    private String simpleHighlighter(String query, String str) {
-        if (!query.isEmpty()) {
-            for (String token : query.split("\\s+")) {
-                StringBuilder sb = new StringBuilder(2 * str.length());
-                for (int i = 0; i < str.length();) {
-                    if (i + token.length() <= str.length()) {
-                        String s = str.substring(i, token.length() + i);
-                        if (s.equalsIgnoreCase(token)) {
-                            sb.append("<b>" + s + "</b>");
-                            i += s.length();
-                        } else {
-                            sb.append(str.charAt(i));
-                            i++;
-                        }
-                    } else {
-                        sb.append(str.charAt(i));
-                        i++;
-                    }
-                }
-                str = sb.toString();
-            }
-        }
-        return str;
     }
 }
