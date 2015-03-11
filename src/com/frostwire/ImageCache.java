@@ -138,8 +138,9 @@ public class ImageCache {
                     
                     if (data == null) {
                         throw new IOException("ImageCache.loadUrl() got nothing at " + url.toString());
-                    }
 
+                    }
+                    
                     if (data != null) {
                         image = ImageIO.read(new ByteArrayInputStream(data));
                         saveToCache(url, image, System.currentTimeMillis());

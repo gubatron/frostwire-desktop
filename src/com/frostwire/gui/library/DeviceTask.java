@@ -53,11 +53,7 @@ public abstract class DeviceTask implements Runnable {
 
     protected void setProgress(int progress) {
         // cast progress to [0..100]
-        if (progress < 0 || progress > 100) {
-            return;
-        }
-        progress = (progress < 0) ? 0 : progress;
-        progress = (progress > 100) ? 100 : progress;
+        progress = (progress < 0) ? 0 : (progress > 100) ? 100 : progress;
 
         this.progress = progress;
         onProgress(progress);

@@ -390,8 +390,6 @@ public class LCS {
                 case REMOVE:
                     break;
                 case ADD:
-                    buf.append(escapeHtml(entry.getValue()));
-                    break;
                 default:
                     buf.append(escapeHtml(entry.getValue()));
                 }

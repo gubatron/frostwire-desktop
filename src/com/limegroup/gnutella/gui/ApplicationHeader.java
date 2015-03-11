@@ -297,7 +297,7 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
                             //they want internet search while on the library
                             performInternetSearch = true;
                             query = librarySearchField.getText();
-                            librarySearchField.setText(new String(""));
+                            librarySearchField.setText("");
                             cloudSearchField.setText(query);
                         }
 
