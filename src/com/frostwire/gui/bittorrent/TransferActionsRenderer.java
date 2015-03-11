@@ -18,32 +18,19 @@
 
 package com.frostwire.gui.bittorrent;
 
-import com.frostwire.JsonEngine;
 import com.frostwire.gui.AlphaIcon;
 import com.frostwire.gui.player.MediaPlayer;
+import com.frostwire.gui.player.MediaSource;
 import com.frostwire.logging.Logger;
-import com.frostwire.search.CrawlableSearchResult;
-import com.frostwire.search.SearchResult;
-import com.frostwire.search.StreamableSearchResult;
-import com.frostwire.search.archiveorg.ArchiveorgTorrentSearchResult;
-import com.frostwire.torrent.PaymentOptions;
-import com.frostwire.torrent.PaymentOptions.PaymentMethod;
-import com.frostwire.util.StringUtils;
-import com.frostwire.uxstats.UXAction;
-import com.frostwire.uxstats.UXStats;
-import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.search.FWAbstractJPanelTableCellRenderer;
-import com.limegroup.gnutella.gui.search.SearchResultActionsHolder;
-import com.limegroup.gnutella.gui.search.UISearchResult;
-import com.limegroup.gnutella.gui.tables.TableActionLabel;
-import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 
 /**
  * @author gubatron
@@ -53,12 +40,13 @@ public final class TransferActionsRenderer extends FWAbstractJPanelTableCellRend
 
     private static final Logger LOG = Logger.getLogger(TransferActionsRenderer.class);
 
-    private  static final float BUTTONS_TRANSPARENCY = 0.85f;
-    private  static final ImageIcon play_solid;
-    private  static final AlphaIcon play_transparent;
+    private static final float BUTTONS_TRANSPARENCY = 0.85f;
+    private static final ImageIcon play_solid;
+    private static final AlphaIcon play_transparent;
 
     private JLabel labelPlay;
     private boolean showSolid;
+    private BTDownload dl;
 
     static {
         play_solid = GUIMediator.getThemeImage("search_result_play_over");
@@ -95,53 +83,31 @@ public final class TransferActionsRenderer extends FWAbstractJPanelTableCellRend
     }
 
     private void updateUIData(TransferHolder actionsHolder, JTable table, int row, int column) {
+        dl = actionsHolder.getDl();
         showSolid = mouseIsOverRow(table, row);
         updatePlayButton();
-        labelPlay.setVisible(isSearchResultPlayable());
-    }
-
-    private boolean isSearchResultPlayable() {
-        boolean playable = false;
-//        if (searchResult.getSearchResult() instanceof StreamableSearchResult) {
-//            playable = ((StreamableSearchResult) searchResult.getSearchResult()).getStreamUrl() != null;
-//            if (playable && searchResult.getExtension() != null) {
-//                MediaType mediaType = MediaType.getMediaTypeForExtension(searchResult.getExtension());
-//                playable = mediaType != null && (mediaType.equals(MediaType.getAudioMediaType())) || mediaType.equals(MediaType.getVideoMediaType());
-//            }
-//        }
-        return playable;
+        labelPlay.setVisible(dl.canPreview());
     }
 
     private void updatePlayButton() {
-        //labelPlay.setIcon((isStreamableSourceBeingPlayed(searchResult)) ? GUIMediator.getThemeImage("speaker") : (showSolid) ? play_solid : play_transparent);
+        labelPlay.setIcon((isDlBeingPlayed()) ? GUIMediator.getThemeImage("speaker") : (showSolid) ? play_solid : play_transparent);
     }
 
     private void labelPlay_mouseReleased(MouseEvent e) {
-//        if (e.getButton() == MouseEvent.BUTTON1) {
-//            if (searchResult.getSearchResult() instanceof StreamableSearchResult && !isStreamableSourceBeingPlayed(searchResult)) {
-//                searchResult.play();
-//                updatePlayButton();
-//            }
-//
-//            uxLogMediaPreview();
-//        }
-    }
-
-    private void uxLogMediaPreview() {
-//        MediaType mediaType = MediaType.getMediaTypeForExtension(searchResult.getExtension());
-//        if (mediaType != null) {
-//            boolean isVideo = mediaType.equals(MediaType.getVideoMediaType());
-//            UXStats.instance().log(isVideo ? UXAction.SEARCH_RESULT_VIDEO_PREVIEW : UXAction.SEARCH_RESULT_AUDIO_PREVIEW);
-//        }
-    }
-
-    private boolean isStreamableSourceBeingPlayed(UISearchResult sr) {
-        if (!(sr instanceof StreamableSearchResult)) {
-            return false;
+        if (e.getButton() == MouseEvent.BUTTON1) {
+            if (dl.canPreview() && !isDlBeingPlayed()) {
+                File file = dl.getPreviewFile();
+                if (file != null) {
+                    GUIMediator.instance().launchMedia(new MediaSource(file));
+                }
+                updatePlayButton();
+            }
         }
+    }
 
-        StreamableSearchResult ssr = (StreamableSearchResult) sr;
-        return MediaPlayer.instance().isThisBeingPlayed(ssr.getStreamUrl());
+    private boolean isDlBeingPlayed() {
+        File file = dl.getPreviewFile();
+        return file != null && MediaPlayer.instance().isThisBeingPlayed(dl.getPreviewFile());
     }
 
     @Override
