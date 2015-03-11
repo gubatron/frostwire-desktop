@@ -446,7 +446,8 @@ AEDiagnosticsLogger
 	{
 		return( new File( debug_dir, getName() + "_" + (first_file?"1":"2") + ".log" ));
 	}
-	
+
+/*
 	private static String 
 	format(
 		int 	n ) 
@@ -458,4 +459,6 @@ AEDiagnosticsLogger
 		
 	   return( String.valueOf(n));
 	}
+*/
+
 }

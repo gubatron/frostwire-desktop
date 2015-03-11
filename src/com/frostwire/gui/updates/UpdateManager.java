@@ -35,6 +35,7 @@ import org.limewire.util.CommonUtils;
 import org.limewire.util.OSUtils;
 
 import com.limegroup.gnutella.gui.GUIMediator;
+import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
@@ -260,13 +261,13 @@ public final class UpdateManager implements Serializable {
         String[] options = new String[3];
 
         if (msg.getTorrent() != null) {
-            options[OPTION_DOWNLOAD_TORRENT] = new String("Download Torrent");
+            options[OPTION_DOWNLOAD_TORRENT] = I18n.tr("Download Torrent");
         } else {
             options = new String[2];
         }
 
-        options[OPTION_LATER] = new String("Thanks, but not now");
-        options[OPTION_OPEN_URL] = new String("Go to webpage");
+        options[OPTION_LATER] = I18n.tr("Thanks, but not now");
+        options[OPTION_OPEN_URL] = I18n.tr("Go to webpage");
 
         final int finalOptionType = optionType;
         final String[] finalOptions = options;
