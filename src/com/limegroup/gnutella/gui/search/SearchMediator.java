@@ -83,10 +83,6 @@ public final class SearchMediator {
 
     static final String DOWNLOAD_STRING = I18n.tr("Download");
 
-    static final String KILL_STRING = I18n.tr("Close Search");
-
-    static final String LAUNCH_STRING = I18n.tr("Launch Action");
-
     static final String REPEAT_SEARCH_STRING = I18n.tr("Repeat Search");
 
     static final String DOWNLOAD_PARTIAL_FILES_STRING = I18n.tr("Download Partial Files");
@@ -421,13 +417,6 @@ public final class SearchMediator {
         final SearchResultDataLine[] lines = rp.getAllSelectedLines();
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-
-                // hasTorrentDownloads always returns false? the comment
-                //                if (!AzureusStarter.isAzureusCoreStarted() && hasTorrentDownloads(lines)) {
-                //                    GUIMediator.showMessage(I18n.tr("Please try this download in a few seconds, FrostWire is still warming up."));
-                //                    return;
-                //                }
-
                 SearchMediator.downloadAll(lines, rp.getSearchInformation());
                 rp.refresh();
             }
@@ -578,7 +567,6 @@ public final class SearchMediator {
 
         @Override
         public void onFinished(long token) {
-            //System.out.println("Finished: " + token);
             SearchMediator.this.onFinished(token);
         }
     }

@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011-2014, 2013, FrostWire(R). All rights reserved.
+ * Copyright (c) 2011-2015, FrostWire(R). All rights reserved.
  
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -72,7 +72,6 @@ public class LocaleLabel extends JLabel {
         public boolean canDisplay() {
             if (canDisplay == null) {
                 canDisplay = getDefaultFont().canDisplayUpTo(value) == -1;
-                //System.out.println("display probe");
             }
 
             return canDisplay;
