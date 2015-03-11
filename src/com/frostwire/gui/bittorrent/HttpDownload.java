@@ -488,4 +488,9 @@ public class HttpDownload implements BTDownload {
     public boolean canPreview() {
         return false;
     }
+
+    @Override
+    public File getPreviewFile() {
+        return null;
+    }
 }

@@ -246,6 +246,11 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
 
     @Override
     public boolean canPreview() {
+        return getPreviewFile() != null;
+    }
+
+    @Override
+    public File getPreviewFile() {
         if (items.size() == 1) {
             TransferItem item = items.get(0);
             if (item instanceof BTDownloadItem) {
@@ -261,9 +266,9 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
                         long percent = (100 * downloaded) / size;
 
                         if (percent > 30 || downloaded > 5 * 1024 * 1024) {
-                            return true;
+                            return item.getFile();
                         } else {
-                            return false;
+                            return null;
                         }
 
                         //LOG.debug(" Downloaded: " + downloaded);
@@ -272,7 +277,7 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
             }
         }
 
-        return false;
+        return null;
     }
 
     private class StatusListener implements BTDownloadListener {

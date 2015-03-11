@@ -88,4 +88,6 @@ public interface BTDownload {
     public CopyrightLicenseBroker getCopyrightLicenseBroker();
 
     public boolean canPreview();
+
+    public File getPreviewFile();
 }

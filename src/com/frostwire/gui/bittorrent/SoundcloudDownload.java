@@ -497,4 +497,13 @@ public class SoundcloudDownload implements BTDownload {
     public boolean canPreview() {
         return true;
     }
+
+    @Override
+    public File getPreviewFile() {
+        if (isComplete()) {
+            return completeFile;
+        } else {
+            return tempAudio;
+        }
+    }
 }
