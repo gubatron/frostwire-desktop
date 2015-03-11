@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011-2014, FrostWire(R). All rights reserved.
+ * Copyright (c) 2011-2015, FrostWire(R). All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
 package com.frostwire.gui.bittorrent;
 
 import com.frostwire.JsonEngine;
+import com.frostwire.logging.Logger;
 import com.frostwire.torrent.PaymentOptions;
 import com.frostwire.torrent.PaymentOptions.PaymentMethod;
 import com.frostwire.util.StringUtils;
@@ -31,17 +32,17 @@ import com.limegroup.gnutella.gui.tables.TableActionLabel;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 /**
- * 
  * @author gubatron
  * @author aldenml
- * 
  */
 public final class PaymentOptionsRenderer extends FWAbstractJPanelTableCellRenderer {
+
+    private static final Logger LOG = Logger.getLogger(PaymentOptionsRenderer.class);
+
     private final static ImageIcon bitcoin_enabled;
     private final static ImageIcon bitcoin_disabled;
 
@@ -70,10 +71,10 @@ public final class PaymentOptionsRenderer extends FWAbstractJPanelTableCellRende
 
     private void setupUI() {
         setEnabled(true);
-        setBorder(BorderFactory.createEmptyBorder(0,0,2,0));
+        setBorder(BorderFactory.createEmptyBorder(0, 0, 2, 0));
 
         //We use "Bitcoin" for the protocol (upper case B), and "bitcoins" for the units of currency (lower case b)
-        labelBitcoin.setToolTipText(I18n.tr("Name your price, Send a Tip or Donation in") +" "+ I18n.tr("bitcoins"));
+        labelBitcoin.setToolTipText(I18n.tr("Name your price, Send a Tip or Donation in") + " " + I18n.tr("bitcoins"));
         labelPaypal.setToolTipText(I18n.tr("Name your price, Send a Tip or Donation via Paypal"));
 
         initMouseListeners();
@@ -114,10 +115,10 @@ public final class PaymentOptionsRenderer extends FWAbstractJPanelTableCellRende
             labelBitcoin.updateActionIcon(gotPaymentOptions && !StringUtils.isNullOrEmpty(paymentOptions.bitcoin), showSolid);
             labelPaypal.updateActionIcon(gotPaymentOptions && !StringUtils.isNullOrEmpty(paymentOptions.paypalUrl), showSolid);
         } catch (Throwable t) {
-            t.printStackTrace();
+            LOG.error("Unable to update UI data", t);
         }
     }
-    
+
     private void openPaymentOptionsURL(PaymentOptions paymentOptions, PaymentMethod method) {
         String paymentOptionsUrl = null;
         if (method == PaymentMethod.PAYPAL && !StringUtils.isNullOrEmpty(paymentOptions.paypalUrl)) {
@@ -126,7 +127,7 @@ public final class PaymentOptionsRenderer extends FWAbstractJPanelTableCellRende
             String paymentOptionsJSON = StringUtils.encodeUrl(new JsonEngine().toJson(paymentOptions).replaceAll("\n", ""));
             String title = StringUtils.encodeUrl(paymentOptions.getItemName());
             paymentOptionsUrl = "http://www.frostwire.com/tips/?method=" + method.toString() + "&po=" + paymentOptionsJSON + "&title=" + title;
-            
+
         }
         GUIMediator.openURL(paymentOptionsUrl);
     }
@@ -147,11 +148,5 @@ public final class PaymentOptionsRenderer extends FWAbstractJPanelTableCellRende
                 UXStats.instance().log(UXAction.DOWNLOAD_CLICK_PAYPAL_PAYMENT);
             }
         }
-    }
-
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        cancelEdit();
     }
 }
