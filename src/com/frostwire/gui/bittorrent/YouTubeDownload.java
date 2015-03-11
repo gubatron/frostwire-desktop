@@ -497,4 +497,9 @@ public class YouTubeDownload implements BTDownload {
     public CopyrightLicenseBroker getCopyrightLicenseBroker() {
         return null;
     }
+
+    @Override
+    public boolean canPreview() {
+        return true;
+    }
 }

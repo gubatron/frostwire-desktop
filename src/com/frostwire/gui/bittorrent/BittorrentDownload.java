@@ -19,8 +19,10 @@
 package com.frostwire.gui.bittorrent;
 
 import com.frostwire.bittorrent.BTDownload;
+import com.frostwire.bittorrent.BTDownloadItem;
 import com.frostwire.bittorrent.BTDownloadListener;
 import com.frostwire.gui.library.LibraryMediator;
+import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.jlibtorrent.TorrentInfo;
 import com.frostwire.logging.Logger;
 import com.frostwire.torrent.CopyrightLicenseBroker;
@@ -36,7 +38,10 @@ import com.limegroup.gnutella.settings.iTunesSettings;
 import org.limewire.util.OSUtils;
 
 import java.io.File;
-import java.util.*;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author gubatron
@@ -237,6 +242,37 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
     public CopyrightLicenseBroker getCopyrightLicenseBroker() {
         setupMetadataHolder();
         return licenseBroker;
+    }
+
+    @Override
+    public boolean canPreview() {
+        if (items.size() == 1) {
+            TransferItem item = items.get(0);
+            if (item instanceof BTDownloadItem) {
+                BTDownloadItem btItem = (BTDownloadItem) item;
+
+                if (MediaPlayer.isPlayableFile(btItem.getFile())) {
+
+                    long downloaded = btItem.getSequentialDownloaded();
+                    long size = btItem.getSize();
+
+                    if (size > 0) {
+
+                        long percent = (100 * downloaded) / size;
+
+                        if (percent > 30 || downloaded > 5 * 1024 * 1024) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+
+                        //LOG.debug(" Downloaded: " + downloaded);
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 
     private class StatusListener implements BTDownloadListener {

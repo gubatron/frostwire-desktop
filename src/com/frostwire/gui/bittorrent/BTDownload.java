@@ -86,4 +86,6 @@ public interface BTDownload {
     public PaymentOptions getPaymentOptions();
 
     public CopyrightLicenseBroker getCopyrightLicenseBroker();
+
+    public boolean canPreview();
 }
