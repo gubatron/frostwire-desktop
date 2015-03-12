@@ -68,7 +68,7 @@ public class PartialFilesDialog extends JDialog {
     }
 
     public PartialFilesDialog(JFrame frame, byte[] bytes, String name) {
-        this(frame, new TorrentInfo(bytes), name);
+        this(frame, TorrentInfo.bdecode(bytes), name);
     }
 
     public PartialFilesDialog(JFrame frame, TorrentInfo torrent, String name) {

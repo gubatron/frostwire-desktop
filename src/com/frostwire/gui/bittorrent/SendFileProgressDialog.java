@@ -219,7 +219,7 @@ public class SendFileProgressDialog extends JDialog {
             bos.flush();
             bos.close();
 
-            final TorrentInfo torrent = new TorrentInfo(bencoded_torrent_bytes);
+            final TorrentInfo torrent = TorrentInfo.bdecode(bencoded_torrent_bytes);
 
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
