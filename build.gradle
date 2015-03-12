@@ -28,10 +28,24 @@ compileJava {
     options.encoding = '8859_1'
 }
 
+repositories {
+    mavenCentral()
+}
+
+
 // add third party jars to classpath.
 dependencies {
     def ant_jar_path = System.getenv('ANT_HOME') + '/lib/ant.jar'
     compile files(new File(ant_jar_path).toURI())
+
+    // compile time dependencies for H2
+    compile 'com.h2database:h2:1.4.186'
+    compile 'com.vividsolutions:jts:1.13'
+    compile 'org.slf4j:slf4j-api:1.7.10'
+    compile 'javax.servlet:javax.servlet-api:3.1.0'
+    compile 'org.osgi:org.osgi.core:4.2.0'
+    compile 'org.osgi:org.osgi.enterprise:4.2.0'
+    compile 'org.apache.lucene:lucene-core:3.0.2'
 }
 
 sourceSets {
@@ -56,7 +70,7 @@ sourceSets {
             exclude "**/ant/gettext/*.java"
 
             srcDir 'lib/jars-src/lucene-3.5.0'
-            srcDir 'lib/jars-src/h2-1.4.186'
+            srcDir 'lib/jars-src/h2-1.4.186/src/main'
             srcDir 'lib/jars-src/jaudiotagger/src'
             srcDir 'lib/jars-src/metadata-extractor-2.6.2-src/Source'
 
