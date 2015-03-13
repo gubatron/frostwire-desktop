@@ -54,7 +54,6 @@ final class Finalizer {
      * Exits the virtual machine, making calls to save
      * any necessary settings and to perform any
      * necessary cleanups.
-     * @param toExecute a string to try to execute after shutting down.
      */
     static void shutdown() {
         UXStats.instance().flush();
@@ -63,10 +62,6 @@ final class Finalizer {
         SearchMediator.instance().shutdown();
 
         MediaPlayer.instance().stop();
-
-        // TODO: This line of code must be refactored in a better workflow of
-        // LifecycleManager -> ActivityCallback
-        //LibraryMediator.instance().getLibrary().close();
 
         GUIMediator.applyWindowSettings();
 
@@ -85,6 +80,7 @@ final class Finalizer {
         Thread shutdown = new Thread("Shutdown Thread") {
             public void run() {
                 try {
+                    sleep(3000);
                     BugManager.instance().shutdown();
                     GuiCoreMediator.getLifecycleManager().shutdown(toExecute);
                     System.exit(0);
