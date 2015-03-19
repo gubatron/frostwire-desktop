@@ -252,28 +252,22 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
 
     @Override
     public File getPreviewFile() {
-        if (items.size() == 1) {
-            TransferItem item = items.get(0);
-            if (item instanceof BTDownloadItem) {
-                BTDownloadItem btItem = (BTDownloadItem) item;
+        BTDownloadItem item = getFirstBiggestItem();
 
-                if (MediaPlayer.isPlayableFile(btItem.getFile())) {
+        if (item != null && MediaPlayer.isPlayableFile(item.getFile())) {
+            long downloaded = item.getSequentialDownloaded();
+            long size = item.getSize();
 
-                    long downloaded = btItem.getSequentialDownloaded();
-                    long size = btItem.getSize();
+            LOG.debug("Downloaded: " + downloaded + ", seq: " + dl.isSequentialDownload());
 
-                    LOG.debug(" Downloaded: " + downloaded + ", seq: " + dl.isSequentialDownload());
+            if (size > 0) {
 
-                    if (size > 0) {
+                long percent = (100 * downloaded) / size;
 
-                        long percent = (100 * downloaded) / size;
-
-                        if (percent > 30 || downloaded > 5 * 1024 * 1024) {
-                            return item.getFile();
-                        } else {
-                            return null;
-                        }
-                    }
+                if (percent > 30 || downloaded > 10 * 1024 * 1024) {
+                    return item.getFile();
+                } else {
+                    return null;
                 }
             }
         }
@@ -282,39 +276,52 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
     }
 
     private void checkSequentialDownload() {
-        if (items.size() == 1) {
-            TransferItem item = items.get(0);
-            if (item instanceof BTDownloadItem) {
-                BTDownloadItem btItem = (BTDownloadItem) item;
+        BTDownloadItem item = getFirstBiggestItem();
 
-                if (MediaPlayer.isPlayableFile(btItem.getFile())) {
+        if (item != null && MediaPlayer.isPlayableFile(item.getFile())) {
+            long downloaded = item.getSequentialDownloaded();
+            long size = item.getSize();
 
-                    long downloaded = btItem.getSequentialDownloaded();
-                    long size = btItem.getSize();
+            if (size > 0) {
 
-                    if (size > 0) {
+                long percent = (100 * downloaded) / size;
 
-                        long percent = (100 * downloaded) / size;
-
-                        if (percent > 30 || downloaded > 5 * 1024 * 1024) {
-                            if (dl.isSequentialDownload()) {
-                                dl.setSequentialDownload(false);
-                            }
-                        } else {
-                            if (!dl.isSequentialDownload()) {
-                                dl.setSequentialDownload(true);
-                            }
-                        }
-
-                        //LOG.debug("Seq: " + dl.isSequentialDownload() + " Downloaded: " + downloaded);
+                if (percent > 30 || downloaded > 10 * 1024 * 1024) {
+                    if (dl.isSequentialDownload()) {
+                        dl.setSequentialDownload(false);
+                    }
+                } else {
+                    if (!dl.isSequentialDownload()) {
+                        dl.setSequentialDownload(true);
                     }
                 }
+
+                //LOG.debug("Seq: " + dl.isSequentialDownload() + " Downloaded: " + downloaded);
             }
         } else {
             if (dl.isSequentialDownload()) {
                 dl.setSequentialDownload(false);
             }
         }
+    }
+
+    private BTDownloadItem getFirstBiggestItem() {
+        BTDownloadItem item = null;
+
+        for (TransferItem it : items) {
+            if (it instanceof BTDownloadItem) {
+                BTDownloadItem bit = (BTDownloadItem) it;
+                if (item == null) {
+                    item = bit;
+                } else {
+                    if (item.getSize() < 2 * 1024 * 1024 && item.getSize() < bit.getSize()) {
+                        item = bit;
+                    }
+                }
+            }
+        }
+
+        return item;
     }
 
     private class StatusListener implements BTDownloadListener {
