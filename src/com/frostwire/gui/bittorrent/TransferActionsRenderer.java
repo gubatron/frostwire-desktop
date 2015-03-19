@@ -38,8 +38,6 @@ import java.io.File;
  */
 public final class TransferActionsRenderer extends FWAbstractJPanelTableCellRenderer {
 
-    private static final Logger LOG = Logger.getLogger(TransferActionsRenderer.class);
-
     private static final float BUTTONS_TRANSPARENCY = 0.85f;
     private static final ImageIcon play_solid;
     private static final AlphaIcon play_transparent;

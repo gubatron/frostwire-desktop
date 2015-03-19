@@ -246,6 +246,7 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
 
     @Override
     public boolean canPreview() {
+        checkSequentialDownload();
         return getPreviewFile() != null;
     }
 
@@ -261,6 +262,8 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
                     long downloaded = btItem.getSequentialDownloaded();
                     long size = btItem.getSize();
 
+                    LOG.debug(" Downloaded: " + downloaded + ", seq: " + dl.isSequentialDownload());
+
                     if (size > 0) {
 
                         long percent = (100 * downloaded) / size;
@@ -270,14 +273,48 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
                         } else {
                             return null;
                         }
-
-                        //LOG.debug(" Downloaded: " + downloaded);
                     }
                 }
             }
         }
 
         return null;
+    }
+
+    private void checkSequentialDownload() {
+        if (items.size() == 1) {
+            TransferItem item = items.get(0);
+            if (item instanceof BTDownloadItem) {
+                BTDownloadItem btItem = (BTDownloadItem) item;
+
+                if (MediaPlayer.isPlayableFile(btItem.getFile())) {
+
+                    long downloaded = btItem.getSequentialDownloaded();
+                    long size = btItem.getSize();
+
+                    if (size > 0) {
+
+                        long percent = (100 * downloaded) / size;
+
+                        if (percent > 30 || downloaded > 5 * 1024 * 1024) {
+                            if (dl.isSequentialDownload()) {
+                                dl.setSequentialDownload(false);
+                            }
+                        } else {
+                            if (!dl.isSequentialDownload()) {
+                                dl.setSequentialDownload(true);
+                            }
+                        }
+
+                        //LOG.debug("Seq: " + dl.isSequentialDownload() + " Downloaded: " + downloaded);
+                    }
+                }
+            }
+        } else {
+            if (dl.isSequentialDownload()) {
+                dl.setSequentialDownload(false);
+            }
+        }
     }
 
     private class StatusListener implements BTDownloadListener {
