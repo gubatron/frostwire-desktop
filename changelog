@@ -10,8 +10,9 @@ frostwire (6.0.7) stable; urgency=high
   * Torrent creation and parsing now done using frostwire-jlibtorrent api. More
     Azureus cleanups.
   * Upgraded H2 database engine.
+  * Upgraded frostwire-jlibtorrent to the latest code from libtorrent.
 	
- -- FrostWire Team <contact@frostwire.com>  Tue, 10 March 2015 04:04:20 -0500
+ -- FrostWire Team <contact@frostwire.com>  Thu, 19 March 2015 00:12:25 -0500
 
 frostwire (6.0.6) stable; urgency=high
   * Fixes bug where default save location for torrents would not be accounted for.
