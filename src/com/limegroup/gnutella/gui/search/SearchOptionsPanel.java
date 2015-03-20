@@ -98,6 +98,9 @@ final class SearchOptionsPanel extends JPanel {
         for (SearchEngine se: engines) {
              JCheckBox cBox = engineCheckboxes.get(se);
              if (cBox != null) {
+                 if (cBox.isEnabled() && !cBox.isSelected() && se.isEnabled()) {
+                     continue;
+                 }
                  cBox.setSelected(se.isEnabled());
                  cBox.setEnabled(se.isEnabled());
              }
