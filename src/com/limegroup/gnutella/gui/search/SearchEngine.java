@@ -224,6 +224,11 @@ public abstract class SearchEngine {
         return obj !=null && _id == ((SearchEngine) obj)._id;
     }
 
+    @Override
+    public int hashCode() {
+        return _id;
+    }
+
     public static List<SearchEngine> getEngines() {
         return Arrays.asList(YOUTUBE, EXTRATORRENT, TPB, BITSNOOP, SOUNDCLOUD, FROSTCLICK, MININOVA, KAT, MONOVA, ARCHIVEORG, TORLOCK, EZTV, YIFY, BTJUNKIE);
     }

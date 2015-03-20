@@ -11,6 +11,7 @@ frostwire (6.0.7) stable; urgency=high
     Azureus cleanups.
   * Upgraded H2 database engine.
   * Upgraded frostwire-jlibtorrent to the latest code from libtorrent.
+  * UX-improvement: A repeated search will honor active search engines.
 	
  -- FrostWire Team <contact@frostwire.com>  Thu, 19 March 2015 00:12:25 -0500
 

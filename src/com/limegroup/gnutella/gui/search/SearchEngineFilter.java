@@ -16,9 +16,10 @@ class SearchEngineFilter implements TableLineFilter<SearchResultDataLine> {
 
     public boolean allow(SearchResultDataLine node) {
         boolean result = false;
-        JCheckBox box = engineCheckboxes.get(node.getSearchEngine());
+        final SearchEngine searchEngine = node.getSearchEngine();
+        JCheckBox box = engineCheckboxes.get(searchEngine);
         if (box != null) {
-            result = node.getSearchEngine().isEnabled() && box.isEnabled() && box.isSelected();
+            result = searchEngine.isEnabled() && box.isEnabled() && box.isSelected();
         }
         return result;
     }

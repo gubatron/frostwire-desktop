@@ -89,8 +89,19 @@ final class SearchOptionsPanel extends JPanel {
 
     public void updateFiltersPanel() {
         generalFilter = new GeneralResultFilter(resultPanel, sliderSeeds, sliderSize, textFieldKeywords);
+        updateCheckboxes(SearchEngine.getEngines());
         resultPanel.filterChanged(new SearchEngineFilter(engineCheckboxes), 0);
         resultPanel.filterChanged(generalFilter, 1);
+    }
+
+    private void updateCheckboxes(List<SearchEngine> engines) {
+        for (SearchEngine se: engines) {
+             JCheckBox cBox = engineCheckboxes.get(se);
+             if (cBox != null) {
+                 cBox.setSelected(se.isEnabled());
+                 cBox.setEnabled(se.isEnabled());
+             }
+        }
     }
 
     public void resetFilters() {
@@ -117,9 +128,6 @@ final class SearchOptionsPanel extends JPanel {
         panel.setLayout(new MigLayout("insets 3, wrap 2"));
         List<SearchEngine> searchEngines = SearchEngine.getEngines();
         setupCheckboxes(searchEngines, panel);
-
-        //panel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, ThemeMediator.LIGHT_BORDER_COLOR));
-
         return panel;
     }
 
