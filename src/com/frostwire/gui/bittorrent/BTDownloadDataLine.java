@@ -15,20 +15,9 @@
 
 package com.frostwire.gui.bittorrent;
 
-import java.awt.event.ActionEvent;
-import java.io.File;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.Icon;
-
-import com.frostwire.transfers.TransferState;
-
 import com.frostwire.gui.library.LibraryMediator;
-import com.frostwire.torrent.PaymentOptions;
+import com.frostwire.bittorrent.PaymentOptions;
+import com.frostwire.transfers.TransferState;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
@@ -36,16 +25,14 @@ import com.limegroup.gnutella.gui.IconManager;
 import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.gui.notify.Notification;
 import com.limegroup.gnutella.gui.notify.NotifyUserProxy;
-import com.limegroup.gnutella.gui.tables.AbstractDataLine;
-import com.limegroup.gnutella.gui.tables.IconAndNameHolder;
-import com.limegroup.gnutella.gui.tables.IconAndNameHolderImpl;
-import com.limegroup.gnutella.gui.tables.LimeTableColumn;
-import com.limegroup.gnutella.gui.tables.ProgressBarHolder;
-import com.limegroup.gnutella.gui.tables.SeedsHolder;
-import com.limegroup.gnutella.gui.tables.SizeHolder;
-import com.limegroup.gnutella.gui.tables.SpeedRenderer;
-import com.limegroup.gnutella.gui.tables.TimeRemainingHolder;
-import com.limegroup.gnutella.settings.iTunesSettings;
+import com.limegroup.gnutella.gui.tables.*;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.io.File;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * This class handles all of the data for a single download, representing
@@ -231,7 +218,7 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
     public void initialize(BTDownload downloader) {
         super.initialize(downloader);
         _notification = downloader.isCompleted();
-        paymentOptions = initializer.getPaymentOptions();//comes with item name preset
+        paymentOptions = initializer.getPaymentOptions(); // Comes with item name preset.
         update();
     }
 

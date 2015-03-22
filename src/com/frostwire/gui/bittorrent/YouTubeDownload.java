@@ -20,8 +20,8 @@ package com.frostwire.gui.bittorrent;
 
 import com.frostwire.search.extractors.YouTubeExtractor.LinkInfo;
 import com.frostwire.search.youtube.YouTubeCrawledSearchResult;
-import com.frostwire.torrent.CopyrightLicenseBroker;
-import com.frostwire.torrent.PaymentOptions;
+import com.frostwire.bittorrent.CopyrightLicenseBroker;
+import com.frostwire.bittorrent.PaymentOptions;
 import com.frostwire.transfers.TransferState;
 import com.frostwire.util.HttpClient;
 import com.frostwire.util.HttpClient.HttpClientListener;

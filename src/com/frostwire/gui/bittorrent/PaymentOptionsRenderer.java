@@ -20,8 +20,8 @@ package com.frostwire.gui.bittorrent;
 
 import com.frostwire.JsonEngine;
 import com.frostwire.logging.Logger;
-import com.frostwire.torrent.PaymentOptions;
-import com.frostwire.torrent.PaymentOptions.PaymentMethod;
+import com.frostwire.bittorrent.PaymentOptions;
+import com.frostwire.bittorrent.PaymentOptions.PaymentMethod;
 import com.frostwire.util.StringUtils;
 import com.frostwire.uxstats.UXAction;
 import com.frostwire.uxstats.UXStats;

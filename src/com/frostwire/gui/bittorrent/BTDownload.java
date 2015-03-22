@@ -18,8 +18,8 @@
 
 package com.frostwire.gui.bittorrent;
 
-import com.frostwire.torrent.CopyrightLicenseBroker;
-import com.frostwire.torrent.PaymentOptions;
+import com.frostwire.bittorrent.CopyrightLicenseBroker;
+import com.frostwire.bittorrent.PaymentOptions;
 import com.frostwire.transfers.TransferState;
 
 import java.io.File;

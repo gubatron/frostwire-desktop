@@ -18,7 +18,7 @@
 
 package com.frostwire.gui.components.slides;
 
-import com.frostwire.torrent.PaymentOptions;
+import com.frostwire.bittorrent.PaymentOptions;
 
 /**
  * 

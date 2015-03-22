@@ -19,14 +19,11 @@
 package com.frostwire.gui.bittorrent;
 
 import com.frostwire.bittorrent.BTDownload;
-import com.frostwire.bittorrent.BTDownloadItem;
-import com.frostwire.bittorrent.BTDownloadListener;
+import com.frostwire.bittorrent.*;
 import com.frostwire.gui.library.LibraryMediator;
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.jlibtorrent.TorrentInfo;
 import com.frostwire.logging.Logger;
-import com.frostwire.torrent.CopyrightLicenseBroker;
-import com.frostwire.torrent.PaymentOptions;
 import com.frostwire.transfers.TransferItem;
 import com.frostwire.transfers.TransferState;
 import com.frostwire.util.DirectoryUtils;

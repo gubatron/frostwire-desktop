@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011-2014, FrostWire(R). All rights reserved.
+ * Copyright (c) 2011-2015, FrostWire(R). All rights reserved.
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,8 +37,8 @@ import net.miginfocom.swing.MigLayout;
 
 import com.frostwire.gui.bittorrent.LicenseToggleButton.LicenseIcon;
 import com.frostwire.licences.License;
-import com.frostwire.torrent.CopyrightLicenseBroker;
-import com.frostwire.torrent.CopyrightLicenseBroker.LicenseCategory;
+import com.frostwire.bittorrent.CopyrightLicenseBroker;
+import com.frostwire.bittorrent.CopyrightLicenseBroker.LicenseCategory;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;

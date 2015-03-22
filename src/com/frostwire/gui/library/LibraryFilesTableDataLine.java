@@ -18,10 +18,10 @@
 
 package com.frostwire.gui.library;
 
+import com.frostwire.bittorrent.BTInfoAdditionalMetadataHolder;
+import com.frostwire.bittorrent.PaymentOptions;
 import com.frostwire.gui.Librarian;
-import com.frostwire.gui.bittorrent.BTInfoAdditionalMetadataHolder;
 import com.frostwire.gui.player.MediaPlayer;
-import com.frostwire.torrent.PaymentOptions;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.IconManager;

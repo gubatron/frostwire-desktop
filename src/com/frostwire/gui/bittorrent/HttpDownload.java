@@ -29,8 +29,8 @@ import java.util.concurrent.Executors;
 
 import com.frostwire.transfers.TransferState;
 
-import com.frostwire.torrent.CopyrightLicenseBroker;
-import com.frostwire.torrent.PaymentOptions;
+import com.frostwire.bittorrent.CopyrightLicenseBroker;
+import com.frostwire.bittorrent.PaymentOptions;
 import com.frostwire.util.DigestUtils;
 import com.frostwire.util.DigestUtils.DigestProgressListener;
 import com.frostwire.util.HttpClient;

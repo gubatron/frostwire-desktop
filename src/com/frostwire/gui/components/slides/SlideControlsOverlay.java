@@ -38,7 +38,7 @@ import javax.swing.plaf.FontUIResource;
 import net.miginfocom.swing.MigLayout;
 
 import com.frostwire.JsonEngine;
-import com.frostwire.torrent.PaymentOptions;
+import com.frostwire.bittorrent.PaymentOptions;
 import com.frostwire.util.StringUtils;
 import com.frostwire.uxstats.UXAction;
 import com.frostwire.uxstats.UXStats;
