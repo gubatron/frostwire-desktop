@@ -35,7 +35,7 @@ public class WindowsUtils {
 			return;
 		}
 
-		File src = new File(startMenu, "Programs\\FrostWire 5\\FrostWire " + FrostWireUtils.getFrostWireVersion() + ".lnk");
+		File src = new File(startMenu, "Programs\\FrostWire 6\\FrostWire 6.lnk");
 		File dst = new File(startMenu, "Programs\\Startup\\FrostWire On Startup.lnk");
 
 		if (allow) {
