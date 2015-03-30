@@ -93,80 +93,80 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
     private boolean _notification;
 
     private PaymentOptions paymentOptions;
-    
+
+    static final int ACTIONS_INDEX = 0;
+    private static final LimeTableColumn ACTIONS_COLUMN = new LimeTableColumn(ACTIONS_INDEX, "TRANSFER_ACTIONS", I18n.tr("Actions"), 23, true, TransferHolder.class);
+
     /**
      * Column index for the file name.
      */
-    static final int FILE_INDEX = 0;
+    static final int FILE_INDEX = 1;
     private static final LimeTableColumn FILE_COLUMN = new LimeTableColumn(FILE_INDEX, "DOWNLOAD_NAME_COLUMN", I18n.tr("Name"), 201, true, IconAndNameHolder.class);
 
     /** Column index for name-your-price/tips/donations */
-    static final int PAYMENT_OPTIONS_INDEX = 1;
+    static final int PAYMENT_OPTIONS_INDEX = 2;
     private static final LimeTableColumn PAYMENT_OPTIONS_COLUMN = new LimeTableColumn(PAYMENT_OPTIONS_INDEX, "PAYMENT_OPTIONS_COLUMN", I18n.tr("Tips/Donations"), 65, true, PaymentOptions.class );
     
     /**
      * Column index for the file size.
      */
-    static final int SIZE_INDEX = 2;
+    static final int SIZE_INDEX = 3;
     private static final LimeTableColumn SIZE_COLUMN = new LimeTableColumn(SIZE_INDEX, "DOWNLOAD_SIZE_COLUMN", I18n.tr("Size"), 65, true, SizeHolder.class);
 
     /**
      * Column index for the file download status.
      */
-    static final int STATUS_INDEX = 3;
+    static final int STATUS_INDEX = 4;
     private static final LimeTableColumn STATUS_COLUMN = new LimeTableColumn(STATUS_INDEX, "DOWNLOAD_STATUS_COLUMN", I18n.tr("Status"), 152, true, String.class);
 
     /**
      * Column index for the progress of the download.
      */
-    static final int PROGRESS_INDEX = 4;
+    static final int PROGRESS_INDEX = 5;
     private static final LimeTableColumn PROGRESS_COLUMN = new LimeTableColumn(PROGRESS_INDEX, "DOWNLOAD_PROGRESS_COLUMN", I18n.tr("Progress"), 71, true, ProgressBarHolder.class);
 
     /**
      * Column index for actual amount of bytes downloaded.
      */
-    static final int BYTES_DOWNLOADED_INDEX = 5;
+    static final int BYTES_DOWNLOADED_INDEX = 6;
     private static final LimeTableColumn BYTES_DOWNLOADED_COLUMN = new LimeTableColumn(BYTES_DOWNLOADED_INDEX, "DOWNLOAD_BYTES_DOWNLOADED_COLUMN", I18n.tr("Downloaded"), 20, true, SizeHolder.class);
 
-    static final int BYTES_UPLOADED_INDEX = 6;
+    static final int BYTES_UPLOADED_INDEX = 7;
     private static final LimeTableColumn BYTES_UPLOADED_COLUMN = new LimeTableColumn(BYTES_UPLOADED_INDEX, "DOWNLOAD_BYTES_UPLOADED_COLUMN", I18n.tr("Uploaded"), 20, false, SizeHolder.class);
 
     /**
      * Column index for the download speed.
      */
-    static final int DOWNLOAD_SPEED_INDEX = 7;
+    static final int DOWNLOAD_SPEED_INDEX = 8;
     private static final LimeTableColumn DOWNLOAD_SPEED_COLUMN = new LimeTableColumn(DOWNLOAD_SPEED_INDEX, "DOWNLOAD_SPEED_COLUMN", I18n.tr("Down Speed"), 58, true, SpeedRenderer.class);
 
-    static final int UPLOAD_SPEED_INDEX = 8;
+    static final int UPLOAD_SPEED_INDEX = 9;
     private static final LimeTableColumn UPLOAD_SPEED_COLUMN = new LimeTableColumn(UPLOAD_SPEED_INDEX, "UPLOAD_SPEED_COLUMN", I18n.tr("Up Speed"), 58, true, SpeedRenderer.class);
 
     /**
      * Column index for the download time remaining.
      */
-    static final int TIME_INDEX = 9;
+    static final int TIME_INDEX = 10;
     private static final LimeTableColumn TIME_COLUMN = new LimeTableColumn(TIME_INDEX, "DOWNLOAD_TIME_REMAINING_COLUMN", I18n.tr("Time"), 49, true, TimeRemainingHolder.class);
 
-    static final int SEEDS_INDEX = 10;
+    static final int SEEDS_INDEX = 11;
     private static final LimeTableColumn SEEDS_COLUMN = new LimeTableColumn(SEEDS_INDEX, "SEEDS_STATUS_COLUMN", I18n.tr("Seeds"), 80, true, String.class);
 
-    static final int PEERS_INDEX = 11;
+    static final int PEERS_INDEX = 12;
     private static final LimeTableColumn PEERS_COLUMN = new LimeTableColumn(PEERS_INDEX, "PEERS_STATUS_COLUMN", I18n.tr("Peers"), 80, false, String.class);
 
-    static final int SHARE_RATIO_INDEX = 12;
+    static final int SHARE_RATIO_INDEX = 13;
     private static final LimeTableColumn SHARE_RATIO_COLUMN = new LimeTableColumn(SHARE_RATIO_INDEX, "SHARE_RATIO_COLUMN", I18n.tr("Share Ratio"), 80, false, String.class);
 
-    static final int SEED_TO_PEER_RATIO_INDEX = 13;
+    static final int SEED_TO_PEER_RATIO_INDEX = 14;
     private static final LimeTableColumn SEED_TO_PEER_RATIO_COLUMN = new LimeTableColumn(SEED_TO_PEER_RATIO_INDEX, "SEED_TO_PEER_RATIO_COLUMN", I18n.tr("Seeds/Peers"), 80, false, String.class);
 
-    static final int DATE_CREATED_INDEX = 14;
+    static final int DATE_CREATED_INDEX = 15;
     static final LimeTableColumn DATE_CREATED_COLUMN = new LimeTableColumn(DATE_CREATED_INDEX, "DATE_CREATED_COLUMN", I18n.tr("Started On"), 80, false, Date.class);
 
-    static final int LICENSE_INDEX = 15;
+    static final int LICENSE_INDEX = 16;
     static final LimeTableColumn LICENSE_COLUMN = new LimeTableColumn(LICENSE_INDEX, "LICENSE_COLUMN", I18n.tr("License"), 80, false, String.class);
 
-    static final int ACTIONS_INDEX = 16;
-    private static final LimeTableColumn ACTIONS_COLUMN = new LimeTableColumn(ACTIONS_INDEX, "TRANSFER_ACTIONS", I18n.tr("Actions"), 63, true, TransferHolder.class);
-    
     /**
      * Number of columns to display
      */
