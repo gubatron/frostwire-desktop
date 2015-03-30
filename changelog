@@ -9,11 +9,13 @@ frostwire (6.0.7) stable; urgency=high
   * Croatian translation updates.
   * Torrent creation and parsing now done using frostwire-jlibtorrent api. More
     Azureus cleanups.
+  * Fixes run on startup issue on Windows. Thanks to @win32re.
+  * Upgraded java virtual machine to 1.8.0_40 with hundreds of fixes and upgrades.
   * Upgraded H2 database engine.
   * Upgraded frostwire-jlibtorrent to the latest code from libtorrent.
   * UX-improvement: A repeated search will honor active search engines.
-	
- -- FrostWire Team <contact@frostwire.com>  Thu, 19 March 2015 00:12:25 -0500
+
+ -- FrostWire Team <contact@frostwire.com>  Mon, 30 March 2015 16:50:00 -0500
 
 frostwire (6.0.6) stable; urgency=high
   * Fixes bug where default save location for torrents would not be accounted for.
