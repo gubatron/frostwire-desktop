@@ -31,8 +31,7 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
-import com.frostwire.ImageCache;
-import com.frostwire.ImageCache.OnLoadedListener;
+import com.frostwire.gui.components.slides.ImageCache.OnLoadedListener;
 import com.limegroup.gnutella.gui.GUIMediator;
 
 /**

@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.frostwire;
+package com.frostwire.gui.components.slides;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
