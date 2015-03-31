@@ -31,19 +31,15 @@ import java.util.concurrent.ExecutorService;
 
 import javax.swing.JOptionPane;
 
+import com.frostwire.util.*;
 import org.limewire.concurrent.ExecutorsHelper;
 import org.limewire.concurrent.ThreadExecutor;
 import org.limewire.util.NetworkUtils;
 
-import com.frostwire.JsonEngine;
 import com.frostwire.core.FileDescriptor;
 import com.frostwire.localpeer.Finger;
 import com.frostwire.localpeer.LocalPeer;
 import com.frostwire.logging.Logger;
-import com.frostwire.util.HttpClient;
-import com.frostwire.util.HttpClientFactory;
-import com.frostwire.util.ProgressFileEntity;
-import com.frostwire.util.UserAgentGenerator;
 import com.frostwire.util.ProgressFileEntity.ProgressFileEntityListener;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -68,8 +64,6 @@ public class Device {
     public static int ACTION_BROWSE = 0;
     public static int ACTION_DOWNLOAD = 1;
     public static int ACTION_UPLOAD = 2;
-
-    private static JsonEngine JSON_ENGINE = new JsonEngine();
 
     private final String udn;
     private InetAddress _address;
@@ -177,7 +171,7 @@ public class Device {
 
             setTimestamp(System.currentTimeMillis());
 
-            FileDescriptorList list = JSON_ENGINE.toObject(json, FileDescriptorList.class);
+            FileDescriptorList list = JsonUtils.toObject(json, FileDescriptorList.class);
 
             return list.files;
 
@@ -257,7 +251,7 @@ public class Device {
             }
 
             final String postUrl = "http://" + _address.getHostAddress() + ":" + _port + "/desktop-upload-request";
-            final String json = new JsonEngine().toJson(dur);
+            final String json = JsonUtils.toJson(dur);
             final DeviceUploadDialog dlg = new DeviceUploadDialog(GUIMediator.getAppFrame());
 
             ThreadExecutor.startThread(new Runnable() {

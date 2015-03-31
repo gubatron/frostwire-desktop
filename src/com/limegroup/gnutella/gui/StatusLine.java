@@ -614,7 +614,7 @@ public final class StatusLine {
             Session session = BTEngine.getInstance().getSession();
             if (session != null) {
                 DHT dht = new DHT(session);
-                tip = tip + ". (DHT: " + dht.nodes() + " " + I18n.tr("nodes") + ")";
+                tip = tip + ". (DHT: " + dht.totalNodes() + " " + I18n.tr("nodes") + ")";
             }
 
             _connectionQualityMeter.setToolTipText(tip);

@@ -29,9 +29,9 @@ import java.util.regex.Pattern;
 
 import javax.swing.JPanel;
 
+import com.frostwire.util.JsonUtils;
 import org.limewire.util.OSUtils;
 
-import com.frostwire.JsonEngine;
 import com.frostwire.logging.Logger;
 import com.frostwire.util.HttpClient;
 import com.frostwire.util.HttpClientFactory;
@@ -153,7 +153,7 @@ public class MultimediaSlideshowPanel extends JPanel implements SlideshowPanel {
             String jsonString = client.get(url);
 
             if (jsonString != null) {
-                final SlideList slideList = new JsonEngine().toObject(jsonString, SlideList.class);
+                final SlideList slideList = JsonUtils.toObject(jsonString, SlideList.class);
                 try {
                     setup(slideList.slides);
                 } catch (Exception e) {

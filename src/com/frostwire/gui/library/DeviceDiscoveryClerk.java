@@ -29,7 +29,6 @@ import java.util.Map.Entry;
 
 import javax.swing.SwingUtilities;
 
-import com.frostwire.JsonEngine;
 import com.frostwire.core.ConfigurationManager;
 import com.frostwire.core.Constants;
 import com.frostwire.gui.Librarian;
@@ -42,6 +41,7 @@ import com.frostwire.localpeer.LocalPeerManagerImpl;
 import com.frostwire.localpeer.LocalPeerManagerListener;
 import com.frostwire.logging.Logger;
 import com.frostwire.util.HttpClientFactory;
+import com.frostwire.util.JsonUtils;
 import com.limegroup.gnutella.settings.LibrarySettings;
 import com.limegroup.gnutella.util.FrostWireUtils;
 
@@ -58,8 +58,6 @@ public class DeviceDiscoveryClerk {
     private final LocalPeerManager peerManager;
 
     private Map<String, Device> deviceCache;
-
-    private JsonEngine jsonEngine;
 
     public DeviceDiscoveryClerk() {
         this.httpServerManager = new HttpServerManager();
@@ -90,7 +88,6 @@ public class DeviceDiscoveryClerk {
             }
         });
         deviceCache = Collections.synchronizedMap(new HashMap<String, Device>());
-        jsonEngine = new JsonEngine();
 
         if (LibrarySettings.LIBRARY_WIFI_SHARING_ENABLED.getValue()) {
             start();
@@ -161,7 +158,7 @@ public class DeviceDiscoveryClerk {
 
             String json = new String(jsonBytes);
 
-            Finger finger = jsonEngine.toObject(json, Finger.class);
+            Finger finger = JsonUtils.toObject(json, Finger.class);
 
             synchronized (deviceCache) {
                 if (deviceCache.containsKey(key)) {
