@@ -33,10 +33,9 @@ import org.limewire.util.SystemUtils;
 
 import com.frostwire.gui.components.slides.Slide;
 import com.frostwire.logging.Logger;
-import com.frostwire.util.DigestUtils;
+import com.frostwire.gui.DigestUtils;
 import com.frostwire.util.HttpClient;
 import com.frostwire.util.HttpClientFactory;
-import com.limegroup.gnutella.gui.I18n;
 
 public class SlideDownload extends HttpDownload {
 	

@@ -31,13 +31,12 @@ import com.frostwire.transfers.TransferState;
 
 import com.frostwire.bittorrent.CopyrightLicenseBroker;
 import com.frostwire.bittorrent.PaymentOptions;
-import com.frostwire.util.DigestUtils;
-import com.frostwire.util.DigestUtils.DigestProgressListener;
+import com.frostwire.gui.DigestUtils;
+import com.frostwire.gui.DigestUtils.DigestProgressListener;
 import com.frostwire.util.HttpClient;
 import com.frostwire.util.HttpClient.HttpClientListener;
 import com.frostwire.util.HttpClient.RangeNotSupportedException;
 import com.frostwire.util.HttpClientFactory;
-import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.SharingSettings;
 import org.apache.commons.io.FilenameUtils;
 

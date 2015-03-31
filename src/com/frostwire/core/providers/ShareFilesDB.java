@@ -26,7 +26,7 @@ import com.frostwire.database.sqlite.SQLiteDatabase;
 import com.frostwire.database.sqlite.SQLiteOpenHelper;
 import com.frostwire.database.sqlite.SQLiteQueryBuilder;
 import com.frostwire.logging.Logger;
-import com.frostwire.text.TextUtils;
+import com.frostwire.gui.TextUtils;
 
 /**
  * @author gubatron

@@ -23,7 +23,7 @@ import java.util.Set;
 import java.util.regex.Pattern;
 
 import com.frostwire.database.Cursor;
-import com.frostwire.text.TextUtils;
+import com.frostwire.gui.TextUtils;
 
 /**
  * This is a convience class that helps build SQL queries to be sent to

@@ -28,7 +28,7 @@ import com.frostwire.content.ContentValues;
 import com.frostwire.database.Cursor;
 import com.frostwire.database.SQLException;
 import com.frostwire.logging.Logger;
-import com.frostwire.text.TextUtils;
+import com.frostwire.gui.TextUtils;
 
 /**
  * @author gubatron

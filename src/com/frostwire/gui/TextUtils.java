@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.frostwire.text;
+package com.frostwire.gui;
 
 public class TextUtils {
 

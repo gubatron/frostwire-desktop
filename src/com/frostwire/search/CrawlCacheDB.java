@@ -29,7 +29,7 @@ import com.frostwire.database.Cursor;
 import com.frostwire.database.sqlite.SQLiteDatabase;
 import com.frostwire.database.sqlite.SQLiteOpenHelper;
 import com.frostwire.database.sqlite.SQLiteQueryBuilder;
-import com.frostwire.text.TextUtils;
+import com.frostwire.gui.TextUtils;
 import com.limegroup.gnutella.settings.SearchSettings;
 
 /**

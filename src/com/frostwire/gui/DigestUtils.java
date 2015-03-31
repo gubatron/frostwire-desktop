@@ -1,4 +1,4 @@
-package com.frostwire.util;
+package com.frostwire.gui;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;

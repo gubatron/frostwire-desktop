@@ -27,7 +27,7 @@ import com.frostwire.jlibtorrent.alerts.BlockFinishedAlert;
 import com.frostwire.jlibtorrent.alerts.FileErrorAlert;
 import com.frostwire.jlibtorrent.alerts.TorrentFinishedAlert;
 import com.frostwire.logging.Logger;
-import com.frostwire.util.DigestUtils;
+import com.frostwire.gui.DigestUtils;
 import com.frostwire.util.HttpClient;
 import com.frostwire.util.HttpClient.HttpRangeException;
 import com.frostwire.util.HttpClientFactory;
@@ -35,9 +35,7 @@ import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.DialogOption;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.UpdateSettings;
-import org.apache.commons.io.FilenameUtils;
 import org.limewire.util.CommonUtils;
-import org.limewire.util.OSUtils;
 
 import javax.swing.*;
 import java.io.*;
