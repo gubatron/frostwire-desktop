@@ -19,8 +19,6 @@
 
 package org.gudy.azureus2.core3.util;
 
-import com.aelitis.azureus.core.util.CopyOnWriteList;
-
 /**
  * @author parg
  *

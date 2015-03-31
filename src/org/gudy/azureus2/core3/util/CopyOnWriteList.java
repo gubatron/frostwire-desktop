@@ -17,19 +17,13 @@
  *
  */
 
-package com.aelitis.azureus.core.util;
+package org.gudy.azureus2.core3.util;
 
 import java.lang.ref.WeakReference;
 import java.util.*;
 
-import org.gudy.azureus2.core3.util.AEDiagnostics;
-import org.gudy.azureus2.core3.util.AEDiagnosticsEvidenceGenerator;
-import org.gudy.azureus2.core3.util.Constants;
-import org.gudy.azureus2.core3.util.Debug;
-import org.gudy.azureus2.core3.util.IndentWriter;
-
-public class 
-CopyOnWriteList<T> 
+public class
+		CopyOnWriteList<T>
 implements Iterable<T>
 {
 	private static final boolean LOG_STATS = false;
@@ -103,8 +97,7 @@ implements Iterable<T>
 		}
 	}
 
-	public 
-	CopyOnWriteList(boolean _use_linked_list ) {
+	public CopyOnWriteList(boolean _use_linked_list) {
 		this.initialCapacity = 1;
 		use_linked_list = _use_linked_list;
 		if (LOG_STATS) {

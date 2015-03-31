@@ -19,15 +19,13 @@ package org.gudy.azureus2.core3.util;
 
 import java.util.Arrays;
 
-import org.gudy.azureus2.plugins.utils.ByteArrayWrapper;
-
 /**
  * @author Olivier
  * 
  */
 public class 
 HashWrapper 
-	implements ByteArrayWrapper
+	//implements ByteArrayWrapper
 {
   
   private byte[] 	hash;

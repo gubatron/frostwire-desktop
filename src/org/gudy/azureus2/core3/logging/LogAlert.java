@@ -16,15 +16,28 @@
  */
 package org.gudy.azureus2.core3.logging;
 
-import com.aelitis.azureus.core.util.GeneralUtils;
-//import org.gudy.azureus2.core3.config.COConfigurationManager;
-//import org.gudy.azureus2.pluginsimpl.local.PluginCoreUtils;
 import java.util.ArrayList;
 
 /**
  * @author TuxPaper
  */
-public class LogAlert implements org.gudy.azureus2.plugins.logging.LogAlert {
+public class LogAlert /*implements org.gudy.azureus2.plugins.logging.LogAlert*/ {
+
+	/**
+	 * Log Type: Information
+	 */
+	public static final int LT_INFORMATION = 1;
+
+	/**
+	 * Log Type: Warning
+	 */
+	public static final int LT_WARNING = 2;
+
+	/**
+	 * Log Type: Error
+	 */
+	public static final int LT_ERROR = 3;
+
 	// log types
 	public static final int AT_INFORMATION = LogEvent.LT_INFORMATION;
 
@@ -139,10 +152,6 @@ public class LogAlert implements org.gudy.azureus2.plugins.logging.LogAlert {
 	public int getTimeoutSecs() {
 		if (this.timeoutSecs != -1) {return this.timeoutSecs;}
 		return 1000;//COConfigurationManager.getIntParameter("Message Popup Autoclose in Seconds");
-	}
-	
-	public String getPlainText() {
-		return GeneralUtils.stripOutHyperlinks(text);
 	}
 	
 }
