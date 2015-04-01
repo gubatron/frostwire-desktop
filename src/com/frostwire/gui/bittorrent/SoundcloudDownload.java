@@ -27,6 +27,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 import com.frostwire.core.CommonConstants;
+import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.search.soundcloud.SoundCloudRedirectResponse;
 import com.frostwire.transfers.TransferState;
 import com.frostwire.mp3.ID3Wrapper;
@@ -43,6 +44,7 @@ import com.frostwire.util.JsonUtils;
 import com.limegroup.gnutella.gui.iTunesMediator;
 import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.settings.iTunesSettings;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.limewire.util.OSUtils;
 
@@ -91,7 +93,7 @@ public class SoundcloudDownload implements BTDownload {
         String filename = sr.getFilename();
 
         completeFile = buildFile(SharingSettings.TORRENT_DATA_DIR_SETTING.getValue(), filename);
-        tempAudio = buildTempFile(FilenameUtils.getBaseName(filename), "audio");
+        tempAudio = buildTempFile(FilenameUtils.getBaseName(filename), "mp3");
 
         bytesReceived = 0;
         dateCreated = new Date();
@@ -410,7 +412,20 @@ public class SoundcloudDownload implements BTDownload {
                     boolean renameTo = tempAudio.renameTo(completeFile);
 
                     if (!renameTo) {
+                        if (!MediaPlayer.instance().isThisBeingPlayed(tempAudio)) {
+                            state = TransferState.ERROR_MOVING_INCOMPLETE;
+                            cleanupIncomplete();
+                            return;
+                        } else {
+                            boolean copiedTo = copyPlayingTemp(tempAudio, completeFile);
+                            if (!copiedTo) {
+                                state = TransferState.ERROR_MOVING_INCOMPLETE;
+                                cleanupIncomplete();
+                                return;
+                            }
+                        }
                         state = TransferState.ERROR_MOVING_INCOMPLETE;
+                        cleanupIncomplete();
                         return;
                     }
                 }
@@ -441,6 +456,21 @@ public class SoundcloudDownload implements BTDownload {
         @Override
         public void onHeaders(HttpClient httpClient, Map<String, List<String>> headerFields) {
         }
+    }
+
+    private boolean copyPlayingTemp(File temp, File dest) {
+        boolean r = false;
+        System.out.println(temp);
+
+        try {
+            FileUtils.copyFile(temp, dest);
+            r = true;
+        } catch (Throwable e) {
+            e.printStackTrace();
+            r = false;
+        }
+
+        return r;
     }
 
     @Override
