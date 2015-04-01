@@ -18,6 +18,7 @@
 
 package com.frostwire.gui.bittorrent;
 
+import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.search.extractors.YouTubeExtractor.LinkInfo;
 import com.frostwire.search.youtube.YouTubeCrawledSearchResult;
 import com.frostwire.bittorrent.CopyrightLicenseBroker;
@@ -31,7 +32,9 @@ import com.frostwire.util.MP4Muxer.MP4Metadata;
 import com.limegroup.gnutella.gui.iTunesMediator;
 import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.settings.iTunesSettings;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.IOUtils;
 import org.limewire.util.OSUtils;
 
 import java.io.File;
@@ -380,7 +383,17 @@ public class YouTubeDownload implements BTDownload {
                 boolean renameTo = tempVideo.renameTo(completeFile);
 
                 if (!renameTo) {
-                    state = TransferState.ERROR_MOVING_INCOMPLETE;
+                    if (!MediaPlayer.instance().isThisBeingPlayed(tempVideo)) {
+                        state = TransferState.ERROR_MOVING_INCOMPLETE;
+                    } else {
+                        boolean copiedTo = copyPlayingTemp(tempVideo, completeFile);
+                        if (!copiedTo) {
+                            state = TransferState.ERROR_MOVING_INCOMPLETE;
+                        } else {
+                            state = TransferState.FINISHED;
+                        }
+                        cleanupIncomplete();
+                    }
                 } else {
                     state = TransferState.FINISHED;
                     cleanupIncomplete();
@@ -436,6 +449,21 @@ public class YouTubeDownload implements BTDownload {
                     }
                 }
             }
+        }
+
+        private boolean copyPlayingTemp(File temp, File dest) {
+            boolean r = false;
+            System.out.println(temp);
+
+            try {
+                FileUtils.copyFile(temp, dest);
+                r = true;
+            } catch (Throwable e) {
+                e.printStackTrace();
+                r = false;
+            }
+
+            return r;
         }
 
         @Override
