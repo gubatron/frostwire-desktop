@@ -812,16 +812,16 @@ public abstract class Value {
                     return ValueUuid.get(getBytesNoCopy());
                 }
             }
-            case GEOMETRY:
-                switch(getType()) {
-                case BYTES:
-                    return ValueGeometry.get(getBytesNoCopy());
-                case JAVA_OBJECT:
-                    Object object = JdbcUtils.deserialize(getBytesNoCopy(), getDataHandler());
-                    if (DataType.isGeometry(object)) {
-                        return ValueGeometry.getFromGeometry(object);
-                    }
-                }
+//            case GEOMETRY:
+//                switch(getType()) {
+//                case BYTES:
+//                    return ValueGeometry.get(getBytesNoCopy());
+//                case JAVA_OBJECT:
+//                    Object object = JdbcUtils.deserialize(getBytesNoCopy(), getDataHandler());
+//                    if (DataType.isGeometry(object)) {
+//                        return ValueGeometry.getFromGeometry(object);
+//                    }
+//                }
             }
             // conversion by parsing the string value
             String s = getString();
@@ -893,8 +893,8 @@ public abstract class Value {
             }
             case UUID:
                 return ValueUuid.get(s);
-            case GEOMETRY:
-                return ValueGeometry.get(s);
+//            case GEOMETRY:
+//                return ValueGeometry.get(s);
             default:
                 throw DbException.throwInternalError("type=" + targetType);
             }

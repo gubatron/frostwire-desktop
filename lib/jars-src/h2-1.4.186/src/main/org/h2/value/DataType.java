@@ -655,13 +655,13 @@ public class DataType {
                 }
                 return ValueResultSet.get(rs);
             }
-            case Value.GEOMETRY: {
-                Object x = rs.getObject(columnIndex);
-                if (x == null) {
-                    return ValueNull.INSTANCE;
-                }
-                return ValueGeometry.getFromGeometry(x);
-            }
+//            case Value.GEOMETRY: {
+//                Object x = rs.getObject(columnIndex);
+//                if (x == null) {
+//                    return ValueNull.INSTANCE;
+//                }
+//                return ValueGeometry.getFromGeometry(x);
+//            }
             default:
                 throw DbException.throwInternalError("type="+type);
             }
@@ -1034,8 +1034,8 @@ public class DataType {
             return ValueArray.get(x.getClass().getComponentType(), v);
         } else if (x instanceof Character) {
             return ValueStringFixed.get(((Character) x).toString());
-        } else if (isGeometry(x)) {
-            return ValueGeometry.getFromGeometry(x);
+//        } else if (isGeometry(x)) {
+//            return ValueGeometry.getFromGeometry(x);
         } else {
             return ValueJavaObject.getNoCopy(x, null, session.getDataHandler());
         }

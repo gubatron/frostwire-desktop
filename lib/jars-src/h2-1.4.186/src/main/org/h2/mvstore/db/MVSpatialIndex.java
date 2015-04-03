@@ -30,11 +30,11 @@ import org.h2.result.SortOrder;
 import org.h2.table.IndexColumn;
 import org.h2.table.TableFilter;
 import org.h2.value.Value;
-import org.h2.value.ValueGeometry;
+//import org.h2.value.ValueGeometry;
 import org.h2.value.ValueLong;
 
-import com.vividsolutions.jts.geom.Envelope;
-import com.vividsolutions.jts.geom.Geometry;
+//import com.vividsolutions.jts.geom.Envelope;
+//import com.vividsolutions.jts.geom.Geometry;
 
 /**
  * This is an index based on a MVRTreeMap.
@@ -162,15 +162,15 @@ public class MVSpatialIndex extends BaseIndex implements SpatialIndex, MVIndex {
     }
 
     private SpatialKey getKey(SearchRow r) {
-        if (r == null) {
+        //if (r == null) {
             return null;
-        }
-        Value v = r.getValue(columnIds[0]);
-        Geometry g = ((ValueGeometry) v.convertTo(Value.GEOMETRY)).getGeometryNoCopy();
-        Envelope env = g.getEnvelopeInternal();
-        return new SpatialKey(r.getKey(),
-                (float) env.getMinX(), (float) env.getMaxX(),
-                (float) env.getMinY(), (float) env.getMaxY());
+//        }
+//        Value v = r.getValue(columnIds[0]);
+//        Geometry g = ((ValueGeometry) v.convertTo(Value.GEOMETRY)).getGeometryNoCopy();
+//        Envelope env = g.getEnvelopeInternal();
+//        return new SpatialKey(r.getKey(),
+//                (float) env.getMinX(), (float) env.getMaxX(),
+//                (float) env.getMinY(), (float) env.getMaxY());
     }
 
     @Override
@@ -220,12 +220,13 @@ public class MVSpatialIndex extends BaseIndex implements SpatialIndex, MVIndex {
     }
 
     private SpatialKey getEnvelope(SearchRow row) {
-        Value v = row.getValue(columnIds[0]);
-        Geometry g = ((ValueGeometry) v.convertTo(Value.GEOMETRY)).getGeometryNoCopy();
-        Envelope env = g.getEnvelopeInternal();
-        return new SpatialKey(row.getKey(),
-                (float) env.getMinX(), (float) env.getMaxX(),
-                (float) env.getMinY(), (float) env.getMaxY());
+        return null;
+//        Value v = row.getValue(columnIds[0]);
+//        Geometry g = ((ValueGeometry) v.convertTo(Value.GEOMETRY)).getGeometryNoCopy();
+//        Envelope env = g.getEnvelopeInternal();
+//        return new SpatialKey(row.getKey(),
+//                (float) env.getMinX(), (float) env.getMaxX(),
+//                (float) env.getMinY(), (float) env.getMaxY());
     }
 
 

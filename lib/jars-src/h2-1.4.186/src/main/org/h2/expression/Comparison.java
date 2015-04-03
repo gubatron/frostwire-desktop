@@ -16,7 +16,7 @@ import org.h2.table.TableFilter;
 import org.h2.util.New;
 import org.h2.value.Value;
 import org.h2.value.ValueBoolean;
-import org.h2.value.ValueGeometry;
+//import org.h2.value.ValueGeometry;
 import org.h2.value.ValueNull;
 
 /**
@@ -292,12 +292,12 @@ public class Comparison extends Condition {
         case SMALLER:
             result = database.compare(l, r) < 0;
             break;
-        case SPATIAL_INTERSECTS: {
-            ValueGeometry lg = (ValueGeometry) l.convertTo(Value.GEOMETRY);
-            ValueGeometry rg = (ValueGeometry) r.convertTo(Value.GEOMETRY);
-            result = lg.intersectsBoundingBox(rg);
-            break;
-        }
+//        case SPATIAL_INTERSECTS: {
+//            ValueGeometry lg = (ValueGeometry) l.convertTo(Value.GEOMETRY);
+//            ValueGeometry rg = (ValueGeometry) r.convertTo(Value.GEOMETRY);
+//            result = lg.intersectsBoundingBox(rg);
+//            break;
+//        }
         default:
             throw DbException.throwInternalError("type=" + compareType);
         }

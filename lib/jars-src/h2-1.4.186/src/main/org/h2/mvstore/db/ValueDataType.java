@@ -33,7 +33,7 @@ import org.h2.value.ValueDate;
 import org.h2.value.ValueDecimal;
 import org.h2.value.ValueDouble;
 import org.h2.value.ValueFloat;
-import org.h2.value.ValueGeometry;
+//import org.h2.value.ValueGeometry;
 import org.h2.value.ValueInt;
 import org.h2.value.ValueJavaObject;
 import org.h2.value.ValueLobDb;
@@ -572,12 +572,12 @@ public class ValueDataType implements DataType {
             }
             return ValueResultSet.get(rs);
         }
-        case Value.GEOMETRY: {
-            int len = readVarInt(buff);
-            byte[] b = DataUtils.newBytes(len);
-            buff.get(b, 0, len);
-            return ValueGeometry.get(b);
-        }
+//        case Value.GEOMETRY: {
+//            int len = readVarInt(buff);
+//            byte[] b = DataUtils.newBytes(len);
+//            buff.get(b, 0, len);
+//            return ValueGeometry.get(b);
+//        }
         case SPATIAL_KEY_2D:
             return getSpatialDataType().read(buff);
         default:

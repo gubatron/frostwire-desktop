@@ -16,7 +16,7 @@ import org.h2.server.Service;
 import org.h2.server.ShutdownHandler;
 import org.h2.server.TcpServer;
 import org.h2.server.pg.PgServer;
-import org.h2.server.web.WebServer;
+//import org.h2.server.web.WebServer;
 import org.h2.util.StringUtils;
 import org.h2.util.Tool;
 import org.h2.util.Utils;
@@ -416,10 +416,11 @@ public class Server extends Tool implements Runnable, ShutdownHandler {
      * @return the server
      */
     public static Server createWebServer(String... args) throws SQLException {
-        WebServer service = new WebServer();
-        Server server = new Server(service, args);
-        service.setShutdownHandler(server);
-        return server;
+        return null;
+//        WebServer service = new WebServer();
+//        Server server = new Server(service, args);
+//        service.setShutdownHandler(server);
+//        return server;
     }
 
     /**
@@ -696,6 +697,7 @@ public class Server extends Tool implements Runnable, ShutdownHandler {
      * @param conn the database connection (the database must be open)
      */
     public static void startWebServer(Connection conn) throws SQLException {
+        /**
         WebServer webServer = new WebServer();
         Server web = new Server(webServer, new String[] { "-webPort", "0" });
         web.start();
@@ -711,6 +713,7 @@ public class Server extends Tool implements Runnable, ShutdownHandler {
         } catch (Exception e) {
             // ignore
         }
+         */
     }
 
 }

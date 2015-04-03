@@ -20,7 +20,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
 import org.h2.engine.Constants;
-import org.h2.server.web.ConnectionInfo;
+//import org.h2.server.web.ConnectionInfo;
 import org.h2.util.JdbcUtils;
 import org.h2.util.New;
 import org.h2.util.ScriptReader;
@@ -340,10 +340,10 @@ public class Shell extends Tool implements Runnable {
                 data = d;
             }
             if (found) {
-                ConnectionInfo info = new ConnectionInfo(data);
-                url = info.url;
-                user = info.user;
-                driver = info.driver;
+//                ConnectionInfo info = new ConnectionInfo(data);
+//                url = info.url;
+//                user = info.user;
+//                driver = info.driver;
             }
         } catch (IOException e) {
             // ignore

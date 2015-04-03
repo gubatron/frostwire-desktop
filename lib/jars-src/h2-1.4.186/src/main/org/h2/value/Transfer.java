@@ -691,11 +691,11 @@ public class Transfer {
             }
             return ValueResultSet.get(rs);
         }
-        case Value.GEOMETRY:
-            if (version >= Constants.TCP_PROTOCOL_VERSION_14) {
-                return ValueGeometry.get(readBytes());
-            }
-            return ValueGeometry.get(readString());
+//        case Value.GEOMETRY:
+//            if (version >= Constants.TCP_PROTOCOL_VERSION_14) {
+//                return ValueGeometry.get(readBytes());
+//            }
+//            return ValueGeometry.get(readString());
         default:
             throw DbException.get(ErrorCode.CONNECTION_BROKEN_1, "type=" + type);
         }
