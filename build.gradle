@@ -37,18 +37,6 @@ repositories {
 dependencies {
     def ant_jar_path = System.getenv('ANT_HOME') + '/lib/ant.jar'
     compile files(new File(ant_jar_path).toURI())
-
-    // compile time dependencies for H2
-    //compile 'com.vividsolutions:jts:1.13'
-    //compile 'org.slf4j:slf4j-api:1.7.10'
-    /*
-
-
-    compile 'javax.servlet:javax.servlet-api:3.1.0'
-    compile 'org.osgi:org.osgi.core:4.2.0'
-    compile 'org.osgi:org.osgi.enterprise:4.2.0'
-    compile 'org.apache.lucene:lucene-core:3.0.2'
-    */
 }
 
 sourceSets {
