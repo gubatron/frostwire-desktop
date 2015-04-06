@@ -693,7 +693,21 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
                         }
                     }
 
-                    BTEngine.getInstance().download(torrentFile, null, filesSelection);
+                    File saveDir = null;
+
+                    // Check if there's a file named like the torrent in the same folder
+                    // then that means the user wants to seed
+                    String seedDataFilename = torrentFile.getName().replace(".torrent", "");
+                    File seedDataFile = new File(torrentFile.getParentFile(), seedDataFilename);
+                    if (seedDataFile.exists()) {
+                        saveDir = torrentFile.getParentFile();
+                    }
+
+                    if (saveDir == null) {
+                        BTEngine.getInstance().download(torrentFile, saveDir, filesSelection);
+                    } else {
+                        GUIMediator.instance().openTorrentForSeed(torrentFile, saveDir);
+                    }
 
                 } catch (Exception e) {
                     e.printStackTrace();
