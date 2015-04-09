@@ -16,7 +16,7 @@ frostwire (6.0.7) stable; urgency=high
   * Upgraded frostwire-jlibtorrent to the latest code from libtorrent.
   * UX-improvement: A repeated search will honor active search engines.
 
- -- FrostWire Team <contact@frostwire.com>  Mon, 30 March 2015 17:45:00 -0500
+ -- FrostWire Team <contact@frostwire.com>  Wed, 08 April 2015 22:24:00 -0500
 
 frostwire (6.0.6) stable; urgency=high
   * Fixes bug where default save location for torrents would not be accounted for.
