@@ -3,8 +3,9 @@ frostwire (6.0.8) stable; urgency=high
   * Reduced used of DHT network for search.
   * Faster torrent download start time.
   * Fixes download error on some Archive.org search results.
+  * Fixes Yify search.
 
- -- FrostWire Team <contact@frostwire.com>  Mon, 13 April 2015 14:29:00 -0500
+ -- FrostWire Team <contact@frostwire.com>  Tue, 14 April 2015 05:23:00 -0500
 
 frostwire (6.0.7) stable; urgency=high
   * New feature: Preview while you download.	
