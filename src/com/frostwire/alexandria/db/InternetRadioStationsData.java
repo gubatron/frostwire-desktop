@@ -13,7 +13,7 @@ public final class InternetRadioStationsData {
     public InternetRadioStationsData() {
         data = new LinkedList<List<Object>>();
         nameSet = new HashSet<String>();
-
+        add(data, "BassDrive.com","24/7 Online Drum & Bass Radio", "http://www.bassdrive.com/v2/streams/BassDrive3.pls", "32 kbps", "AAC+", "http://www.bassdrive.com","Drum & bass", "");
         add(data, "Yup! Radio", "Yup! Radio", "http://radio.wnolfm.com:80", "128 kbps", "MP3", "http://yupradio.com", "Misc", "");
         add(data, "DEFJAY.DE - 100% R&B! (GERMANY)", "DEFJAY.DE - 100% R&B! (GERMANY)", "http://87.230.56.41:80", "128 kbps", "MP3", "http://www.defjay.de", "Pop R&B Urban Rap Hip Hop", "");
         add(data, "Schlagerhoelle - wir heizen Euch ein mit Schlager und Discofox", "Schlagerhoelle - wir heizen Euch ein mit Schlager und Discofox", "http://80.237.155.20:30842", "128 kbps", "MP3", "http://www.schlagerhoelle.de", "Schlager Discofox", "");
