@@ -30,6 +30,7 @@ import com.frostwire.gui.theme.SkinMenu;
 import com.frostwire.gui.theme.SkinMenuItem;
 import com.frostwire.gui.theme.SkinPopupMenu;
 import com.frostwire.logging.Logger;
+import com.frostwire.search.torrent.TorrentScrapedFileSearchResult;
 import com.frostwire.search.soundcloud.SoundCloudRedirectResponse;
 import com.frostwire.search.soundcloud.SoundcloudItem;
 import com.frostwire.search.soundcloud.SoundcloudPlaylist;
@@ -45,7 +46,6 @@ import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.PaddedPanel;
 import com.limegroup.gnutella.gui.actions.LimeAction;
-import com.limegroup.gnutella.gui.dnd.FileTransfer;
 import com.limegroup.gnutella.gui.iTunesMediator;
 import com.limegroup.gnutella.gui.search.GenericCellEditor;
 import com.limegroup.gnutella.gui.tables.AbstractTableMediator;
@@ -730,6 +730,15 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         } catch (Throwable e) {
             LOG.error("Unable to start download from search result", e);
         }
+    }
+
+    public void openSearchResult(final TorrentScrapedFileSearchResult sr) {
+        GUIMediator.safeInvokeLater(new Runnable() {
+            public void run() {
+                BTDownload downloader = new TorrentFetcherDownload(sr.getTorrentUrl(), sr.getDetailsUrl(), sr.getDisplayName(), false, sr.getFilePath());
+                add(downloader);
+            }
+        });
     }
 
     public BTDownload[] getSelectedDownloaders() {
