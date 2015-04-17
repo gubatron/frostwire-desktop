@@ -19,6 +19,7 @@
 package com.frostwire.gui.bittorrent;
 
 import com.frostwire.bittorrent.BTEngine;
+import com.frostwire.jlibtorrent.FileStorage;
 import com.frostwire.jlibtorrent.TorrentInfo;
 import com.frostwire.logging.Logger;
 import com.frostwire.bittorrent.CopyrightLicenseBroker;
@@ -43,16 +44,23 @@ public class TorrentFetcherDownload implements BTDownload {
     private final String referer;
     private final String displayName;
     private final boolean partial;
+    private final String relativePath;
 
     private final Date dateCreated;
 
     private TransferState state;
 
-    public TorrentFetcherDownload(String uri, String referrer, String displayName, boolean partial) {
+    public TorrentFetcherDownload(String uri, String referrer, String displayName, boolean partial, String relativePath) {
         this.uri = uri;
         this.referer = referrer;
         this.displayName = displayName;
         this.partial = partial;
+
+        if (!partial) {
+            this.relativePath = relativePath;
+        } else {
+            this.relativePath = null;
+        }
 
         this.dateCreated = new Date();
 
@@ -61,6 +69,10 @@ public class TorrentFetcherDownload implements BTDownload {
         Thread t = new Thread(new FetcherRunnable(), "Torrent-Fetcher - " + uri);
         t.setDaemon(true);
         t.start();
+    }
+
+    public TorrentFetcherDownload(String uri, String referrer, String displayName, boolean partial) {
+        this(uri, referrer, displayName, partial, null);
     }
 
     public TorrentFetcherDownload(String uri, boolean partial) {
@@ -210,29 +222,56 @@ public class TorrentFetcherDownload implements BTDownload {
     }
 
     private void downloadTorrent(final byte[] data) {
-        GUIMediator.safeInvokeLater(new Runnable() {
-            public void run() {
-                try {
+        if (relativePath != null) {
+            try {
 
-                    boolean[] selection = null;
+                TorrentInfo ti = TorrentInfo.bdecode(data);
+                boolean[] selection = calculateSelection(ti, relativePath);
 
-                    if (partial) {
-                        PartialFilesDialog dlg = new PartialFilesDialog(GUIMediator.getAppFrame(), data, displayName);
-                        dlg.setVisible(true);
-                        selection = dlg.getFilesSelection();
-                        if (selection == null) {
-                            return;
-                        }
-                    }
+                BTEngine.getInstance().download(ti, null, selection);
 
-                    TorrentInfo ti = TorrentInfo.bdecode(data);
-                    BTEngine.getInstance().download(ti, null, selection);
-
-                } catch (Throwable e) {
-                    LOG.error("Error downloading torrent", e);
-                }
+            } catch (Throwable e) {
+                LOG.error("Error downloading torrent", e);
             }
-        });
+        } else {
+            GUIMediator.safeInvokeLater(new Runnable() {
+                public void run() {
+                    try {
+
+                        boolean[] selection = null;
+
+                        if (partial) {
+                            PartialFilesDialog dlg = new PartialFilesDialog(GUIMediator.getAppFrame(), data, displayName);
+                            dlg.setVisible(true);
+                            selection = dlg.getFilesSelection();
+                            if (selection == null) {
+                                return;
+                            }
+                        }
+
+                        TorrentInfo ti = TorrentInfo.bdecode(data);
+                        BTEngine.getInstance().download(ti, null, selection);
+
+                    } catch (Throwable e) {
+                        LOG.error("Error downloading torrent", e);
+                    }
+                }
+            });
+        }
+    }
+
+    private boolean[] calculateSelection(TorrentInfo ti, String path) {
+        boolean[] selection = new boolean[ti.getNumFiles()];
+
+        FileStorage fs = ti.getFiles();
+        for (int i = 0; i < selection.length; i++) {
+            String filePath = fs.getFilePath(i);
+            if (path.endsWith(filePath) || filePath.endsWith(path)) {
+                selection[i] = true;
+            }
+        }
+
+        return selection;
     }
 
     private static String getDownloadNameFromMagnetURI(String uri) {

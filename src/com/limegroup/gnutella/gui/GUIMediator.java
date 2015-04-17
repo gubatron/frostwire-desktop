@@ -27,7 +27,6 @@ import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.File;
@@ -41,8 +40,6 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.Executors;
-import java.util.concurrent.FutureTask;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import javax.swing.Action;
@@ -53,10 +50,9 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
-import com.frostwire.search.torrent.TorrentCrawlableSearchResult;
+import com.frostwire.search.torrent.TorrentScrapedFileSearchResult;
 import com.frostwire.search.torrent.TorrentCrawledSearchResult;
 import com.frostwire.util.ThreadPool;
-import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import org.limewire.concurrent.ThreadExecutor;
 import org.limewire.service.ErrorService;
 import org.limewire.service.Switch;
@@ -1715,6 +1711,11 @@ public final class GUIMediator {
     }
 
     public void openTorrentSearchResult(TorrentCrawledSearchResult sr) {
+        getBTDownloadMediator().openSearchResult(sr);
+        setWindow(GUIMediator.Tabs.SEARCH);
+    }
+
+    public void openTorrentSearchResult(TorrentScrapedFileSearchResult sr) {
         getBTDownloadMediator().openSearchResult(sr);
         setWindow(GUIMediator.Tabs.SEARCH);
     }
