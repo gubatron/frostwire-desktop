@@ -18,18 +18,17 @@
 
 package com.limegroup.gnutella.gui.search;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JPopupMenu;
-
-import com.frostwire.search.torrent.TorrentScrapedFileSearchResult;
+import com.frostwire.search.ScrapedTorrentFileSearchResult;
 import com.frostwire.search.torrent.TorrentCrawledSearchResult;
 import com.frostwire.search.torrent.TorrentSearchResult;
 import com.frostwire.uxstats.UXAction;
 import com.frostwire.uxstats.UXStats;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.util.PopupUtils;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * 
@@ -55,8 +54,8 @@ public class TorrentUISearchResult extends AbstractUISearchResult {
     public void download(boolean partial) {
         if (sr instanceof TorrentCrawledSearchResult) {
             GUIMediator.instance().openTorrentSearchResult((TorrentCrawledSearchResult) sr);
-        } else if (sr instanceof TorrentScrapedFileSearchResult) {
-            GUIMediator.instance().openTorrentSearchResult((TorrentScrapedFileSearchResult) sr);
+        } else if (sr instanceof ScrapedTorrentFileSearchResult) {
+            GUIMediator.instance().openTorrentSearchResult((ScrapedTorrentFileSearchResult) sr);
         } else {
             GUIMediator.instance().openTorrentSearchResult(sr, partial);
         }

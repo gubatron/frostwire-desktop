@@ -50,7 +50,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
-import com.frostwire.search.torrent.TorrentScrapedFileSearchResult;
+import com.frostwire.search.ScrapedTorrentFileSearchResult;
 import com.frostwire.search.torrent.TorrentCrawledSearchResult;
 import com.frostwire.util.ThreadPool;
 import org.limewire.concurrent.ThreadExecutor;
@@ -1715,7 +1715,7 @@ public final class GUIMediator {
         setWindow(GUIMediator.Tabs.SEARCH);
     }
 
-    public void openTorrentSearchResult(TorrentScrapedFileSearchResult sr) {
+    public void openTorrentSearchResult(ScrapedTorrentFileSearchResult sr) {
         getBTDownloadMediator().openSearchResult(sr);
         setWindow(GUIMediator.Tabs.SEARCH);
     }

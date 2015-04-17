@@ -19,6 +19,7 @@
 package com.frostwire.gui.bittorrent;
 
 import com.frostwire.bittorrent.BTEngine;
+import com.frostwire.bittorrent.PaymentOptions;
 import com.frostwire.core.CommonConstants;
 import com.frostwire.core.FileDescriptor;
 import com.frostwire.gui.bittorrent.BTDownloadActions.PlaySingleMediaFileAction;
@@ -30,7 +31,7 @@ import com.frostwire.gui.theme.SkinMenu;
 import com.frostwire.gui.theme.SkinMenuItem;
 import com.frostwire.gui.theme.SkinPopupMenu;
 import com.frostwire.logging.Logger;
-import com.frostwire.search.torrent.TorrentScrapedFileSearchResult;
+import com.frostwire.search.ScrapedTorrentFileSearchResult;
 import com.frostwire.search.soundcloud.SoundCloudRedirectResponse;
 import com.frostwire.search.soundcloud.SoundcloudItem;
 import com.frostwire.search.soundcloud.SoundcloudPlaylist;
@@ -38,7 +39,6 @@ import com.frostwire.search.soundcloud.SoundcloudSearchResult;
 import com.frostwire.search.torrent.TorrentCrawledSearchResult;
 import com.frostwire.search.torrent.TorrentSearchResult;
 import com.frostwire.search.youtube.YouTubeCrawledSearchResult;
-import com.frostwire.bittorrent.PaymentOptions;
 import com.frostwire.transfers.TransferState;
 import com.frostwire.util.HttpClientFactory;
 import com.frostwire.util.JsonUtils;
@@ -732,7 +732,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         }
     }
 
-    public void openSearchResult(final TorrentScrapedFileSearchResult sr) {
+    public void openSearchResult(final ScrapedTorrentFileSearchResult sr) {
         GUIMediator.safeInvokeLater(new Runnable() {
             public void run() {
                 BTDownload downloader = new TorrentFetcherDownload(sr.getTorrentUrl(), sr.getDetailsUrl(), sr.getDisplayName(), false, sr.getFilePath());
