@@ -580,6 +580,8 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         List<File> selected = listPanel.getSelectedElements();
         List<String> undeletedFileNames = new ArrayList<String>();
 
+        boolean somethingWasRemoved = false;
+
         for (File file : selected) {
             // stop seeding if seeding
             BittorrentDownload dm = null;
@@ -598,7 +600,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
             // removeOptions > 2 => OS offers trash options
             boolean removed = FileUtils.delete(file, removeOptions.length > 2 && option == 0 /* "move to trash" option index */);
             if (removed) {
-
+                somethingWasRemoved = true;
                 DATA_MODEL.remove(DATA_MODEL.getRow(file));
             } else {
                 undeletedFileNames.add(getCompleteFileName(file));
@@ -606,6 +608,10 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         }
 
         clearSelection();
+
+        if (somethingWasRemoved) {
+            LibraryMediator.instance().getLibraryExplorer().refreshSelection(true);
+        }
 
         if (undeletedFileNames.isEmpty()) {
             return;
