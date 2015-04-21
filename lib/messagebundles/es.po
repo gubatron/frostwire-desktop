@@ -414,7 +414,7 @@ msgstr "Iniciar compartir"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:203
 msgid "Allocating"
-msgstr "Aplicaciones"
+msgstr "Asignando"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:204
 msgid "Paused"
@@ -446,7 +446,7 @@ msgstr "Error: Firma incorrecta"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:209
 msgid "Try again, not enough peers"
-msgstr ""
+msgstr "Intente nuevamente, no hay suficientes pares"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:210
 msgid "Stopped"
@@ -490,11 +490,11 @@ msgstr "Demuxeando"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:219
 msgid "Error: Disk full - Change default save location."
-msgstr ""
+msgstr "Error: Disco lleno - Cambiar la ubicación de descarga por defecto"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:220
 msgid "Redirecting"
-msgstr ""
+msgstr "Redirigiendo"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:268
 msgid "Unknown status"
@@ -940,7 +940,7 @@ msgid ""
 "If these files can be downloaded from the web, enter the URLs of each "
 "possible mirror, one per line (GetRight style)."
 msgstr ""
-"Si estos archivos pueden ser descargados del web, introduzca las URLs decada "
+"Si estos archivos pueden ser descargados del web, introduzca las URLs de cada "
 "posible espejo, uno por linea (Tipo GetRight)"
 
 #. first button will dock all the way east,
@@ -962,7 +962,7 @@ msgstr "Cerrar"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:332
 msgid "Select a single file or one directory"
-msgstr ""
+msgstr "Seleccione un solo archivo o un directorio"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:334
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:347
@@ -972,7 +972,7 @@ msgstr "Seleccionar/Des-seleccionar todos los archivos"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:336
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:352
 msgid "Select a single directory"
-msgstr ""
+msgstr "Selecciona un solo directorio"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:353
 msgid "Select folder"
@@ -1274,8 +1274,7 @@ msgstr "Has olvidado introducir una ruta para la carpeta de datos del torrent"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:114
 msgid "Please enter a valid path for the Torrent Data Folder"
-msgstr ""
-"Por favor introduzca una ruta válida para la carpeta de datos del torrent."
+msgstr "Por favor introduzca una ruta válida para la carpeta de datos del torrent."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:132
 msgid "The Torrent Data Folder cannot be inside the"
@@ -2057,7 +2056,7 @@ msgstr "Reproducir"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/player/MediaPlayerComponent.java:83
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/player/MediaPlayerComponent.java:88
 msgid "Long Press to Stop Playback"
-msgstr "Click sostenido para detener la reproducción"
+msgstr "Clic sostenido para detener la reproducción"
 
 #. *
 #. * Constant for the forward button.
@@ -2151,7 +2150,7 @@ msgstr "archivo"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/player/MediaPlayerComponent.java:1134
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/dnd/SendFileTransferHandler.java:66
 msgid "folder"
-msgstr "Carpeta"
+msgstr "carpeta"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/player/MediaPlayerComponent.java:1135
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/dnd/SendFileTransferHandler.java:67
@@ -2524,7 +2523,7 @@ msgid ""
 "For helping distribute Frostwire to opensource communities in a very simple "
 "manner."
 msgstr ""
-"Por ayudar a distribuir FrostWire a comunidades de código abierto deuna "
+"Por ayudar a distribuir FrostWire a comunidades de código abierto de una "
 "manera muy simple"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/AboutWindow.java:292
@@ -2728,7 +2727,7 @@ msgid ""
 "FrostWire could not locate your web browser to display the following "
 "webpage: {0}."
 msgstr ""
-"FrostWire no pudo encontrar su programa de acceso a internet para mostrar la "
+"FrostWire no pudo encontrar su navegador de internet para mostrar la "
 "siguiente página: {0}"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/GUIMediator.java:1368
@@ -3007,15 +3006,15 @@ msgstr "Jugando con los pixeles para el indicador de cortafuegos..."
 #. make the social buttons
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/StatusLine.java:162
 msgid "Learning to socialize on Facebook..."
-msgstr "Aprende a socializar en Facebook..."
+msgstr "Aprendiendo a socializar en Facebook..."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/StatusLine.java:164
 msgid "Learning to socialize on Twitter..."
-msgstr "Aprende a socializar en Twitter..."
+msgstr "Aprendiendo a socializar en Twitter..."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/StatusLine.java:166
 msgid "Learning to socialize on G+..."
-msgstr "Aprende a socializar en G++"
+msgstr "Aprendiendo a socializar en G++"
 
 #. male Seeding status label
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/StatusLine.java:170
@@ -3089,7 +3088,7 @@ msgstr "Su conexión a la red es excelente"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/StatusLine.java:617
 msgid "nodes"
-msgstr ""
+msgstr "nodos"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/StatusLine.java:727
 msgid "Show Connection Quality"
@@ -3598,7 +3597,7 @@ msgid ""
 "Click icon to set up an encrypted VPN connection."
 msgstr ""
 "FrostWire no puede detectar una conexión VPN encriptada, tu privacidad está "
-"a riesgo. Haga click en el ícono para configurar una conexión VPN."
+"a riesgo. Haga clic en el ícono para configurar una conexión VPN."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/actions/FileMenuActions.java:60
 msgid "O&pen .Torrent or Magnet"
@@ -4024,7 +4023,7 @@ msgstr "FrostWire es un software gratuito,"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/init/WelcomeWindow.java:114
 msgid "Do not pay for FrostWire."
-msgstr "no pagues por FrostWire."
+msgstr "No pagues por FrostWire."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/FileMenu.java:40
 msgid "&File"
@@ -4060,7 +4059,7 @@ msgstr "Aprende sobre compartir en BitTorrent"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/HelpMenu.java:54
 msgid "What is a VPN?"
-msgstr "Que es un VPN?"
+msgstr "¿Qué es un VPN?"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/HelpMenu.java:54
 msgid ""
