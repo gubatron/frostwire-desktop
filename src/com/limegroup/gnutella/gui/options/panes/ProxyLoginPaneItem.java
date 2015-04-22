@@ -18,8 +18,6 @@ package com.limegroup.gnutella.gui.options.panes;
 import com.frostwire.bittorrent.BTEngine;
 import com.frostwire.jlibtorrent.ProxySettings;
 import com.frostwire.jlibtorrent.Session;
-import com.frostwire.jlibtorrent.SettingsPack;
-import com.frostwire.jlibtorrent.swig.settings_pack;
 import com.limegroup.gnutella.gui.GUIUtils.SizePolicy;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LabeledComponent;
@@ -147,6 +145,8 @@ public final class ProxyLoginPaneItem extends AbstractPaneItem {
 
         // aldenml: OK, I will shortcut directly to the jlibtorrent session
         Session session = BTEngine.getInstance().getSession();
+        // NOTE: don't delete, this is for the new API
+        /*
         SettingsPack settings = new SettingsPack();
         if (authenticate) {
             int connectionMethod = ConnectionSettings.CONNECTION_METHOD.getValue();
@@ -161,6 +161,18 @@ public final class ProxyLoginPaneItem extends AbstractPaneItem {
         settings.setString(settings_pack.string_types.proxy_username.swigValue(), username);
         settings.setString(settings_pack.string_types.proxy_password.swigValue(), password);
         session.applySettings(settings);
+        */
+        ProxySettings proxy = session.getProxy();
+        if (authenticate) {
+            if (ProxySettings.ProxyType.HTTP.equals(proxy.getType())) {
+                proxy.setType(ProxySettings.ProxyType.HTTP_PW);
+            } else if (ProxySettings.ProxyType.SOCKS5.equals(proxy.getType())) {
+                proxy.setType(ProxySettings.ProxyType.SOCKS5_PW);
+            }
+        }
+        proxy.setUsername(username);
+        proxy.setPassword(password);
+        session.setProxy(proxy);
         BTEngine.getInstance().saveSettings();
 
         return false;
