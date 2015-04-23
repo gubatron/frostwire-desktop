@@ -483,6 +483,11 @@ public class SoundcloudDownload implements BTDownload {
     }
 
     @Override
+    public boolean deleteDataWhenRemoved() {
+        return deleteDataWhenRemoved;
+    }
+
+    @Override
     public boolean equals(Object obj) {
         return obj instanceof SoundcloudDownload && sr.getDownloadUrl().equals(((SoundcloudDownload) obj).sr.getDownloadUrl());
     }

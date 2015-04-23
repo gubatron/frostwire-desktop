@@ -474,6 +474,11 @@ public class HttpDownload implements BTDownload {
     }
 
     @Override
+    public boolean deleteDataWhenRemoved() {
+        return deleteDataWhenRemoved;
+    }
+
+    @Override
     public PaymentOptions getPaymentOptions() {
         return null;
     }

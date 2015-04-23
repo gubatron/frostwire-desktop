@@ -492,6 +492,11 @@ public class YouTubeDownload implements BTDownload {
         this.deleteDataWhenRemoved = deleteDataWhenRemove;
     }
 
+    @Override
+    public boolean deleteDataWhenRemoved() {
+        return deleteDataWhenRemoved;
+    }
+
     private static enum DownloadType {
         VIDEO, DASH, DEMUX
     }

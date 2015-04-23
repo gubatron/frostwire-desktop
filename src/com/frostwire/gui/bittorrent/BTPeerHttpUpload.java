@@ -146,6 +146,11 @@ public class BTPeerHttpUpload implements BTDownload {
     }
 
     @Override
+    public boolean deleteDataWhenRemoved() {
+        return false;
+    }
+
+    @Override
     public String getHash() {
         return null;
     }

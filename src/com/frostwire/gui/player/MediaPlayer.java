@@ -723,6 +723,14 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
         return false;
     }
 
+    public boolean isPlaying() {
+        return getState().equals(MediaPlaybackState.Playing);
+    }
+
+    public boolean isPaused() {
+        return getState().equals(MediaPlaybackState.Paused);
+    }
+
     public synchronized void setPlaylistFilesView(List<MediaSource> playlistFilesView) {
         this.playlistFilesView = playlistFilesView.toArray(new MediaSource[playlistFilesView.size()]);
     }

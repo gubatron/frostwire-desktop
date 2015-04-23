@@ -198,6 +198,11 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
     }
 
     @Override
+    public boolean deleteDataWhenRemoved() {
+        return deleteDataWhenRemove;
+    }
+
+    @Override
     public String getHash() {
         return dl.getInfoHash();
     }
@@ -361,6 +366,7 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
         @Override
         public void removed(BTDownload dl, Set<File> incompleteFiles) {
             finalCleanup(incompleteFiles);
+            BTDownloadMediator.instance().stopMediaPlayerIfSongPlayedIsDeletedTransferFile(dl);
         }
     }
 

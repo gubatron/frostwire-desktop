@@ -73,6 +73,8 @@ public interface BTDownload {
 
     public void setDeleteDataWhenRemove(boolean deleteDataWhenRemove);
 
+    public boolean deleteDataWhenRemoved();
+
     public String getHash();
 
     public String getSeedToPeerRatio();

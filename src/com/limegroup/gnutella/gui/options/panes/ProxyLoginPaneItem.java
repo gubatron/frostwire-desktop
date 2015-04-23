@@ -162,6 +162,7 @@ public final class ProxyLoginPaneItem extends AbstractPaneItem {
         settings.setString(settings_pack.string_types.proxy_password.swigValue(), password);
         session.applySettings(settings);
         */
+
         ProxySettings proxy = session.getProxy();
         if (authenticate) {
             if (ProxySettings.ProxyType.HTTP.equals(proxy.getType())) {
@@ -174,6 +175,7 @@ public final class ProxyLoginPaneItem extends AbstractPaneItem {
         proxy.setPassword(password);
         session.setProxy(proxy);
         BTEngine.getInstance().saveSettings();
+
 
         return false;
     }

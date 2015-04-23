@@ -168,6 +168,11 @@ public class TorrentFetcherDownload implements BTDownload {
     public void setDeleteDataWhenRemove(boolean deleteDataWhenRemove) {
     }
 
+    @Override
+    public boolean deleteDataWhenRemoved() {
+        return false;
+    }
+
     public String getHash() {
         return null;
     }

@@ -39,6 +39,7 @@ import com.frostwire.search.soundcloud.SoundcloudSearchResult;
 import com.frostwire.search.torrent.TorrentCrawledSearchResult;
 import com.frostwire.search.torrent.TorrentSearchResult;
 import com.frostwire.search.youtube.YouTubeCrawledSearchResult;
+import com.frostwire.transfers.TransferItem;
 import com.frostwire.transfers.TransferState;
 import com.frostwire.util.HttpClientFactory;
 import com.frostwire.util.JsonUtils;
@@ -378,6 +379,38 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     public void remove(BTDownload dloader) {
         super.remove(dloader);
         dloader.remove();
+    }
+
+    public void stopMediaPlayerIfSongPlayedIsDeletedTransferFile(com.frostwire.bittorrent.BTDownload dloader) {
+        final List<TransferItem> items = dloader.getItems();
+        final File fileInUseByPlayer = MediaPlayer.instance().getCurrentMedia().getFile();
+        for (TransferItem item : items) {
+            if (item.getFile().equals(fileInUseByPlayer)) {
+                MediaPlayer.instance().stop();
+                return;
+            }
+        }
+    }
+
+    public void stopMediaPlayerIfSongPlayedIsDeletedTransferFile(BTDownload dloader) {
+        if (dloader.deleteDataWhenRemoved() && (MediaPlayer.instance().isPlaying() || MediaPlayer.instance().isPaused())) {
+            final File fileInUseByPlayer = MediaPlayer.instance().getCurrentMedia().getFile();
+
+            if (dloader instanceof com.frostwire.transfers.BittorrentDownload) {
+                BittorrentDownload torrentTransfer = (BittorrentDownload) dloader;
+                final List<TransferItem> items = torrentTransfer.getDl().getItems();
+                for (TransferItem item : items) {
+                    if (item.getFile().equals(fileInUseByPlayer)) {
+                        MediaPlayer.instance().stop();
+                        return;
+                    }
+                }
+            } else {
+                if (fileInUseByPlayer.equals(dloader.getSaveLocation())) {
+                    MediaPlayer.instance().stop();
+                }
+            }
+        }
     }
 
     /**
@@ -960,6 +993,11 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
             @Override
             public void run() {
                 HttpDownload downloader = new HttpDownload(httpUrl, title, saveFileAs, fileSize, null, false, true) {
+                    @Override
+                    public boolean deleteDataWhenRemoved() {
+                        return false;
+                    }
+
                     @Override
                     protected void onComplete() {
                         final File savedFile = getSaveLocation();
