@@ -224,12 +224,9 @@ public class TorrentFetcherDownload implements BTDownload {
     private void downloadTorrent(final byte[] data) {
         if (relativePath != null) {
             try {
-
                 TorrentInfo ti = TorrentInfo.bdecode(data);
                 boolean[] selection = calculateSelection(ti, relativePath);
-
                 BTEngine.getInstance().download(ti, null, selection);
-
             } catch (Throwable e) {
                 LOG.error("Error downloading torrent", e);
             }

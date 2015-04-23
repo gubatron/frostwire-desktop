@@ -617,15 +617,6 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         removeYouTubeAction.setEnabled(false);
     }
 
-    public void openTorrentSearchResult(final TorrentSearchResult sr, final boolean partialDownload) {
-        GUIMediator.safeInvokeLater(new Runnable() {
-            public void run() {
-                BTDownload downloader = new TorrentFetcherDownload(sr.getTorrentUrl(), sr.getDetailsUrl(), sr.getDisplayName(), partialDownload);
-                add(downloader);
-            }
-        });
-    }
-
     public void openTorrentURI(final String uri, final boolean partialDownload) {
         GUIMediator.safeInvokeLater(new Runnable() {
             public void run() {
@@ -732,10 +723,19 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         }
     }
 
+    public void openTorrentSearchResult(final TorrentSearchResult sr, final boolean partialDownload) {
+        GUIMediator.safeInvokeLater(new Runnable() {
+            public void run() {
+                BTDownload downloader = new TorrentFetcherDownload(sr.getTorrentUrl(), sr.getDetailsUrl(), sr.getDisplayName(), partialDownload);
+                add(downloader);
+            }
+        });
+    }
+
     public void openSearchResult(final ScrapedTorrentFileSearchResult sr) {
         GUIMediator.safeInvokeLater(new Runnable() {
             public void run() {
-                BTDownload downloader = new TorrentFetcherDownload(sr.getTorrentUrl(), null, sr.getDisplayName(), false, sr.getFilePath());
+                BTDownload downloader = new TorrentFetcherDownload(sr.getTorrentUrl(), sr.getReferrerUrl(), sr.getDisplayName(), false, sr.getFilePath());
                 add(downloader);
             }
         });
