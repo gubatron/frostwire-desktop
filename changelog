@@ -1,11 +1,14 @@
 frostwire (6.0.8) stable; urgency=high
   * Significant improvements in search result availability.
-  * Reduced used of DHT network for search.
+  * Faster Bitsnoop, Extratorrent and KAT individual file search results.
+  * Reduced use of DHT network for search.
   * Faster torrent download start time.
   * Fixes download error on some Archive.org search results.
   * Fixes Yify search.
+  * Misc fixes in Library functionality.
+  * Crash fixes.
 
- -- FrostWire Team <contact@frostwire.com>  Tue, 14 April 2015 05:23:00 -0500
+ -- FrostWire Team <contact@frostwire.com>  Fri, 24 April 2015 04:44:00 -0500
 
 frostwire (6.0.7) stable; urgency=high
   * New feature: Preview while you download.	
