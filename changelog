@@ -1,3 +1,9 @@
+frostwire (6.0.9) stable; urgency=high
+  * Jlibtorrent updates.
+  * Crash fixes.
+
+ -- FrostWire Team <contact@frostwire.com>  Tue, 5 May 2015 10:30:00 -0500
+
 frostwire (6.0.8) stable; urgency=high
   * Significant improvements in search result availability.
   * Faster Bitsnoop, Extratorrent and KAT individual file search results.
