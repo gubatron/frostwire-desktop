@@ -1,3 +1,9 @@
+frostwire (6.1.0) stable; urgency=high
+  * YouTube search fixes.
+  * Domain alias manager removed.
+
+ -- FrostWire Team <contact@frostwire.com>  Thu, 7 May 2015 14:31:08 -0500
+ 
 frostwire (6.0.9) stable; urgency=high
   * Jlibtorrent updates.
   * Crash fixes.
