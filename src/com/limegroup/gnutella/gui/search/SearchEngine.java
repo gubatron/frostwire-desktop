@@ -109,7 +109,7 @@ public abstract class SearchEngine {
         }
     };
 
-    public static final SearchEngine YOUTUBE = new SearchEngine(YOUTUBE_ID, "YouTube", SearchEnginesSettings.YOUTUBE_SEARCH_ENABLED, "gdata.youtube.com") {
+    public static final SearchEngine YOUTUBE = new SearchEngine(YOUTUBE_ID, "YouTube", SearchEnginesSettings.YOUTUBE_SEARCH_ENABLED, "www.youtube.com") {
         @Override
         public SearchPerformer getPerformer(long token, String keywords) {
             return new YouTubeSearchPerformer(YOUTUBE.getDomainName(), token, keywords, DEFAULT_TIMEOUT);
