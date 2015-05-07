@@ -15,14 +15,8 @@
 
 package com.limegroup.gnutella.util;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Properties;
-import java.util.Set;
-
 import com.frostwire.util.ByteUtils;
+import com.limegroup.gnutella.settings.ApplicationSettings;
 import org.apache.commons.io.IOUtils;
 import org.limewire.setting.SettingsFactory;
 import org.limewire.util.CommonUtils;
@@ -31,7 +25,12 @@ import org.limewire.util.SystemUtils;
 import org.limewire.util.SystemUtils.SpecialLocations;
 import org.limewire.util.VersionUtils;
 
-import com.limegroup.gnutella.settings.ApplicationSettings;
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Properties;
+import java.util.Set;
 
 
 /**
