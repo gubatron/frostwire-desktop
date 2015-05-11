@@ -13,6 +13,7 @@ import com.frostwire.gui.bittorrent.SendFileProgressDialog;
 import com.frostwire.uxstats.UXAction;
 import com.frostwire.uxstats.UXStats;
 import com.limegroup.gnutella.gui.GUIMediator;
+import com.limegroup.gnutella.gui.DialogOption;
 import com.limegroup.gnutella.gui.I18n;
 
 /**
@@ -64,9 +65,9 @@ public class SendFileTransferHandler extends LimeTransferHandler {
 	public static boolean handleFiles(final File[] files) {
 
 		String fileFolder = files[0].isFile() ? I18n.tr("file"):I18n.tr("folder");
-		int result = JOptionPane.showConfirmDialog(GUIMediator.getAppFrame(), I18n.tr("Do you want to send this {0} to a friend?",fileFolder)+"\n\n\""+files[0].getName() + "\"",I18n.tr("Send files with FrostWire"),JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
-		
-		if (result == JOptionPane.YES_OPTION) {
+		DialogOption result = GUIMediator.showYesNoMessage(I18n.tr("Do you want to send this {0} to a friend?", fileFolder) + "\n\n\"" + files[0].getName() + "\"", I18n.tr("Send files with FrostWire"), JOptionPane.QUESTION_MESSAGE);
+
+		if (result == DialogOption.YES) {
 			new SendFileProgressDialog(GUIMediator.getAppFrame(), files[0]).setVisible(true);
 			GUIMediator.instance().setWindow(GUIMediator.Tabs.SEARCH);
 			UXStats.instance().log(UXAction.SHARING_TORRENT_CREATED_WITH_SEND_TO_FRIEND_FROM_DND);

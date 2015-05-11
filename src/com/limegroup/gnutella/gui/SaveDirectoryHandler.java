@@ -123,7 +123,7 @@ public final class SaveDirectoryHandler {
         if (isGoodVistaDirectory(f))
             return true;
         return GUIMediator.showYesNoMessage(
-                I18n.tr("Saving downloads to {0} may not function correctly.  To be sure downloads are saved properly you should save them to a sub-folder of {1}.  Would you like to choose another location?",f, CommonUtils.getUserHomeDir()), 
+                I18n.tr("Saving downloads to {0} may not function correctly. To be sure downloads are saved properly you should save them to a sub-folder of {1}. Would you like to choose another location?", f, CommonUtils.getUserHomeDir()),
                 QuestionsHandler.VISTA_SAVE_LOCATION, DialogOption.YES
                 ) == DialogOption.NO;
     }

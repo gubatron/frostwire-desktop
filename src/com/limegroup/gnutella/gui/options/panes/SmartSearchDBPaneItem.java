@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import com.limegroup.gnutella.gui.GUIMediator;
+import com.limegroup.gnutella.gui.DialogOption;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LabeledComponent;
 import com.limegroup.gnutella.gui.search.SearchMediator;
@@ -77,10 +78,11 @@ public final class SmartSearchDBPaneItem extends AbstractPaneItem {
     }
 
     protected void resetSmartSearchDB() {
-        int showConfirmDialog = JOptionPane.showConfirmDialog(GUIMediator.getAppFrame(), I18n.tr("If you continue you will erase all the information related to\n" + _numTorrents + " torrents that FrostWire has learned to speed up your search results.\nDo you wish to continue?"),
-                I18n.tr("Are you sure?"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
-        if (showConfirmDialog == JOptionPane.YES_OPTION) {
+        DialogOption showConfirmDialog = GUIMediator.showYesNoMessage(I18n.tr("If you continue you will erase all the information related to\n{0} torrents that FrostWire has learned to speed up your search results.\nDo you wish to continue?", _numTorrents),
+                        I18n.tr("Are you sure?"), JOptionPane.QUESTION_MESSAGE);
+
+        if (showConfirmDialog == DialogOption.YES) {
             SearchMediator.instance().clearCache();
         }
     }

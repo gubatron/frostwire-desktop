@@ -248,7 +248,7 @@ public final class UpdateManager implements Serializable {
      * @param msg
      */
     public void showUpdateMessage(final UpdateMessage msg) {
-        final String title = (msg.getMessageType().equals("update")) ? "New FrostWire Update Available" : "FrostWire Team Announcement";
+        final String title = (msg.getMessageType().equals("update")) ? I18n.tr("New FrostWire Update Available") : I18n.tr("FrostWire Team Announcement");
 
         int optionType = JOptionPane.CANCEL_OPTION;
 
