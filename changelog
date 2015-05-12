@@ -1,3 +1,9 @@
+frostwire (6.1.1) stable; urgency=high
+  * YouTube search fixes for non-english users.
+  * Russian translation update.
+
+ -- FrostWire Team <contact@frostwire.com>  Tue, 12 May 2015 15:20:28 -0500
+
 frostwire (6.1.0) stable; urgency=high
   * YouTube search fixes.
   * Domain alias manager removed.
