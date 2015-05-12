@@ -23,6 +23,7 @@ import org.limewire.util.OSUtils;
 
 import com.frostwire.gui.updates.UpdateMediator;
 import com.limegroup.gnutella.gui.GUIMediator;
+import com.limegroup.gnutella.gui.DialogOption;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.iTunesMediator;
 import com.limegroup.gnutella.gui.actions.AbstractAction;
@@ -71,11 +72,17 @@ final class ToolsMenu extends AbstractMenu {
 
         @Override
         public void actionPerformed(ActionEvent arg0) {
-            int result = JOptionPane.showConfirmDialog(GUIMediator.getAppFrame(), I18n.tr("This will remove your \"FrostWire\" playlist in iTunes and replace\n" + "it with one containing all the iTunes compatible files in your \n" + "Frostwire \"Torrent Data Folder\"\n\n"
-                    + "Please note that it will add the files to the iTunes library as well\n" + "and this could result in duplicate files on your iTunes library\n\n" + "Are you sure you want to continue?"), I18n.tr("Warning"), JOptionPane.WARNING_MESSAGE, JOptionPane.YES_OPTION
-                    | JOptionPane.CANCEL_OPTION);
 
-            if (result == JOptionPane.YES_OPTION) {
+            DialogOption result = GUIMediator.showYesNoMessage(I18n.tr(
+                      "This will remove your \"FrostWire\" playlist in iTunes and replace\n"
+                    + "it with one containing all the iTunes compatible files in your \n"
+                    + "Frostwire \"Torrent Data Folder\"\n\n"
+                    + "Please note that it will add the files to the iTunes library as well\n"
+                    + "and this could result in duplicate files on your iTunes library\n\n"
+                    + "Are you sure you want to continue?"),
+             I18n.tr("Warning"), JOptionPane.WARNING_MESSAGE);
+
+            if (result == DialogOption.YES) {
                 iTunesMediator.instance().resetFrostWirePlaylist();
             }
         }
