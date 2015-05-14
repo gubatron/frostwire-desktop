@@ -81,7 +81,7 @@ public abstract class SearchEngine {
         }
     };
 
-    public static final SearchEngine KAT = new SearchEngine(KAT_ID, "KAT", SearchEnginesSettings.KAT_SEARCH_ENABLED, "kickass.to") {
+    public static final SearchEngine KAT = new SearchEngine(KAT_ID, "KAT", SearchEnginesSettings.KAT_SEARCH_ENABLED, "kat.cr") {
         @Override
         public SearchPerformer getPerformer(long token, String keywords) {
             return new KATSearchPerformer(KAT.getDomainName(), token, keywords, DEFAULT_TIMEOUT);
