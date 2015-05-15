@@ -36,7 +36,6 @@ _UpgradeReport_Files/
 Debug/
 Release/
 ipch/
-tags
 *.opensdf
 components/resources/dist/lw-resources.jar
 lib/jars/fwtips.jar
