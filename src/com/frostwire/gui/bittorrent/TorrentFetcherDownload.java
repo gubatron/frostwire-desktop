@@ -19,11 +19,11 @@
 package com.frostwire.gui.bittorrent;
 
 import com.frostwire.bittorrent.BTEngine;
+import com.frostwire.bittorrent.CopyrightLicenseBroker;
+import com.frostwire.bittorrent.PaymentOptions;
 import com.frostwire.jlibtorrent.FileStorage;
 import com.frostwire.jlibtorrent.TorrentInfo;
 import com.frostwire.logging.Logger;
-import com.frostwire.bittorrent.CopyrightLicenseBroker;
-import com.frostwire.bittorrent.PaymentOptions;
 import com.frostwire.transfers.TransferState;
 import com.frostwire.util.HttpClientFactory;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -42,6 +42,7 @@ public class TorrentFetcherDownload implements BTDownload {
 
     private final String uri;
     private final String referer;
+    private final String cookie;
     private final String displayName;
     private final boolean partial;
     private final String relativePath;
@@ -50,9 +51,10 @@ public class TorrentFetcherDownload implements BTDownload {
 
     private TransferState state;
 
-    public TorrentFetcherDownload(String uri, String referrer, String displayName, boolean partial, String relativePath) {
+    public TorrentFetcherDownload(String uri, String referrer, String cookie, String displayName, boolean partial, String relativePath) {
         this.uri = uri;
         this.referer = referrer;
+        this.cookie = cookie;
         this.displayName = displayName;
         this.partial = partial;
 
@@ -69,6 +71,10 @@ public class TorrentFetcherDownload implements BTDownload {
         Thread t = new Thread(new FetcherRunnable(), "Torrent-Fetcher - " + uri);
         t.setDaemon(true);
         t.start();
+    }
+
+    public TorrentFetcherDownload(String uri, String referrer, String displayName, boolean partial, String relativePath) {
+        this(uri, referrer, null, displayName, partial, relativePath);
     }
 
     public TorrentFetcherDownload(String uri, String referrer, String displayName, boolean partial) {
@@ -300,7 +306,7 @@ public class TorrentFetcherDownload implements BTDownload {
                 byte[] data = null;
                 if (uri.startsWith("http")) {
                     // use our http client, since we can handle referer
-                    data = HttpClientFactory.newInstance().getBytes(uri, 15000, referer);
+                    data = HttpClientFactory.newInstance().getBytes(uri, 15000, referer, cookie);
                 } else {
                     data = BTEngine.getInstance().fetchMagnet(uri, 90000);
                 }
