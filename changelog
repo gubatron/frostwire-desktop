@@ -1,8 +1,9 @@
 frostwire (6.1.2) stable; urgency=high
   * KAT search fixed.
   * Monova search fixed.
+  * Bitsnoop downloads fixed.
 
- -- FrostWire Team <contact@frostwire.com>  Thu, 14 May 2015 18:06:47 -0500
+ -- FrostWire Team <contact@frostwire.com>  Fri, 15 May 2015 22:50:45 -0500
 
 frostwire (6.1.1) stable; urgency=high
   * YouTube search fixes for non-english users.
