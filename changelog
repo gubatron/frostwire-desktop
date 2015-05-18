@@ -2,11 +2,11 @@ frostwire (6.1.2) stable; urgency=high
   * TPB search fixed.
   * KAT search fixed.
   * Monova search fixed.
-  * EZTV search fixed.	
   * Bitsnoop downloads fixed.
   * BTJunkie downloads fixed.
+  * EZTV search engine removed after scammers took over.	
 	
- -- FrostWire Team <contact@frostwire.com>  Mon, 18 May 2015 08:01:43 -0500
+ -- FrostWire Team <contact@frostwire.com>  Mon, 18 May 2015 14:40:20 -0500
 
 frostwire (6.1.1) stable; urgency=high
   * YouTube search fixes for non-english users.
