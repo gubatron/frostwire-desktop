@@ -190,6 +190,8 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
 
     protected void setupUI() {
         setLayout(new BorderLayout());
+        setMinimumSize(new Dimension(177,113));
+        setPreferredSize(new Dimension(177,232));
         GUIMediator.addRefreshListener(this);
 
         setupModel();

@@ -147,6 +147,7 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
 
     protected void setupUI() {
         setLayout(new BorderLayout());
+        setMinimumSize(new Dimension(177,94));
 
         GUIMediator.addRefreshListener(this);
 
