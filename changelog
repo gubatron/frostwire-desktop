@@ -1,5 +1,6 @@
 frostwire (6.1.2) stable; urgency=high
   * Added SSL (https) support for torrent web seeds.
+  * Options window remembers last pane opened.
 
  -- FrostWire Team <contact@frostwire.com>  Tue, 02 Jun 2015 14:29:20 -0500
 
