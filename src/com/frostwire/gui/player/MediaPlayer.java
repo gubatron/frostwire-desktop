@@ -243,7 +243,9 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
                 return;
             }
 
-            if (!PlayerSettings.USE_FW_PLAYER_FOR_CLOUD_VIDEO_PREVIEWS.getValue() && PlayerSettings.USE_OS_DEFAULT_PLAYER.getValue()) {
+            //if (!PlayerSettings.USE_FW_PLAYER_FOR_CLOUD_VIDEO_PREVIEWS.getValue()
+            //    &&
+            if (PlayerSettings.USE_OS_DEFAULT_PLAYER.getValue()) {
                 playInOS(source);
                 return;
             }
