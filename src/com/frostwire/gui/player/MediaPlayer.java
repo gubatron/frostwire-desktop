@@ -237,15 +237,13 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
     /**
      * Loads a MediaSource into the player to play next
      */
-    public void loadMedia(MediaSource source, boolean play, boolean playNextSong, Playlist currentPlaylist, List<MediaSource> playlistFilesView) {
+    public void loadMedia(MediaSource source, boolean play, boolean isPreview, boolean playNextSong, Playlist currentPlaylist, List<MediaSource> playlistFilesView) {
         try {
             if (source == null) {
                 return;
             }
 
-            //if (!PlayerSettings.USE_FW_PLAYER_FOR_CLOUD_VIDEO_PREVIEWS.getValue()
-            //    &&
-            if (PlayerSettings.USE_OS_DEFAULT_PLAYER.getValue()) {
+            if (!isPreview && PlayerSettings.USE_OS_DEFAULT_PLAYER.getValue()) {
                 playInOS(source);
                 return;
             }
@@ -337,22 +335,22 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
         }
     }
 
-    public void asyncLoadMedia(final MediaSource source, final boolean play, final boolean playNextSong, final Playlist currentPlaylist, final List<MediaSource> playlistFilesView) {
+    public void asyncLoadMedia(final MediaSource source, final boolean play, final boolean isPreview, final boolean playNextSong, final Playlist currentPlaylist, final List<MediaSource> playlistFilesView) {
         playExecutor.execute(new Runnable() {
             public void run() {
-                loadMedia(source, play, playNextSong, currentPlaylist, playlistFilesView);
+                loadMedia(source, play, isPreview, playNextSong, currentPlaylist, playlistFilesView);
             }
         });
     }
 
-    public void loadMedia(MediaSource source, boolean play, boolean playNextSong) {
-        loadMedia(source, play, playNextSong, currentPlaylist, (playlistFilesView != null) ? Arrays.asList(playlistFilesView) : null);
+    public void loadMedia(MediaSource source, boolean play, boolean isPreview, boolean playNextSong) {
+        loadMedia(source, play, isPreview, playNextSong, currentPlaylist, (playlistFilesView != null) ? Arrays.asList(playlistFilesView) : null);
     }
 
-    public void asyncLoadMedia(final MediaSource source, final boolean play, final boolean playNextSong) {
+    public void asyncLoadMedia(final MediaSource source, final boolean play, final boolean isPreview, final boolean playNextSong) {
         playExecutor.execute(new Runnable() {
             public void run() {
-                loadMedia(source, play, playNextSong);
+                loadMedia(source, play, isPreview, playNextSong);
             }
         });
     }
@@ -656,7 +654,7 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
 
         if (media != null) {
             //System.out.println(song.getFile());
-            asyncLoadMedia(media, true, true, currentPlaylist, Arrays.asList(playlistFilesView));
+            asyncLoadMedia(media, true, false, true, currentPlaylist, Arrays.asList(playlistFilesView));
         }
     }
     

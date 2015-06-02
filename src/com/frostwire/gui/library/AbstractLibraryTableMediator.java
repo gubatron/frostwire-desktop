@@ -303,7 +303,7 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
         try {
             MediaSource mediaSource = createMediaSource(line);
             if (mediaSource != null) {
-                MediaPlayer.instance().asyncLoadMedia(mediaSource, true, false, null, getFilesView());
+                MediaPlayer.instance().asyncLoadMedia(mediaSource, true, false, false, null, getFilesView());
             }
         } catch (Exception e) {
             e.printStackTrace();

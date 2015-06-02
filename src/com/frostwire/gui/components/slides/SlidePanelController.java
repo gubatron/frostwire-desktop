@@ -134,7 +134,7 @@ class SlidePanelController {
         if (!StringUtils.isNullOrEmpty(mediaURL)) {
             StreamMediaSource mediaSource = new StreamMediaSource(mediaURL, slide.title, slide.clickURL, showMediaPlayer);
             if (slide.hasFlag(flagUsingFWPlayerForMediaType)) {
-                GUIMediator.instance().launchMedia(mediaSource);
+                GUIMediator.instance().launchMedia(mediaSource, true);
             } else {
                 playInOS(mediaSource);
             }

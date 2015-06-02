@@ -71,7 +71,7 @@ public final class LibraryActionsRenderer extends AbstractActionsRenderer {
             }
 
             if (mediaSource != null && !actionsHolder.isPlaying()) {
-                MediaPlayer.instance().asyncLoadMedia(mediaSource, true, playNextSong, null, filesView);
+                MediaPlayer.instance().asyncLoadMedia(mediaSource, true, false, playNextSong, null, filesView);
             }
         }        
     }

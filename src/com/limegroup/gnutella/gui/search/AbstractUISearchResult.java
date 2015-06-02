@@ -113,6 +113,7 @@ public abstract class AbstractUISearchResult implements UISearchResult {
 
     @Override
     public void play() {
+        // this gets invoked when clicking on a search result play preview button.
         if (sr instanceof StreamableSearchResult) {
             StreamableSearchResult ssr = (StreamableSearchResult) sr;
             String streamUrl = ssr.getStreamUrl();
@@ -125,10 +126,10 @@ public abstract class AbstractUISearchResult implements UISearchResult {
                     if (videoPreviewInBrowser) {
                         GUIMediator.instance().launchYouTubePreviewInBrowser(((YouTubeCrawledStreamableSearchResult) sr));
                     } else {
-                        GUIMediator.instance().launchMedia(new StreamMediaSource(streamUrl, sr.getDisplayName(), sr.getDetailsUrl(), true));
+                        GUIMediator.instance().launchMedia(new StreamMediaSource(streamUrl, sr.getDisplayName(), sr.getDetailsUrl(), true), true);
                     }
                 } else {
-                    GUIMediator.instance().launchMedia(new StreamMediaSource(streamUrl, sr.getDisplayName(), sr.getDetailsUrl(), false));
+                    GUIMediator.instance().launchMedia(new StreamMediaSource(streamUrl, sr.getDisplayName(), sr.getDetailsUrl(), false), true);
                 }
             }
         }

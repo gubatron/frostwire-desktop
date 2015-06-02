@@ -506,7 +506,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
 
         MediaSource mediaSource = new MediaSource(line.getPlayListItem());
         if (MediaPlayer.isPlayableFile(mediaSource)) {
-            MediaPlayer.instance().asyncLoadMedia(mediaSource, true, true, currentPlaylist, getFilesView());
+            MediaPlayer.instance().asyncLoadMedia(mediaSource, true, false, true, currentPlaylist, getFilesView());
             uxLogPlayFromPlaylists();
         }
     }

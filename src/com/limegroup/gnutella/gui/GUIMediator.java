@@ -1519,7 +1519,7 @@ public final class GUIMediator {
      *
      * @param song - song to play now
      */
-    public void launchMedia(MediaSource song) {
+    public void launchMedia(MediaSource song, boolean isPreview) {
 
         if (MediaPlayer.instance().getCurrentMedia() != null)
             try {
@@ -1537,7 +1537,7 @@ public final class GUIMediator {
             playNextSong = false;
         }
 
-        MediaPlayer.instance().asyncLoadMedia(song, true, playNextSong);
+        MediaPlayer.instance().asyncLoadMedia(song, true, isPreview, playNextSong);
     }
 
     /**
