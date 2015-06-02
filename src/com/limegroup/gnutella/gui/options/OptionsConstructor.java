@@ -26,6 +26,8 @@ import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -33,6 +35,8 @@ import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.WindowConstants;
 
+import com.limegroup.gnutella.settings.ApplicationSettings;
+import org.appwork.utils.Application;
 import org.limewire.setting.IntSetting;
 import org.limewire.setting.SettingsGroupManager;
 import org.limewire.util.CommonUtils;
@@ -130,7 +134,7 @@ public final class OptionsConstructor {
     static final String UPLOAD_SLOTS_KEY = "OPTIONS_UPLOAD_SLOTS_MAIN_TITLE";
     static final String CONNECTIONS_KEY = "OPTIONS_CONNECTIONS_MAIN_TITLE";
     static final String BITTORRENT_KEY = "OPTIONS_BITTORRENT_MAIN_TITLE";
-    static final String BITTORRENT_BASIC_KEY = "OPTIONS_BITTORRENT_BASIC_TITLE";
+    public static final String BITTORRENT_BASIC_KEY = "OPTIONS_BITTORRENT_BASIC_TITLE";
     static final String BITTORRENT_ADVANCED_KEY = "OPTIONS_BITTORRENT_ADVANCED_TITLE";
     static final String SHUTDOWN_KEY = "OPTIONS_SHUTDOWN_MAIN_TITLE";
     static final String UPDATE_KEY = "OPTIONS_UPDATE_MAIN_TITLE";
@@ -168,6 +172,8 @@ public final class OptionsConstructor {
     static final String STORE_BASIC_KEY = "OPTIONS_STORE_BASIC_MAIN_TITLE";
     static final String STORE_ADVANCED_KEY = "OPTIONS_STORE_ADVANCED_MAIN_TITLE";
 
+    private final Map<String, OptionsTreeNode> keysToNodes;
+
     /**
      * The constructor create all of the options windows and their
      * components.
@@ -182,6 +188,7 @@ public final class OptionsConstructor {
     public OptionsConstructor(final OptionsTreeManager treeManager, final OptionsPaneManager paneManager) {
         TREE_MANAGER = treeManager;
         PANE_MANAGER = paneManager;
+        keysToNodes = new LinkedHashMap<String, OptionsTreeNode>();
         final String title = I18n.tr("Options");
         final boolean shouldBeModal = !OSUtils.isMacOSX();
 
@@ -263,6 +270,7 @@ public final class OptionsConstructor {
         DIALOG.getContentPane().add(mainPanel);
 
         OptionsTreeNode node = initializePanels();
+        System.out.println("Show node: " + node.getTitleKey());
         PANE_MANAGER.show(node);
     }
 
@@ -270,7 +278,8 @@ public final class OptionsConstructor {
     private OptionsTreeNode initializePanels() {
         //bittorrent
         addGroupTreeNode(OptionsMediator.ROOT_NODE_KEY, BITTORRENT_KEY, I18n.tr("BitTorrent"));
-        OptionsTreeNode node = addOption(BITTORRENT_KEY, BITTORRENT_BASIC_KEY, I18n.tr("Basic"), TorrentSaveFolderPaneItem.class, TorrentSeedingSettingPaneItem.class);
+        addOption(BITTORRENT_KEY, BITTORRENT_BASIC_KEY, I18n.tr("Basic"), TorrentSaveFolderPaneItem.class, TorrentSeedingSettingPaneItem.class);
+
         addOption(BITTORRENT_KEY, BITTORRENT_ADVANCED_KEY, I18n.tr("Advanced"), TorrentGlobalSpeedPaneItem.class, TorrentConnectionPaneItem.class);
 
         // library
@@ -327,6 +336,13 @@ public final class OptionsConstructor {
         // debug
         addOption(OptionsMediator.ROOT_NODE_KEY, BUGS_KEY, I18n.tr("Bug Reports"), BugsPaneItem.class);
 
+        OptionsTreeNode node = keysToNodes.get(ApplicationSettings.OPTIONS_LAST_SELECTED_KEY.getValue());
+
+        if (node == null) {
+            ApplicationSettings.OPTIONS_LAST_SELECTED_KEY.revertToDefault();
+            node = keysToNodes.get(ApplicationSettings.OPTIONS_LAST_SELECTED_KEY.getValue());
+        }
+
         return node;
     }
 
@@ -364,6 +380,7 @@ public final class OptionsConstructor {
 
         OptionsTreeNode node = TREE_MANAGER.addNode(parentKey, childKey, label, sb.toString());
         node.setClasses(clazzes);
+        keysToNodes.put(childKey, node);
         return node;
     }
 
@@ -399,11 +416,13 @@ public final class OptionsConstructor {
             OptionsMediator.instance().disposeOptions();
         } else {
             GUIUtils.centerOnScreen(DIALOG);
+
             //  initial tree selection
-            if (key == null)
-                TREE_MANAGER.setDefaultSelection();
-            else
+            if (key == null) {
+                TREE_MANAGER.setSelection(ApplicationSettings.OPTIONS_LAST_SELECTED_KEY.getValue());
+            } else {
                 TREE_MANAGER.setSelection(key);
+            }
 
             // make tree component the default component instead of the search field
             TREE_MANAGER.getComponent().requestFocusInWindow();

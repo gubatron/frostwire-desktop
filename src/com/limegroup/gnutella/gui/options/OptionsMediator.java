@@ -20,6 +20,7 @@ import java.io.IOException;
 import javax.swing.JDialog;
 
 import com.frostwire.bittorrent.BTEngine;
+import com.limegroup.gnutella.settings.ApplicationSettings;
 import org.limewire.setting.SettingsGroupManager;
 
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -139,6 +140,10 @@ public final class OptionsMediator {
      */
     public final void handleSelection(final OptionsTreeNode node) {
         _paneManager.show(node);
+
+        if (_constructor.isOptionsVisible()) {
+            ApplicationSettings.OPTIONS_LAST_SELECTED_KEY.setValue(node.getTitleKey());
+        }
     }
 
     /**

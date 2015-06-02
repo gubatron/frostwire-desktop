@@ -24,6 +24,7 @@ import javax.swing.JTree;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
+import com.limegroup.gnutella.settings.ApplicationSettings;
 import org.limewire.util.I18NConvert;
 import org.limewire.util.StringUtils;
 
