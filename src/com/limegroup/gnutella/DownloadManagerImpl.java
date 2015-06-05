@@ -46,8 +46,12 @@ public final class DownloadManagerImpl implements DownloadManager {
             engine.setListener(new BTEngineAdapter() {
                 @Override
                 public void downloadAdded(BTEngine engine, BTDownload dl) {
+                    if (engine == null || dl == null) {
+                        return;
+                    }
+
                     String name = dl.getName();
-                    if (name != null && name.contains("fetchMagnet - ")) {
+                    if (name==null || (name != null && name.contains("fetchMagnet - "))) {
                         return;
                     }
 
