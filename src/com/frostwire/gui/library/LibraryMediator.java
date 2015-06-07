@@ -292,6 +292,7 @@ public class LibraryMediator {
         for (PlaylistItem item : items) {
             LibraryPlaylistsTableMediator.instance().add(item);
         }
+        LibraryPlaylistsTableMediator.instance().getTable().repaint();
         getLibrarySearch().addResults(items.size());
     }
 
