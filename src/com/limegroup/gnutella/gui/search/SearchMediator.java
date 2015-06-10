@@ -15,31 +15,11 @@
 
 package com.limegroup.gnutella.gui.search;
 
-import java.io.File;
-import java.text.Normalizer;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
-
-import javax.swing.JComponent;
-import javax.swing.SwingUtilities;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-
-import com.frostwire.logging.Logger;
-import com.frostwire.search.*;
-import org.limewire.util.I18NConvert;
-import org.limewire.util.StringUtils;
-
 import com.frostwire.gui.filters.SearchFilter;
 import com.frostwire.gui.filters.SearchFilterFactory;
 import com.frostwire.gui.filters.SearchFilterFactoryImpl;
+import com.frostwire.logging.Logger;
+import com.frostwire.search.*;
 import com.frostwire.search.archiveorg.ArchiveorgCrawledSearchResult;
 import com.frostwire.search.soundcloud.SoundcloudSearchResult;
 import com.frostwire.search.torrent.TorrentSearchResult;
@@ -49,6 +29,18 @@ import com.limegroup.gnutella.gui.ApplicationHeader;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.SearchSettings;
+import org.limewire.util.I18NConvert;
+import org.limewire.util.StringUtils;
+import rx.functions.Action1;
+import rx.functions.Func1;
+import rx.observables.GroupedObservable;
+
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.io.File;
+import java.text.Normalizer;
+import java.util.*;
 
 /**
  * This class acts as a mediator between the various search components --
@@ -114,7 +106,7 @@ public final class SearchMediator {
     }
 
     /**
-     * Constructs the UI components of the search result display area of the 
+     * Constructs the UI components of the search result display area of the
      * search tab.
      */
     private SearchMediator() {
@@ -143,6 +135,31 @@ public final class SearchMediator {
 
         this.manager = new SearchManagerImpl(SEARCH_MANAGER_NUM_THREADS);
         this.manager.registerListener(new ManagerListener());
+
+        // testing
+        this.manager.observable().groupBy(new Func1<SearchResult, String>() {
+            @Override
+            public String call(SearchResult sr) {
+                return sr.getSource();
+            }
+        }).subscribe(new Action1<GroupedObservable<String, SearchResult>>() {
+            @Override
+            public void call(GroupedObservable<String, SearchResult> srg) {
+                srg.subscribe(new Action1<SearchResult>() {
+                    @Override
+                    public void call(SearchResult sr) {
+                        System.out.println("Rx: " + sr.getSource() + " " + sr.getDisplayName());
+                    }
+                });
+            }
+        });
+
+        /*.subscribe(new Action1<SearchResult>() {
+            @Override
+            public void call(SearchResult sr) {
+                System.out.println("Rx: " + sr);
+            }
+        });*/
     }
 
     /**
@@ -152,7 +169,7 @@ public final class SearchMediator {
         GUIMediator.instance().getMainFrame().getApplicationHeader().requestSearchFocus();
     }
 
-    /** 
+    /**
      * Repeats the given search.
      */
     void repeatSearch(SearchResultMediator rp, SearchInformation info) {
@@ -173,7 +190,7 @@ public final class SearchMediator {
 
     /**
      * Initiates a new search with the specified SearchInformation.
-     *
+     * <p/>
      * Returns the GUID of the search if a search was initiated,
      * otherwise returns null.
      */
@@ -184,13 +201,13 @@ public final class SearchMediator {
 
         long token = newSearchToken();
         SearchResultMediator resultTab = addResultTab(token, info);
-        
+
         performSearch(token, info.getQuery());
 
         if (info.getTitle().startsWith("youtube:")) {
             resultTab.selectSchemaBoxByMediaType(NamedMediaType.getFromMediaType(MediaType.getVideoMediaType()));
         }
-        
+
         return token;
     }
 
@@ -203,24 +220,25 @@ public final class SearchMediator {
      */
     private static boolean validate(SearchInformation info) {
         switch (validateInfo(info)) {
-        case QUERY_EMPTY:
-            return false;
-        case QUERY_TOO_SHORT:
-            GUIMediator.showMessage(I18n.tr("Your search must be at least three characters to avoid congesting the network."));
-            return false;
-        case QUERY_TOO_LONG:
-            GUIMediator.showMessage(I18n.tr("Your search is too long. Please make your search smaller and try again."));
-            return false;
-        case QUERY_VALID:
-            return true;
-        default:
-            return true;
+            case QUERY_EMPTY:
+                return false;
+            case QUERY_TOO_SHORT:
+                GUIMediator.showMessage(I18n.tr("Your search must be at least three characters to avoid congesting the network."));
+                return false;
+            case QUERY_TOO_LONG:
+                GUIMediator.showMessage(I18n.tr("Your search is too long. Please make your search smaller and try again."));
+                return false;
+            case QUERY_VALID:
+                return true;
+            default:
+                return true;
         }
     }
 
     /**
      * Validates the a search info and returns {@link #QUERY_VALID} if it is
      * valid.
+     *
      * @param info
      * @return one of the static <code>QUERY*</code> fields
      */
@@ -434,12 +452,13 @@ public final class SearchMediator {
 
     /**
      * Downloads the given TableLine.
+     *
      * @param line
      * @param guid
-     * @param saveDir optionally the directory where the final file should be
-     * saved to, can be <code>null</code>
-     * @param fileName the optional filename of the final file, can be
-     * <code>null</code>
+     * @param saveDir    optionally the directory where the final file should be
+     *                   saved to, can be <code>null</code>
+     * @param fileName   the optional filename of the final file, can be
+     *                   <code>null</code>
      * @param searchInfo The query used to find the file being downloaded.
      */
     private static void downloadLine(SearchResultDataLine line, File saveDir, String fileName, boolean saveAs, SearchInformation searchInfo) {
@@ -482,10 +501,10 @@ public final class SearchMediator {
 
     /**
      * Returns the <tt>ResultPanel</tt> for the specified GUID.
-     * 
+     *
      * @param rguid the guid to search for
      * @return the <tt>ResultPanel</tt> that matches the GUID, or null
-     *  if none match.
+     * if none match.
      */
     static SearchResultMediator getResultPanelForGUID(long token) {
         return getSearchResultDisplayer().getResultPanelForGUID(token);
@@ -496,7 +515,7 @@ public final class SearchMediator {
      * search result UI components.
      *
      * @return the <tt>JComponent</tt> instance containing all of the
-     *  search result UI components
+     * search result UI components
      */
     public static JComponent getResultComponent() {
         return getSearchResultDisplayer().getComponent();
