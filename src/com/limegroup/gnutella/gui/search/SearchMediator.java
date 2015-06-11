@@ -137,18 +137,18 @@ public final class SearchMediator {
         this.manager.registerListener(new ManagerListener());
 
         // testing
-        this.manager.observable().groupBy(new Func1<SearchResult, String>() {
+        this.manager.observable().groupBy(new Func1<ManagerSearchResult, String>() {
             @Override
-            public String call(SearchResult sr) {
-                return sr.getSource();
+            public String call(ManagerSearchResult msr) {
+                return msr.sr.getSource();
             }
-        }).subscribe(new Action1<GroupedObservable<String, SearchResult>>() {
+        }).subscribe(new Action1<GroupedObservable<String, ManagerSearchResult>>() {
             @Override
-            public void call(GroupedObservable<String, SearchResult> srg) {
-                srg.subscribe(new Action1<SearchResult>() {
+            public void call(GroupedObservable<String, ManagerSearchResult> srg) {
+                srg.subscribe(new Action1<ManagerSearchResult>() {
                     @Override
-                    public void call(SearchResult sr) {
-                        System.out.println("Rx: " + sr.getSource() + " " + sr.getDisplayName());
+                    public void call(ManagerSearchResult msr) {
+                        System.out.println("Rx: " + msr.sr.getSource() + " " + msr.sr.getDisplayName());
                     }
                 });
             }
