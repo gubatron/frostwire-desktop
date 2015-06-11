@@ -270,19 +270,19 @@ public final class SearchMediator {
         }
     }
 
-    private List<SearchResult> filter(SearchPerformer performer, List<SearchResult> results, List<String> searchTokens) {
+    private List<SearchResult> filter(List<SearchResult> results, List<String> searchTokens) {
         List<SearchResult> list;
 
         if (searchTokens == null || searchTokens.isEmpty()) {
             list = Collections.emptyList();
         } else {
-            list = filter(results, searchTokens);
+            list = filter2(results, searchTokens);
         }
 
         return list;
     }
 
-    private List<SearchResult> filter(List<? extends SearchResult> results, List<String> searchTokens) {
+    private List<SearchResult> filter2(List<? extends SearchResult> results, List<String> searchTokens) {
         List<SearchResult> list = new LinkedList<SearchResult>();
 
         try {
@@ -544,42 +544,38 @@ public final class SearchMediator {
     private final class ManagerListener implements SearchManagerListener {
 
         @Override
-        public void onResults(SearchPerformer performer, List<? extends SearchResult> results) {
-            if (!performer.isStopped()) {
-                //System.out.println("Received results: " + performer.getToken() + " \t- " + results.size());
+        public void onResults(final long token, List<? extends SearchResult> results) {
 
-                final long token = performer.getToken();
-                final SearchResultMediator rp = getResultPanelForGUID(token);
+            final SearchResultMediator rp = getResultPanelForGUID(token);
 
-                if (rp != null && !rp.isStopped()) {
-                    @SuppressWarnings("unchecked")
-                    List<SearchResult> filtered = filter(performer, (List<SearchResult>) results, rp.getSearchTokens());
+            if (rp != null && !rp.isStopped()) {
+                @SuppressWarnings("unchecked")
+                List<SearchResult> filtered = filter((List<SearchResult>) results, rp.getSearchTokens());
 
-                    if (filtered != null && !filtered.isEmpty()) {
+                if (filtered != null && !filtered.isEmpty()) {
 
-                        SearchEngine se = SearchEngine.getSearchEngineByName(filtered.get(0).getSource());
-                        if (se == null) {
-                            return;
+                    SearchEngine se = SearchEngine.getSearchEngineByName(filtered.get(0).getSource());
+                    if (se == null) {
+                        return;
+                    }
+
+                    final List<UISearchResult> uiResults = convertResults(filtered, se, rp.getQuery());
+
+                    GUIMediator.safeInvokeAndWait(new Runnable() {
+                        public void run() {
+                            try {
+                                SearchFilter filter = getSearchFilterFactory().createFilter();
+                                for (UISearchResult sr : uiResults) {
+                                    if (filter.allow(sr)) {
+                                        getSearchResultDisplayer().addQueryResult(token, sr, rp);
+                                    }
+                                }
+                            } catch (Exception e) {
+                                LOG.error("Error adding search result to UI", e);
+                            }
                         }
 
-                        final List<UISearchResult> uiResults = convertResults(filtered, se, rp.getQuery());
-
-                        GUIMediator.safeInvokeAndWait(new Runnable() {
-                            public void run() {
-                                try {
-                                    SearchFilter filter = getSearchFilterFactory().createFilter();
-                                    for (UISearchResult sr : uiResults) {
-                                        if (filter.allow(sr)) {
-                                            getSearchResultDisplayer().addQueryResult(token, sr, rp);
-                                        }
-                                    }
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                            }
-
-                        });
-                    }
+                    });
                 }
             }
         }
