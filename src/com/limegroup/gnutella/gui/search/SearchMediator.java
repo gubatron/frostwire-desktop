@@ -134,7 +134,7 @@ public final class SearchMediator {
         CrawlPagedWebSearchPerformer.setMagnetDownloader(new LibTorrentMagnetDownloader());
 
         this.manager = new SearchManagerImpl(SEARCH_MANAGER_NUM_THREADS);
-        this.manager.registerListener(new ManagerListener());
+        final ManagerListener managerListener = new ManagerListener();
 
         // testing
         this.manager.observable().groupBy(new Func1<SearchManagerSignal, String>() {
@@ -154,9 +154,11 @@ public final class SearchMediator {
                     public void call(SearchManagerSignal s) {
                         if (s instanceof SearchManagerSignal.Result) {
                             SearchResult sr = ((SearchManagerSignal.Result) s).sr;
-                            System.out.println("Rx: " + sr.getSource() + " " + sr.getDisplayName());
+                            List t = new ArrayList(1);
+                            t.add(sr);
+                            managerListener.onResults(s.token, t);
                         } else {
-                            System.out.println("END");
+                            managerListener.onFinished(s.token);
                         }
                     }
                 });
