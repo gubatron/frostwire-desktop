@@ -252,7 +252,7 @@ public final class SearchMediator {
         }
     }
 
-    private List<SearchResult> filter(Iterable<SearchResult> results, List<String> searchTokens) {
+    private List<SearchResult> filter(List<SearchResult> results, List<String> searchTokens) {
         List<SearchResult> list;
 
         if (searchTokens == null || searchTokens.isEmpty()) {
@@ -264,7 +264,7 @@ public final class SearchMediator {
         return list;
     }
 
-    private List<SearchResult> filter2(Iterable<? extends SearchResult> results, List<String> searchTokens) {
+    private List<SearchResult> filter2(List<? extends SearchResult> results, List<String> searchTokens) {
         List<SearchResult> list = new LinkedList<SearchResult>();
 
         try {
@@ -517,7 +517,7 @@ public final class SearchMediator {
         return SEARCH_FILTER_FACTORY;
     }
 
-    public void onResults(final long token, Iterable<? extends SearchResult> results) {
+    public void onResults(final long token, List<? extends SearchResult> results) {
 
         final SearchResultMediator rp = getResultPanelForGUID(token);
 
