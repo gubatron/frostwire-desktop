@@ -134,9 +134,6 @@ public final class SearchMediator {
         CrawlPagedWebSearchPerformer.setMagnetDownloader(new LibTorrentMagnetDownloader());
 
         this.manager = new SearchManagerImpl(SEARCH_MANAGER_NUM_THREADS);
-        final ManagerListener managerListener = new ManagerListener();
-
-        // testing
         this.manager.observable().groupBy(new Func1<SearchManagerSignal, String>() {
             @Override
             public String call(SearchManagerSignal s) {
@@ -153,9 +150,9 @@ public final class SearchMediator {
                     @Override
                     public void call(SearchManagerSignal s) {
                         if (s instanceof SearchManagerSignal.Results) {
-                            managerListener.onResults(s.token, ((SearchManagerSignal.Results) s).elements);
+                            onResults(s.token, ((SearchManagerSignal.Results) s).elements);
                         } else {
-                            managerListener.onFinished(s.token);
+                            onFinished(s.token);
                         }
                     }
                 });
@@ -536,55 +533,46 @@ public final class SearchMediator {
         return SEARCH_FILTER_FACTORY;
     }
 
+    public void onResults(final long token, Iterable<? extends SearchResult> results) {
+
+        final SearchResultMediator rp = getResultPanelForGUID(token);
+
+        if (rp != null && !rp.isStopped()) {
+            @SuppressWarnings("unchecked")
+            List<SearchResult> filtered = filter((List<SearchResult>) results, rp.getSearchTokens());
+
+            if (filtered != null && !filtered.isEmpty()) {
+
+                SearchEngine se = SearchEngine.getSearchEngineByName(filtered.get(0).getSource());
+                if (se == null) {
+                    return;
+                }
+
+                final List<UISearchResult> uiResults = convertResults(filtered, se, rp.getQuery());
+
+                GUIMediator.safeInvokeAndWait(new Runnable() {
+                    public void run() {
+                        try {
+                            SearchFilter filter = getSearchFilterFactory().createFilter();
+                            for (UISearchResult sr : uiResults) {
+                                if (filter.allow(sr)) {
+                                    getSearchResultDisplayer().addQueryResult(token, sr, rp);
+                                }
+                            }
+                        } catch (Exception e) {
+                            LOG.error("Error adding search result to UI", e);
+                        }
+                    }
+
+                });
+            }
+        }
+    }
+
     private void onFinished(long token) {
         SearchResultMediator rp = getResultPanelForGUID(token);
         updateSearchIcon(token, false);
         rp.setToken(0); // to identify that the search is stopped (needs refactor)
-    }
-
-    private final class ManagerListener implements SearchManagerListener {
-
-        @Override
-        public void onResults(final long token, Iterable<? extends SearchResult> results) {
-
-            final SearchResultMediator rp = getResultPanelForGUID(token);
-
-            if (rp != null && !rp.isStopped()) {
-                @SuppressWarnings("unchecked")
-                List<SearchResult> filtered = filter((List<SearchResult>) results, rp.getSearchTokens());
-
-                if (filtered != null && !filtered.isEmpty()) {
-
-                    SearchEngine se = SearchEngine.getSearchEngineByName(filtered.get(0).getSource());
-                    if (se == null) {
-                        return;
-                    }
-
-                    final List<UISearchResult> uiResults = convertResults(filtered, se, rp.getQuery());
-
-                    GUIMediator.safeInvokeAndWait(new Runnable() {
-                        public void run() {
-                            try {
-                                SearchFilter filter = getSearchFilterFactory().createFilter();
-                                for (UISearchResult sr : uiResults) {
-                                    if (filter.allow(sr)) {
-                                        getSearchResultDisplayer().addQueryResult(token, sr, rp);
-                                    }
-                                }
-                            } catch (Exception e) {
-                                LOG.error("Error adding search result to UI", e);
-                            }
-                        }
-
-                    });
-                }
-            }
-        }
-
-        @Override
-        public void onFinished(long token) {
-            SearchMediator.this.onFinished(token);
-        }
     }
 
     public void clearCache() {
