@@ -140,8 +140,8 @@ public final class SearchMediator {
         this.manager.observable().groupBy(new Func1<SearchManagerSignal, String>() {
             @Override
             public String call(SearchManagerSignal s) {
-                if (s instanceof SearchManagerSignal.Result) {
-                    return ((SearchManagerSignal.Result) s).sr.getSource();
+                if (s instanceof SearchManagerSignal.Results) {
+                    return "unknown";//((SearchManagerSignal.Results) s).elements;
                 } else {
                     return "end";
                 }
@@ -152,11 +152,8 @@ public final class SearchMediator {
                 srg.subscribe(new Action1<SearchManagerSignal>() {
                     @Override
                     public void call(SearchManagerSignal s) {
-                        if (s instanceof SearchManagerSignal.Result) {
-                            SearchResult sr = ((SearchManagerSignal.Result) s).sr;
-                            List t = new ArrayList(1);
-                            t.add(sr);
-                            managerListener.onResults(s.token, t);
+                        if (s instanceof SearchManagerSignal.Results) {
+                            managerListener.onResults(s.token, ((SearchManagerSignal.Results) s).elements);
                         } else {
                             managerListener.onFinished(s.token);
                         }
@@ -164,13 +161,6 @@ public final class SearchMediator {
                 });
             }
         });
-
-        /*.subscribe(new Action1<SearchResult>() {
-            @Override
-            public void call(SearchResult sr) {
-                System.out.println("Rx: " + sr);
-            }
-        });*/
     }
 
     /**
@@ -281,7 +271,7 @@ public final class SearchMediator {
         }
     }
 
-    private List<SearchResult> filter(List<SearchResult> results, List<String> searchTokens) {
+    private List<SearchResult> filter(Iterable<SearchResult> results, List<String> searchTokens) {
         List<SearchResult> list;
 
         if (searchTokens == null || searchTokens.isEmpty()) {
@@ -293,7 +283,7 @@ public final class SearchMediator {
         return list;
     }
 
-    private List<SearchResult> filter2(List<? extends SearchResult> results, List<String> searchTokens) {
+    private List<SearchResult> filter2(Iterable<? extends SearchResult> results, List<String> searchTokens) {
         List<SearchResult> list = new LinkedList<SearchResult>();
 
         try {
@@ -555,7 +545,7 @@ public final class SearchMediator {
     private final class ManagerListener implements SearchManagerListener {
 
         @Override
-        public void onResults(final long token, List<? extends SearchResult> results) {
+        public void onResults(final long token, Iterable<? extends SearchResult> results) {
 
             final SearchResultMediator rp = getResultPanelForGUID(token);
 
