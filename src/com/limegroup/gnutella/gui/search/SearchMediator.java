@@ -32,8 +32,6 @@ import com.limegroup.gnutella.settings.SearchSettings;
 import org.limewire.util.I18NConvert;
 import org.limewire.util.StringUtils;
 import rx.functions.Action1;
-import rx.functions.Func1;
-import rx.observables.GroupedObservable;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -134,28 +132,14 @@ public final class SearchMediator {
         CrawlPagedWebSearchPerformer.setMagnetDownloader(new LibTorrentMagnetDownloader());
 
         this.manager = new SearchManagerImpl(SEARCH_MANAGER_NUM_THREADS);
-        this.manager.observable().groupBy(new Func1<SearchManagerSignal, String>() {
+        this.manager.observable().subscribe(new Action1<SearchManagerSignal>() {
             @Override
-            public String call(SearchManagerSignal s) {
+            public void call(SearchManagerSignal s) {
                 if (s instanceof SearchManagerSignal.Results) {
-                    return "unknown";//((SearchManagerSignal.Results) s).elements;
+                    onResults(s.token, ((SearchManagerSignal.Results) s).elements);
                 } else {
-                    return "end";
+                    onFinished(s.token);
                 }
-            }
-        }).subscribe(new Action1<GroupedObservable<String, SearchManagerSignal>>() {
-            @Override
-            public void call(GroupedObservable<String, SearchManagerSignal> srg) {
-                srg.subscribe(new Action1<SearchManagerSignal>() {
-                    @Override
-                    public void call(SearchManagerSignal s) {
-                        if (s instanceof SearchManagerSignal.Results) {
-                            onResults(s.token, ((SearchManagerSignal.Results) s).elements);
-                        } else {
-                            onFinished(s.token);
-                        }
-                    }
-                });
             }
         });
     }
