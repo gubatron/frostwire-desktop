@@ -18,52 +18,20 @@
 
 package com.frostwire.gui.library;
 
-import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-
-import javax.swing.*;
-import javax.swing.event.MouseInputListener;
-import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
-
-import com.frostwire.bittorrent.BTDownload;
-import com.frostwire.gui.bittorrent.*;
-import org.apache.commons.io.FilenameUtils;
-import org.limewire.util.FileUtils;
-import org.limewire.util.OSUtils;
-
 import com.frostwire.alexandria.Playlist;
+import com.frostwire.bittorrent.PaymentOptions;
 import com.frostwire.gui.Librarian;
+import com.frostwire.gui.bittorrent.*;
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.player.MediaSource;
 import com.frostwire.gui.theme.SkinMenu;
 import com.frostwire.gui.theme.SkinMenuItem;
 import com.frostwire.gui.theme.SkinPopupMenu;
-import com.frostwire.bittorrent.PaymentOptions;
 import com.frostwire.util.MP4Muxer;
 import com.frostwire.uxstats.UXAction;
 import com.frostwire.uxstats.UXStats;
 import com.limegroup.gnutella.MediaType;
-import com.limegroup.gnutella.gui.ButtonRow;
-import com.limegroup.gnutella.gui.CheckBoxList;
-import com.limegroup.gnutella.gui.CheckBoxListPanel;
-import com.limegroup.gnutella.gui.GUIMediator;
-import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.IconManager;
-import com.limegroup.gnutella.gui.MPlayerMediator;
-import com.limegroup.gnutella.gui.MessageService;
-import com.limegroup.gnutella.gui.MultiLineLabel;
-import com.limegroup.gnutella.gui.PaddedPanel;
-import com.limegroup.gnutella.gui.iTunesMediator;
+import com.limegroup.gnutella.gui.*;
 import com.limegroup.gnutella.gui.actions.AbstractAction;
 import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.gui.actions.SearchAction;
@@ -73,6 +41,22 @@ import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import com.limegroup.gnutella.gui.util.GUILauncher;
 import com.limegroup.gnutella.gui.util.GUILauncher.LaunchableProvider;
 import com.limegroup.gnutella.util.QueryUtils;
+import org.apache.commons.io.FilenameUtils;
+import org.limewire.util.FileUtils;
+import org.limewire.util.OSUtils;
+
+import javax.swing.*;
+import javax.swing.event.MouseInputListener;
+import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.io.File;
+import java.util.*;
+import java.util.List;
 
 /**
  * This class wraps the JTable that displays files in the library,
@@ -96,7 +80,6 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
     private Action DEMUX_MP4_AUDIO_ACTION;
     private Action CREATE_TORRENT_ACTION;
     private Action DELETE_ACTION;
-    private Action RENAME_ACTION;
     private Action SEND_TO_ITUNES_ACTION;
     private Action WIFI_UNSHARE_ACTION;
     private Action WIFI_SHARE_ACTION;
@@ -124,7 +107,6 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         DEMUX_MP4_AUDIO_ACTION = new DemuxMP4AudioAction();
         CREATE_TORRENT_ACTION = new CreateTorrentAction();
         DELETE_ACTION = new RemoveAction();
-        RENAME_ACTION = new RenameAction();
         SEND_TO_ITUNES_ACTION = new SendAudioFilesToiTunes();
         WIFI_SHARE_ACTION = new WiFiShareAction(true);
         WIFI_UNSHARE_ACTION = new WiFiShareAction(false);
@@ -217,7 +199,6 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
 
         menu.addSeparator();
         menu.add(new SkinMenuItem(DELETE_ACTION));
-        menu.add(new SkinMenuItem(RENAME_ACTION));
         menu.addSeparator();
 
         int[] rows = TABLE.getSelectedRows();
@@ -236,16 +217,10 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
             if (dirSelected && fileSelected)
                 break;
         }
-        if (dirSelected) {
-            DELETE_ACTION.setEnabled(true);
-            RENAME_ACTION.setEnabled(false);
-        } else {
-            DELETE_ACTION.setEnabled(true);
-        }
 
+        DELETE_ACTION.setEnabled(true);
         LibraryFilesTableDataLine line = DATA_MODEL.get(rows[0]);
         menu.add(createSearchSubMenu(line));
-
         return menu;
     }
 
@@ -474,17 +449,6 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
      */
     ListSelectionModel getSelectionModel() {
         return TABLE.getSelectionModel();
-    }
-
-    /**
-     * Programatically starts a rename of the selected item.
-     */
-    void startRename() {
-        int row = TABLE.getSelectedRow();
-        if (row == -1)
-            return;
-        //int viewIdx = TABLE.convertColumnIndexToView(LibraryFilesTableDataLine.NAME_IDX);
-        //TABLE.editCellAt(row, viewIdx, LibraryTableCellEditor.EVENT);
     }
 
     /**
@@ -796,7 +760,6 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         SEND_TO_FRIEND_ACTION.setEnabled(false);
         CREATE_TORRENT_ACTION.setEnabled(false);
         DELETE_ACTION.setEnabled(false);
-        RENAME_ACTION.setEnabled(false);
         SEND_TO_ITUNES_ACTION.setEnabled(false);
     }
 
@@ -968,24 +931,6 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
 
         public void actionPerformed(ActionEvent ae) {
             REMOVE_LISTENER.actionPerformed(ae);
-        }
-    }
-
-    private final class RenameAction extends AbstractAction {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 2673219925804729384L;
-
-        public RenameAction() {
-            putValue(Action.NAME, I18n.tr("Rename"));
-            //  "LIBRARY_RENAME"   ???
-            //  "LIBRARY_RENAME_BUTTON_TIP"   ???
-        }
-
-        public void actionPerformed(ActionEvent ae) {
-            startRename();
         }
     }
 
