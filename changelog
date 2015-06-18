@@ -1,4 +1,5 @@
 frostwire (6.1.2) stable; urgency=high
+  * Search performance improvements. New RxJava-based implementation.
   * TorLock search fixed.
   * Added SSL (https) support for torrent web seeds.
   * Options window remembers last pane opened.
@@ -6,7 +7,7 @@ frostwire (6.1.2) stable; urgency=high
   * frostwire-jlibtorrent library updates.
   * Library user experience bug fixes.
 	
- -- FrostWire Team <contact@frostwire.com>  Sat, 1 Jun 2015 19:26:00 -0500
+ -- FrostWire Team <contact@frostwire.com>  Tue, 16 Jun 2015 13:16:00 -0500
 
 frostwire (6.1.1) stable; urgency=high
   * TPB search fixed.
