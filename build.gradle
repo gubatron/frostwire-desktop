@@ -30,11 +30,17 @@ compileJava {
 
 repositories {
     mavenCentral()
-}
 
+    flatDir {
+        dirs 'lib/jars'
+    }
+}
 
 // add third party jars to classpath.
 dependencies {
+    compile name: 'rxjava-1.0.12'
+    compile name: 'messages'
+
     def ant_jar_path = System.getenv('ANT_HOME') + '/lib/ant.jar'
     compile files(new File(ant_jar_path).toURI())
 }
@@ -81,7 +87,7 @@ sourceSets {
             include '**/*.icc'
             exclude '**/*.DS_Store'
 
-	    srcDir 'resources'
+            srcDir 'resources'
             include '**/*.properties'
             include '**/*.png'
             include '**/*.gif'
@@ -105,9 +111,7 @@ jar {
 
     exclude('META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA', 'META-INF/*.MF')
 
-    from(zipTree('lib/jars/messages.jar')) {
-        include '**/*.class'
-    }
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
 
     manifest {
         attributes 'Main-Class': 'com.limegroup.gnutella.gui.Main'
