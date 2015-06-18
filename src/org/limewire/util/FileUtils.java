@@ -462,7 +462,8 @@ public class FileUtils {
 
         return null;
     }
-    
+
+    // aldenml: Why are we using NIO2 for this?
     public static File[] listFiles(File directoryFile) {
         List<File> files = new LinkedList<File>();
         DirectoryStream<Path> dir = null;
@@ -473,6 +474,10 @@ public class FileUtils {
             }
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            if (dir != null) {
+                IOUtils.closeQuietly(dir);
+            }
         }
 
         return files.toArray(new File[0]);
