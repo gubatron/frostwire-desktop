@@ -555,8 +555,10 @@ public final class SearchMediator {
 
     private void onFinished(long token) {
         SearchResultMediator rp = getResultPanelForGUID(token);
-        updateSearchIcon(token, false);
-        rp.setToken(0); // to identify that the search is stopped (needs refactor)
+        if (rp != null) {
+            updateSearchIcon(token, false);
+            rp.setToken(0); // to identify that the search is stopped (needs refactor)
+        }
     }
 
     public void clearCache() {
