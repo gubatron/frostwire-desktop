@@ -18,38 +18,28 @@
 
 package com.frostwire.gui.searchfield;
 
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.UIManager;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.limewire.util.LCS;
-import org.limewire.util.OSUtils;
-import org.limewire.util.StringUtils;
-
 import com.frostwire.gui.theme.ThemeMediator;
 import com.frostwire.util.HttpClient;
 import com.frostwire.util.HttpClientFactory;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.ApplicationSettings;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.limewire.util.LCS;
+import org.limewire.util.OSUtils;
+import org.limewire.util.StringUtils;
+
+import javax.swing.*;
+import java.awt.*;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
- * 
  * @author gubatron
  * @author aldenml
- *
  */
 public class GoogleSearchField extends SearchField {
 
@@ -82,12 +72,12 @@ public class GoogleSearchField extends SearchField {
             hidePopup();
         }
     }
-    
+
     @Override
     public void setText(String t) {
-        
+
         try {
-            if (t!=null) {
+            if (t != null) {
                 t = t.replace("<html>", "").replace("</html>", "").replace("<b>", "").replace("</b>", "");
             }
         } catch (Throwable e) {
@@ -112,7 +102,7 @@ public class GoogleSearchField extends SearchField {
         entryScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         entryScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         entryPanel.add(entryScrollPane, c);
-        
+
         Font origFont = getFont();
         Font newFont = origFont;
         if (OSUtils.isWindows()) {
@@ -129,7 +119,7 @@ public class GoogleSearchField extends SearchField {
             lang = "en";
         }
 
-        return "http://suggestqueries.google.com/complete/search?output=firefox&hl=" + lang + "&q=%s";
+        return "https://clients1.google.com/complete/search?client=youtube&q=%s&hl=" + lang + "&gl=us&gs_rn=23&gs_ri=youtube&ds=yt&cp=2&gs_id=8&callback=google.sbox.p50";
     }
 
     private static final class SuggestionsThread extends Thread {
@@ -159,8 +149,9 @@ public class GoogleSearchField extends SearchField {
                 String url = String.format(SUGGESTIONS_URL, URLEncoder.encode(constraint, "UTF-8"));
 
                 HttpClient httpClient = HttpClientFactory.newInstance();
-                
-                String json = httpClient.get(url, HTTP_QUERY_TIMEOUT);
+
+                String js = httpClient.get(url, HTTP_QUERY_TIMEOUT);
+                String json = stripJs(js);
 
                 if (!isCancelled()) {
                     final List<String> suggestions = readSuggestions((JSONArray) new JSONArray(json).get(1));
@@ -171,9 +162,8 @@ public class GoogleSearchField extends SearchField {
                             if (it.hasNext())
                                 if (!StringUtils.isNullOrEmpty(input.getText(), true)) {
                                     input.showPopup(it);
-                                }
-                            else
-                                input.hidePopup();
+                                } else
+                                    input.hidePopup();
                         }
                     });
                 }
@@ -188,7 +178,7 @@ public class GoogleSearchField extends SearchField {
             if (!StringUtils.isNullOrEmpty(t, true)) {
                 for (int i = 0; i < array.length(); i++) {
                     try {
-                        String s = LCS.lcsHtml(t, array.getString(i));
+                        String s = LCS.lcsHtml(t, array.getJSONArray(i).getString(0));
                         suggestions.add(s);
                     } catch (JSONException e) {
                         //e.printStackTrace();
@@ -196,6 +186,13 @@ public class GoogleSearchField extends SearchField {
                 }
             }
             return suggestions;
+        }
+
+        private String stripJs(String js) {
+            js = js.replace("google.sbox.p50 && google.sbox.p50(", "");
+            js = js.replace("}])", "}]");
+
+            return js;
         }
     }
 }
