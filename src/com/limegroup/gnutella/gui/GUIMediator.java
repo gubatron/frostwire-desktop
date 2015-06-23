@@ -77,7 +77,6 @@ import com.frostwire.search.torrent.TorrentSearchResult;
 import com.frostwire.search.youtube.YouTubeCrawledSearchResult;
 import com.frostwire.search.youtube.YouTubeCrawledStreamableSearchResult;
 import com.limegroup.gnutella.MediaType;
-import com.limegroup.gnutella.UpdateInformation;
 import com.limegroup.gnutella.gui.actions.AbstractAction;
 import com.limegroup.gnutella.gui.bugs.FatalBugManager;
 import com.limegroup.gnutella.gui.notify.NotifyUserProxy;
@@ -1547,17 +1546,6 @@ public final class GUIMediator {
         MediaPlayer mediaPlayer = MediaPlayer.instance();
         mediaPlayer.stop();
         return true;
-    }
-
-    /**
-     * Makes the update message show up in the status panel
-     */
-    public void showUpdateNotification(final UpdateInformation info) {
-        safeInvokeAndWait(new Runnable() {
-            public void run() {
-                getStatusLine().showUpdatePanel(true, info);
-            }
-        });
     }
 
     /**

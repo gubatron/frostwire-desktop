@@ -48,7 +48,6 @@ import org.limewire.setting.BooleanSetting;
 import com.frostwire.gui.bittorrent.BTDownloadMediator;
 import com.frostwire.gui.theme.SkinCheckBoxMenuItem;
 import com.frostwire.gui.theme.SkinPopupMenu;
-import com.limegroup.gnutella.UpdateInformation;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.settings.StatusBarSettings;
@@ -110,7 +109,6 @@ public final class StatusLine {
      * StatusLinkHandler (ads for going PRO).
      */
     private StatusComponent STATUS_COMPONENT;
-    private UpdatePanel _updatePanel;
     private JPanel _centerPanel;
     private Component _centerComponent;
 
@@ -264,11 +262,6 @@ public final class StatusLine {
 
             //  subtract center component
             int indicatorWidth = _centerComponent.getWidth();
-            if (indicatorWidth <= 0) {
-                if (_updatePanel.shouldBeShown()) {
-                    indicatorWidth = 190;
-                }
-            }
             remainingWidth -= indicatorWidth;
 
             //  add components to panel, if room
@@ -432,12 +425,10 @@ public final class StatusLine {
      */
     private void createCenterPanel() {
         STATUS_COMPONENT = new StatusComponent();
-        _updatePanel = new UpdatePanel();
-        _centerComponent = _updatePanel;
+        _centerComponent = new JLabel();
         _centerPanel = new JPanel(new GridBagLayout());
 
         _centerPanel.setOpaque(false);
-        _updatePanel.setOpaque(false);
         STATUS_COMPONENT.setProgressPreferredSize(new Dimension(250, 20));
 
         GridBagConstraints gbc = new GridBagConstraints();
@@ -450,7 +441,6 @@ public final class StatusLine {
 
         //  add right-click listeners
         _centerPanel.addMouseListener(STATUS_BAR_LISTENER);
-        _updatePanel.addMouseListener(STATUS_BAR_LISTENER);
         STATUS_COMPONENT.addMouseListener(STATUS_BAR_LISTENER);
     }
 
@@ -465,11 +455,7 @@ public final class StatusLine {
 
         _nextUpdateTime = now + 1000 * 5; // update every minute
         _centerPanel.removeAll();
-        if (_updatePanel.shouldBeShown()) {
-            _centerComponent = _updatePanel;
-        } else {
-            _centerComponent = new JLabel();
-        }
+        _centerComponent = new JLabel();
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -489,14 +475,6 @@ public final class StatusLine {
     }
 
     private long _nextUpdateTime = System.currentTimeMillis();
-
-    /**
-     * Tells the status linke that the update panel should be shown with
-     * the given update information.
-     */
-    public void showUpdatePanel(boolean popup, UpdateInformation info) {
-        _updatePanel.makeVisible(popup, info);
-    }
 
     /**
      * Updates the status text.
