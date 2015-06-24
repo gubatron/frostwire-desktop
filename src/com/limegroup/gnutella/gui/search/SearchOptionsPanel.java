@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011-2014, FrostWire(R). All rights reserved.
+ * Copyright (c) 2011-2015, FrostWire(R). All rights reserved.
  
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,13 +18,11 @@
 package com.limegroup.gnutella.gui.search;
 
 import java.awt.Dimension;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
@@ -55,7 +53,7 @@ final class SearchOptionsPanel extends JPanel {
     private final LabeledRangeSlider sliderSize;
     private final LabeledRangeSlider sliderSeeds;
     private final Map<SearchEngine,JCheckBox> engineCheckboxes;
-    
+
     private GeneralResultFilter generalFilter;
 
     public SearchOptionsPanel(SearchResultMediator resultPanel) {
@@ -176,16 +174,10 @@ final class SearchOptionsPanel extends JPanel {
         final Map<JCheckBox, BooleanSetting> cBoxes = new HashMap<JCheckBox, BooleanSetting>();
 
         ItemListener listener = new ItemListener() {
+
             public void itemStateChanged(ItemEvent e) {
                 boolean allDeSelected = true;
-
-                for (JCheckBox cBox : cBoxes.keySet()) {
-                    if (cBox.isSelected()) {
-                        allDeSelected = false;
-                        break;
-                    }
-                }
-
+                allDeSelected = areAll(false);
                 if (allDeSelected) {
                     ((JCheckBox) e.getItemSelectable()).setSelected(true);
                 }
@@ -212,6 +204,18 @@ final class SearchOptionsPanel extends JPanel {
             
             engineCheckboxes.put(se,cBox);
         }
+    }
+
+    private boolean areAll(boolean selected) {
+        final Set<Map.Entry<SearchEngine, JCheckBox>> entries = engineCheckboxes.entrySet();
+        for (Map.Entry<SearchEngine, JCheckBox> entry : entries) {
+            final JCheckBox cBox = entry.getValue();
+            if (selected && !cBox.isSelected() ||
+                !selected && cBox.isSelected()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private void textFieldKeywords_keyReleased(KeyEvent e) {
