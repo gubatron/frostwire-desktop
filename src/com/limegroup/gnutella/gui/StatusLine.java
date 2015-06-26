@@ -43,6 +43,7 @@ import javax.swing.ToolTipManager;
 import com.frostwire.bittorrent.BTEngine;
 import com.frostwire.jlibtorrent.DHT;
 import com.frostwire.jlibtorrent.Session;
+import com.limegroup.gnutella.gui.options.OptionsConstructor;
 import org.limewire.setting.BooleanSetting;
 
 import com.frostwire.gui.bittorrent.BTDownloadMediator;
@@ -228,7 +229,7 @@ public final class StatusLine {
         seedingStatusButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                GUIMediator.instance().setOptionsVisible(true, I18n.tr("Options"));
+                GUIMediator.instance().setOptionsVisible(true, OptionsConstructor.BITTORRENT_BASIC_KEY);
             }
         });
 
