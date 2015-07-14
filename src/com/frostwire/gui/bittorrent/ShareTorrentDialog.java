@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011-2014, FrostWire(R). All rights reserved.
+ * Copyright (c) 2011-2015, FrostWire(R). All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -310,42 +310,6 @@ public class ShareTorrentDialog extends JDialog {
 				ToolTipManager.sharedInstance().setInitialDelay(500);
 			}
 		});
-	}
-
-
-	public static class TimelineJLabel {
-		public int y;
-		public Color color;
-		private JLabel _label;
-
-		private int x;
-
-		/** Pass the label you want to animate */
-		public TimelineJLabel(JLabel wrappedLabel) {
-			_label = wrappedLabel;
-
-			x = (int) _label.getLocation().getX();
-		}
-
-		public void setColor(Color c) {
-			color = c;
-			GUIMediator.safeInvokeLater(new Runnable() {
-				@Override
-				public void run() {
-					_label.setForeground(color);
-				}
-			});
-		}
-
-		public void setY(int yPos) {
-			y = yPos;
-			GUIMediator.safeInvokeLater(new Runnable() {
-				@Override
-				public void run() {
-					_label.setLocation((int) x, y);
-				}
-			});
-		}
 	}
 
 	/**
