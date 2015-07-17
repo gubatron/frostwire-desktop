@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011-2014, FrostWire(R). All rights reserved.
+ * Copyright (c) 2011-2015, FrostWire(R). All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,8 +18,6 @@
 
 package com.limegroup.gnutella.gui.options.panes;
 
-import java.io.IOException;
-
 import com.frostwire.gui.bittorrent.BTDownloadMediator;
 import com.frostwire.gui.bittorrent.TorrentSeedingSettingComponent;
 import com.frostwire.uxstats.UXAction;
@@ -28,10 +26,11 @@ import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.SharingSettings;
 
+import java.io.IOException;
+
 /**
  * @author gubatron
  * @author aldenml
- * 
  */
 public class TorrentSeedingSettingPaneItem extends AbstractPaneItem {
 
@@ -66,13 +65,10 @@ public class TorrentSeedingSettingPaneItem extends AbstractPaneItem {
         if (!COMPONENT.wantsSeeding()) {
             BTDownloadMediator.instance().stopCompleted();
         }
-        
-        SharingSettings.SEED_HANDPICKED_TORRENT_FILES.setValue(COMPONENT.wantsHandpickedSeeding());
 
         GUIMediator.instance().getStatusLine().refresh();
-        
+
         UXStats.instance().log(SharingSettings.SEED_FINISHED_TORRENTS.getValue() ? UXAction.SHARING_SEEDING_ENABLED : UXAction.SHARING_SEEDING_DISABLED);
-        UXStats.instance().log(SharingSettings.SEED_HANDPICKED_TORRENT_FILES.getValue() ? UXAction.SHARING_PARTIAL_SEEDING_ENABLED : UXAction.SHARING_PARTIAL_SEEDING_DISABLED);
 
         return false;
     }

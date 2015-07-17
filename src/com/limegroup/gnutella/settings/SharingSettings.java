@@ -15,19 +15,18 @@
 
 package com.limegroup.gnutella.settings;
 
-import java.io.File;
-
+import com.limegroup.gnutella.util.FrostWireUtils;
 import org.limewire.setting.BooleanSetting;
 import org.limewire.setting.FileSetting;
 import org.limewire.util.CommonUtils;
 
-import com.limegroup.gnutella.util.FrostWireUtils;
+import java.io.File;
 
 /**
  * Settings for sharing
  */
 public class SharingSettings extends LimeProps {
-    
+
     private static final File PORTABLE_ROOT_FOLDER = CommonUtils.getPortableRootFolder();
 
     private SharingSettings() {
@@ -39,8 +38,8 @@ public class SharingSettings extends LimeProps {
 
     /**
      * The default folder where Torrent Data will be saved. This folder CANNOT BE SHARED
-     * to avoid sharing inconsistencies. 
-     * 
+     * to avoid sharing inconsistencies.
+     * <p/>
      * In the case of FrostWire Portable, we'll name the default torrent data folder "Downloads"
      * In regular frostwire it's "Torrent Data"
      */
@@ -48,23 +47,15 @@ public class SharingSettings extends LimeProps {
 
     /**
      * The folder value where Torrent Data will be saved. This folder CANNOT BE SHARED
-     * to avoid sharing inconsistencies. 
+     * to avoid sharing inconsistencies.
      */
     public static final FileSetting TORRENT_DATA_DIR_SETTING = FACTORY.createFileSetting("DEFAULT_TORRENT_DATA_DIR_SETTING", DEFAULT_TORRENT_DATA_DIR).setAlwaysSave(true);
 
     public static final BooleanSetting SEED_FINISHED_TORRENTS = FACTORY.createBooleanSetting("SEED_FINISHED_TORRENTS", true);
 
-    public static final BooleanSetting SEED_HANDPICKED_TORRENT_FILES = FACTORY.createBooleanSetting("SEED_HANDPICKED_TORRENT_FILES", false);
-
     public static final BooleanSetting ENABLE_DISTRIBUTED_HASH_TABLE = FACTORY.createBooleanSetting("ENABLE_DISTRIBUTED_HASH_TABLE", true);
 
     public static final File IMAGE_CACHE_DIR = new File(CommonUtils.getUserSettingsDir(), "image_cache");
-
-    /**
-     * Specifies whether or not completed downloads
-     * should automatically be cleared from the download window.
-     */
-    public static final BooleanSetting CLEAR_DOWNLOAD = FACTORY.createBooleanSetting("CLEAR_DOWNLOAD", false);
 
     public static final File getImageCacheDirectory() {
         if (!IMAGE_CACHE_DIR.exists()) {

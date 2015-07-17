@@ -1,61 +1,70 @@
+/*
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.limegroup.gnutella.gui.options.panes;
-
-import java.io.IOException;
-
-import javax.swing.JCheckBox;
 
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LabeledComponent;
 import com.limegroup.gnutella.settings.SharingSettings;
 
+import javax.swing.*;
+import java.io.IOException;
+
 /**
  * Allows the user to change whether or not partial files are shared.
  */
-//2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
 public final class PartialFileSharingPaneItem extends AbstractPaneItem {
 
     public final static String TITLE = I18n.tr("Partial Files");
-    
+
     public final static String LABEL = I18n.tr("You can choose whether or not to automatically share partially downloaded files.");
 
-	/**
-	 * Constant for the key of the locale-specific <code>String</code> for the 
-	 * upload pane check box label in the options window.
-	 */
-	private final String CHECK_BOX_LABEL = 
-		I18n.tr("Allow Partial Sharing:");
+    /**
+     * Constant for the key of the locale-specific <code>String</code> for the
+     * upload pane check box label in the options window.
+     */
+    private final String CHECK_BOX_LABEL =
+            I18n.tr("Allow Partial Sharing:");
 
-	/**
-	 * Constant for the check box that specifies whether or not partial
-	 * files should be shared.
-	 */
-	private final JCheckBox CHECK_BOX = new JCheckBox();
+    /**
+     * Constant for the check box that specifies whether or not partial
+     * files should be shared.
+     */
+    private final JCheckBox CHECK_BOX = new JCheckBox();
 
-	/**
-	 * The constructor constructs all of the elements of this
-	 * <tt>AbstractPaneItem</tt>.
-	 * 
-	 * @param key
-	 *            the key for this <tt>AbstractPaneItem</tt> that the
-	 *            superclass uses to generate locale-specific keys
-	 */
-	public PartialFileSharingPaneItem() {
-	    super(TITLE, LABEL);
-		
-		LabeledComponent comp = new LabeledComponent(CHECK_BOX_LABEL,
-				CHECK_BOX, LabeledComponent.LEFT_GLUE, LabeledComponent.LEFT);
-		add(comp.getComponent());
-	}
+    /**
+     * The constructor constructs all of the elements of this
+     * <tt>AbstractPaneItem</tt>.
+     */
+    public PartialFileSharingPaneItem() {
+        super(TITLE, LABEL);
 
-	public void initOptions() {
-	    CHECK_BOX.setSelected(SharingSettings.ALLOW_PARTIAL_SHARING.getValue());
-	}
+        LabeledComponent comp = new LabeledComponent(CHECK_BOX_LABEL,
+                CHECK_BOX, LabeledComponent.LEFT_GLUE, LabeledComponent.LEFT);
+        add(comp.getComponent());
+    }
 
-	public boolean applyOptions() throws IOException {
-	    SharingSettings.ALLOW_PARTIAL_SHARING.setValue(CHECK_BOX.isSelected());
+    public void initOptions() {
+        CHECK_BOX.setSelected(SharingSettings.ALLOW_PARTIAL_SHARING.getValue());
+    }
+
+    public boolean applyOptions() throws IOException {
+        SharingSettings.ALLOW_PARTIAL_SHARING.setValue(CHECK_BOX.isSelected());
         return false;
-	}
-	
+    }
+
     public boolean isDirty() {
         return SharingSettings.ALLOW_PARTIAL_SHARING.getValue() != CHECK_BOX.isSelected();
     }

@@ -15,30 +15,25 @@
 
 package com.limegroup.gnutella.gui.init;
 
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.JPanel;
-
-import org.limewire.util.StringUtils;
-
 import com.frostwire.gui.bittorrent.TorrentSaveFolderComponent;
 import com.frostwire.gui.bittorrent.TorrentSeedingSettingComponent;
 import com.frostwire.gui.theme.ThemeMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.LibrarySettings;
 import com.limegroup.gnutella.settings.SharingSettings;
+import org.limewire.util.StringUtils;
+
+import javax.swing.*;
+import java.awt.*;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class displays a setup window for allowing the user to choose
  * the directory for saving their files.
  */
 class BitTorrentSettingsWindow extends SetupWindow {
-
-    private static final long serialVersionUID = 4918724013794478084L;
 
     private static final String LEARN_MORE_URL = "http://support.frostwire.com/hc/en-us/articles/200302295-What-is-seeding-";
 
@@ -90,7 +85,7 @@ class BitTorrentSettingsWindow extends SetupWindow {
 
     /**
      * Overrides applySettings method in SetupWindow.
-     *
+     * <p/>
      * This method applies any settings associated with this setup window.
      */
     public void applySettings(boolean loadCoreComponents) throws ApplySettingsException {
@@ -98,24 +93,23 @@ class BitTorrentSettingsWindow extends SetupWindow {
 
         applyTorrentDataSaveFolderSettings(errors);
 
-        applyTorrentSeedingSeetings(errors);
+        applyTorrentSeedingSettings(errors);
 
         if (!errors.isEmpty()) {
             throw new ApplySettingsException(StringUtils.explode(errors, "\n\n"));
         }
     }
 
-    private void applyTorrentSeedingSeetings(List<String> errors) {
+    private void applyTorrentSeedingSettings(List<String> errors) {
         if (!_torrentSeedingSettingComponent.hasOneBeenSelected()) {
-            errors.add("<html><p>" + I18n.tr("You forgot to select your finished downloads \"Seeding\" setting.") + "</p>\n"+
-            "<p></p><p align=\"right\"><a href=\"http://support.frostwire.com/hc/en-us/articles/200302295-What-is-seeding-\">"+
-            I18n.tr("What is \"Seeding\"?")+
-            "</a></p></html>");
+            errors.add("<html><p>" + I18n.tr("You forgot to select your finished downloads \"Seeding\" setting.") + "</p>\n" +
+                    "<p></p><p align=\"right\"><a href=\"http://support.frostwire.com/hc/en-us/articles/200302295-What-is-seeding-\">" +
+                    I18n.tr("What is \"Seeding\"?") +
+                    "</a></p></html>");
             return;
         }
 
         SharingSettings.SEED_FINISHED_TORRENTS.setValue(_torrentSeedingSettingComponent.wantsSeeding());
-        SharingSettings.SEED_HANDPICKED_TORRENT_FILES.setValue(_torrentSeedingSettingComponent.wantsHandpickedSeeding());
     }
 
     private void applyTorrentDataSaveFolderSettings(List<String> errors) {

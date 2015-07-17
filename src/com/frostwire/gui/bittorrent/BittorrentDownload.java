@@ -333,7 +333,7 @@ public class BittorrentDownload implements com.frostwire.gui.bittorrent.BTDownlo
 
         @Override
         public void finished(BTDownload dl) {
-            if (!SharingSettings.SEED_FINISHED_TORRENTS.getValue() || (dl.isPartial() && !SharingSettings.SEED_HANDPICKED_TORRENT_FILES.getValue())) {
+            if (!SharingSettings.SEED_FINISHED_TORRENTS.getValue()) {
                 dl.pause();
                 finalCleanup(dl.getIncompleteFiles());
             }

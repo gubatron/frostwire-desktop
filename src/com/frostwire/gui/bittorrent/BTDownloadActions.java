@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011-2014, FrostWire(R). All rights reserved.
+ * Copyright (c) 2011-2015, FrostWire(R). All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,11 +43,9 @@ import java.util.List;
 /**
  * @author gubatron
  * @author aldenml
- *
  */
 final class BTDownloadActions {
 
-    static final ShowDetailsAction SHOW_DETAILS_ACTION = new ShowDetailsAction();
     static final ExploreAction EXPLORE_ACTION = new ExploreAction();
     static final ShowInLibraryAction SHOW_IN_LIBRARY_ACTION = new ShowInLibraryAction();
     static final ResumeAction RESUME_ACTION = new ResumeAction();
@@ -65,8 +63,6 @@ final class BTDownloadActions {
     static final PlaySingleMediaFileAction PLAY_SINGLE_AUDIO_FILE_ACTION = new PlaySingleMediaFileAction();
 
     private static class SendBTDownloaderAudioFilesToiTunes extends AbstractAction {
-
-        private static final long serialVersionUID = 8230574519252660781L;
 
         public SendBTDownloaderAudioFilesToiTunes() {
             putValue(Action.NAME, I18n.tr("Send to iTunes"));
@@ -100,8 +96,6 @@ final class BTDownloadActions {
 
     private static abstract class RefreshingAction extends AbstractAction {
 
-        private static final long serialVersionUID = -937688457597255711L;
-
         public final void actionPerformed(ActionEvent e) {
             performAction(e);
             BTDownloadMediator.instance().doRefresh();
@@ -110,7 +104,6 @@ final class BTDownloadActions {
         protected abstract void performAction(ActionEvent e);
 
     }
-
 
 
     private static class ShowDetailsAction extends RefreshingAction {
@@ -150,7 +143,7 @@ final class BTDownloadActions {
             if (downloaders.length > 0) {
                 // when the downloader is a single file, this is appending a folder to the actual file path
                 // treating it like a bittorrent download.
-                File toExplore = new File(downloaders[0].getSaveLocation(),downloaders[0].getDisplayName());
+                File toExplore = new File(downloaders[0].getSaveLocation(), downloaders[0].getDisplayName());
 
                 if (toExplore != null) {
                     // but perhaps it's a single file, make sure it is then... (Re: Issue #366)
@@ -235,25 +228,9 @@ final class BTDownloadActions {
                 }
             }
 
-            boolean resumedAPartial = false;
-
             if (allowedToResume) {
                 for (int i = 0; i < downloaders.length; i++) {
                     downloaders[i].resume();
-
-                    if (downloaders[i].isPartialDownload() && downloaders[i] instanceof BittorrentDownload) {
-                        resumedAPartial = true;
-                    }
-                }
-            }
-
-            if (resumedAPartial && !SharingSettings.SEED_HANDPICKED_TORRENT_FILES.getValue()) {
-                final StringBuffer message = new StringBuffer();
-                message.append(I18n.tr("Handpicked torrent file seeding is turned off, yet you have chosen to seed a handpicked file from a torrent.\n\n"));
-                message.append(I18n.tr("Would you like to seed handpicked torrent files from now on?"));
-
-                if (GUIMediator.showYesNoMessage(message.toString(),DialogOption.NO).equals(DialogOption.YES)) {
-                    SharingSettings.SEED_HANDPICKED_TORRENT_FILES.setValue(true);
                 }
             }
 
@@ -262,11 +239,6 @@ final class BTDownloadActions {
     }
 
     private static class PauseAction extends RefreshingAction {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 4682149704934484393L;
 
         public PauseAction() {
             putValue(Action.NAME, I18n.tr("Pause Download"));
@@ -383,7 +355,7 @@ final class BTDownloadActions {
             for (int i = 0; i < downloaders.length; i++) {
                 BTDownload d = downloaders[i];
                 if (d instanceof BittorrentDownload) {
-                    String magnetUri = ((BittorrentDownload)d).makeMagnetUri();
+                    String magnetUri = ((BittorrentDownload) d).makeMagnetUri();
                     str += magnetUri;
                     if (i < downloaders.length - 1) {
                         str += System.lineSeparator();
@@ -505,7 +477,7 @@ final class BTDownloadActions {
                     return;
                 }
 
-                File downloadFolder = new File(d.getSaveLocation(),d.getDisplayName());
+                File downloadFolder = new File(d.getSaveLocation(), d.getDisplayName());
                 if (downloadFolder.exists()) {
                     playlistFiles.add(downloadFolder);
                 }
@@ -522,7 +494,7 @@ final class BTDownloadActions {
 
         public PlaySingleMediaFileAction() {
             super(I18n.tr("Play file"));
-            putValue(Action.LONG_DESCRIPTION,I18n.tr("Play media file"));
+            putValue(Action.LONG_DESCRIPTION, I18n.tr("Play media file"));
         }
 
         @Override
@@ -541,22 +513,22 @@ final class BTDownloadActions {
 
     /**
      * NOTE: Make sure to check out AbstractLibraryTableMediator.AddToPlaylistAction, which is a similar action to this one.
-     * @author gubatron
      *
+     * @author gubatron
      */
     static class AddToPlaylistAction extends AbstractAction {
         private static final int MAX_VISIBLE_PLAYLIST_NAME_LENGTH_IN_MENU = 80;
         private Playlist playlist;
 
         public AddToPlaylistAction(Playlist playlist) {
-            super(getTruncatedString(playlist.getName(),MAX_VISIBLE_PLAYLIST_NAME_LENGTH_IN_MENU));
+            super(getTruncatedString(playlist.getName(), MAX_VISIBLE_PLAYLIST_NAME_LENGTH_IN_MENU));
             putValue(Action.LONG_DESCRIPTION, I18n.tr("Add to playlist") + " \"" + getValue(Action.NAME) + "\"");
             System.out.println("Truncated playlist name was:" + " " + getValue(Action.NAME));
             this.playlist = playlist;
         }
 
         private static String getTruncatedString(String string, int MAX_LENGTH) {
-            return string.length() > MAX_LENGTH ? (string.substring(0, MAX_LENGTH-1) + "...") : string;
+            return string.length() > MAX_LENGTH ? (string.substring(0, MAX_LENGTH - 1) + "...") : string;
         }
 
         @Override
