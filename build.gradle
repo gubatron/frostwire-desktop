@@ -58,7 +58,7 @@ sourceSets {
             srcDir '../frostwire-common/core'
 
             // frostwire-jlibtorrent
-            srcDir '../frostwire-jlibtorrent/src'
+            srcDir '../frostwire-jlibtorrent/src/main/java'
 
             // jars-src (other third parties dependencies, we keep their sources
             // so that we can properly create the .deb sources for debian based mantainers
