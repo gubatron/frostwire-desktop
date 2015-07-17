@@ -141,19 +141,6 @@ public final class TorrentUtil {
         return sb.toString();
     }
 
-    public static String hashToString(byte[] hash) {
-        String hex = "";
-        for (int i = 0; i < hash.length; i++) {
-            String t = Integer.toHexString(hash[i] & 0xFF);
-            if (t.length() < 2) {
-                t = "0" + t;
-            }
-            hex += t;
-        }
-
-        return hex;
-    }
-
     public static Set<File> getIgnorableFiles() {
         Set<File> set = TorrentUtil.getIncompleteFiles();
         set.addAll(TorrentUtil.getSkipedFiles());

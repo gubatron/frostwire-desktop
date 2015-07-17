@@ -434,18 +434,6 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     }
 
     /**
-     * Forces the selected downloads in the download window to resume.
-     */
-    void resumeSelectedDownloads() {
-        int[] sel = TABLE.getSelectedRows();
-        for (int i = 0; i < sel.length; i++) {
-            BTDownloadDataLine dd = DATA_MODEL.get(sel[i]);
-            BTDownload downloader = dd.getInitializeObject();
-            downloader.resume();
-        }
-    }
-
-    /**
      * Handles a double-click event in the table.
      */
     public void handleActionKey() {
