@@ -57,9 +57,19 @@ public final class DownloadManagerImpl implements DownloadManager {
 
                     File savePath = dl.getSavePath();
 
-                    if (savePath != null && savePath.getParentFile().getAbsolutePath().equals(UpdateSettings.UPDATES_DIR.getAbsolutePath())) {
-                        LOG.info("Update download: " + savePath);
-                        return;
+                    // don't add frostwire update downloads to the download manager.
+                    if (savePath != null) {
+                        final File parentFile = savePath.getParentFile();
+
+                        if (parentFile != null) {
+                            parentFile.getAbsolutePath().equals(UpdateSettings.UPDATES_DIR.getAbsolutePath());
+                            LOG.info("Update download, not adding to transfer manager: " + savePath);
+                            return;
+                        } else if (savePath.getAbsolutePath().equals(UpdateSettings.UPDATES_DIR.getAbsolutePath())) {
+                            // save path must have been a root folder, like D:\, so no parent file.
+                            LOG.info("Update download, not adding to transfer manager: " + savePath);
+                            return;
+                        }
                     }
 
 //                if (CommonUtils.isPortable()) {
