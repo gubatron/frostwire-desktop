@@ -830,7 +830,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         }
     }
 
-    public void downloadSoundcloudFromTrackUrlOrSearchResult(final String trackUrl, final String title, final SoundcloudSearchResult sr) {
+    public void downloadSoundcloudFromTrackUrlOrSearchResult(final String trackUrl, final SoundcloudSearchResult sr) {
         if (sr != null) {
             GUIMediator.safeInvokeLater(new Runnable() {
                 public void run() {
@@ -891,7 +891,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         final SoundcloudItem scItem = JsonUtils.toObject(json, SoundcloudItem.class);
         if (scItem != null) {
             SoundcloudSearchResult srNew = new SoundcloudSearchResult(scItem, clientId, appVersion);
-            downloadSoundcloudFromTrackUrlOrSearchResult(url, scItem.title, srNew);
+            downloadSoundcloudFromTrackUrlOrSearchResult(url, srNew);
         }
     }
 
@@ -903,7 +903,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
             for (SoundcloudItem scItem : playlist.tracks) {
                 if (scItem.downloadable) {
                     SoundcloudSearchResult srNew = new SoundcloudSearchResult(scItem, clientId, appVersion);
-                    downloadSoundcloudFromTrackUrlOrSearchResult(url, scItem.title, srNew);
+                    downloadSoundcloudFromTrackUrlOrSearchResult(url, srNew);
                 }
             }
         }

@@ -18,15 +18,12 @@
 
 package com.frostwire.gui.bittorrent;
 
-import java.io.*;
-import java.nio.ByteBuffer;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-import com.frostwire.core.CommonConstants;
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.search.soundcloud.SoundCloudRedirectResponse;
 import com.frostwire.transfers.TransferState;
@@ -49,12 +46,6 @@ import org.apache.commons.io.FilenameUtils;
 import org.limewire.util.OSUtils;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
 /**
  * @author gubatron
@@ -402,7 +393,7 @@ public class SoundcloudDownload implements BTDownload {
             sr.getSoundcloudItem().downloadable = true;
             state = TransferState.DOWNLOADING;
             SoundcloudSearchResult scSearchResult = new SoundcloudSearchResult(sr.getSoundcloudItem(), null, null);
-            BTDownloadMediator.instance().downloadSoundcloudFromTrackUrlOrSearchResult(scSearchResult.getDownloadUrl(), getDisplayName(), scSearchResult);
+            BTDownloadMediator.instance().downloadSoundcloudFromTrackUrlOrSearchResult(scSearchResult.getDownloadUrl(), scSearchResult);
         }
 
         @Override
