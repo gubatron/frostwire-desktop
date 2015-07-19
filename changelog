@@ -1,7 +1,8 @@
 frostwire (6.1.3) stable; urgency=high
+  * Soundcloud search & download API update.
   * Hungarian translation update.
 	
- -- FrostWire Team <contact@frostwire.com>  Mon, 13 Jul 2015 23:47:00 -0500
+ -- FrostWire Team <contact@frostwire.com>  Sat, 18 Jul 2015 23:54:00 -0500
 
 frostwire (6.1.2) stable; urgency=high
   * Search performance improvements. New RxJava-based implementation.
