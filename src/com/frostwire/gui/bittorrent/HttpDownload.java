@@ -161,7 +161,12 @@ public class HttpDownload implements BTDownload {
     @Override
     public void pause() {
         if (state != TransferState.FINISHED) {
-            state = TransferState.CANCELING;
+
+            if (isPausable()) {
+                state = TransferState.PAUSING;
+            } else {
+                state = TransferState.CANCELING;
+            }
             httpClient.cancel();
         }
     }

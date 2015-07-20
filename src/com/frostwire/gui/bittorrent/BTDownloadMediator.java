@@ -276,13 +276,10 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
             BTDownloadDataLine dataLine = DATA_MODEL.get(selRows[0]);
 
             BTDownload dl = dataLine.getInitializeObject();
-
-            boolean resumable = dl.isResumable();
-            boolean pausable = dl.isPausable();
             boolean completed = dl.isCompleted();
 
-            resumeAction.setEnabled(resumable);
-            pauseAction.setEnabled(pausable);
+            resumeAction.setEnabled(dl.isResumable());
+            pauseAction.setEnabled(dl.isPausable());
             exploreAction.setEnabled(completed);
             showInLibraryAction.setEnabled(completed);
         }
