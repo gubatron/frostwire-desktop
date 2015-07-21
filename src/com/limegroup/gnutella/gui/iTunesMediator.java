@@ -118,12 +118,11 @@ public final class iTunesMediator {
 
     public void addSongsiTunes(String playlist, File[] files) {
         //remove incomplete files from files.
-        Set<File> incompleteFiles = TorrentUtil.getIncompleteFiles();
-        incompleteFiles.addAll(TorrentUtil.getSkipedFiles());
+        Set<File> ignorableFiles = TorrentUtil.getIgnorableFiles();
 
         List<File> completeFiles = new ArrayList<File>(files.length);
         for (File f : files) {
-            if (incompleteFiles.contains(f)) {
+            if (ignorableFiles.contains(f)) {
                 continue;
             }
 

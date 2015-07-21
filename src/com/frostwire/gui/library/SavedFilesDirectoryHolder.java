@@ -78,7 +78,8 @@ public class SavedFilesDirectoryHolder extends FileSettingDirectoryHolder {
 
         for (File f : listFiles) {
             if (f.exists()) {
-                if (!f.isDirectory() && !_hideFiles.contains(f) && !f.getName().toLowerCase().contains(".ds_store")) {
+                if (!f.isDirectory() && !_hideFiles.contains(f) && !f.getName().toLowerCase().contains(".ds_store")
+                        && !isPartsFile(f)) {
                     results.add(f);
                 } else if (f.isDirectory() && !excludeFolders.contains(f)) {
                     results.addAll(getFilesRecursively(f, excludeFolders));
@@ -87,6 +88,10 @@ public class SavedFilesDirectoryHolder extends FileSettingDirectoryHolder {
         }
 
         return results;
+    }
+
+    private boolean isPartsFile(File f) {
+        return f.getName().startsWith(".") && f.getName().endsWith(".parts");
     }
 
     public void clearCache() {

@@ -46,12 +46,17 @@ public abstract class AbstractDirectoryHolder implements DirectoryHolder {
 
     public boolean accept(File file) {
 		if (_hideFiles!=null && (_hideFiles.contains(file) || !isFileVisible(file)
-				|| file.getName().toLowerCase().equals(".ds_store"))) {
+				|| file.getName().toLowerCase().equals(".ds_store")
+                || isPartsFile(file))) {
 			return false;
 		}
 
         File parent = file.getParentFile();
         return parent != null && parent.equals(getDirectory());
+    }
+
+    private boolean isPartsFile(File f) {
+        return f.getName().startsWith(".") && f.getName().endsWith(".parts");
     }
 
     /**

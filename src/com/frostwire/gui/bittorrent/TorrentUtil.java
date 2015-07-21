@@ -45,7 +45,6 @@ package com.frostwire.gui.bittorrent;
 
 import com.frostwire.jlibtorrent.AnnounceEntry;
 import com.frostwire.jlibtorrent.TorrentInfo;
-import com.frostwire.logging.Logger;
 import com.frostwire.transfers.TransferItem;
 import org.gudy.azureus2.core3.util.UrlUtils;
 
@@ -55,36 +54,6 @@ import java.util.List;
 import java.util.Set;
 
 public final class TorrentUtil {
-
-    private static final Logger LOG = Logger.getLogger(TorrentUtil.class);
-
-    public static Set<File> getSkipedFiles() {
-        Set<File> set = new HashSet<File>();
-        List<BTDownload> downloads = BTDownloadMediator.instance().getDownloads();
-
-        for (BTDownload d : downloads) {
-            if (d instanceof BittorrentDownload) {
-                set.addAll(getSkippedFiles(((BittorrentDownload) d).getDl()));
-            }
-        }
-
-        return set;
-    }
-
-    public static Set<File> getSkippedFiles(com.frostwire.bittorrent.BTDownload dm) {
-        Set<File> set = new HashSet<File>();
-        List<TransferItem> infoSet = dm.getItems();
-        for (TransferItem fileInfo : infoSet) {
-            try {
-                if (fileInfo.isSkipped()) {
-                    set.add(fileInfo.getFile());
-                }
-            } catch (Throwable e) {
-                LOG.error("Error getting file information", e);
-            }
-        }
-        return set;
-    }
 
     public static BittorrentDownload getDownloadManager(File f) {
         List<BTDownload> downloads = BTDownloadMediator.instance().getDownloads();
@@ -106,7 +75,7 @@ public final class TorrentUtil {
         return null;
     }
 
-    public static Set<File> getIncompleteFiles() {
+    private static Set<File> getIncompleteFiles() {
         Set<File> set = new HashSet<File>();
 
         List<BTDownload> downloads = BTDownloadMediator.instance().getDownloads();
@@ -115,6 +84,21 @@ public final class TorrentUtil {
                 BittorrentDownload bt = (BittorrentDownload) d;
                 com.frostwire.bittorrent.BTDownload dl = bt.getDl();
                 set.addAll(dl.getIncompleteFiles());
+            }
+        }
+
+        return set;
+    }
+
+    private static Set<File> getPartsFiles() {
+        Set<File> set = new HashSet<File>();
+
+        List<BTDownload> downloads = BTDownloadMediator.instance().getDownloads();
+        for (BTDownload d : downloads) {
+            if (d instanceof BittorrentDownload) {
+                BittorrentDownload bt = (BittorrentDownload) d;
+                com.frostwire.bittorrent.BTDownload dl = bt.getDl();
+                set.add(dl.partsFile());
             }
         }
 
@@ -143,7 +127,7 @@ public final class TorrentUtil {
 
     public static Set<File> getIgnorableFiles() {
         Set<File> set = TorrentUtil.getIncompleteFiles();
-        set.addAll(TorrentUtil.getSkipedFiles());
+        set.addAll(getPartsFiles());
         return set;
     }
 }
