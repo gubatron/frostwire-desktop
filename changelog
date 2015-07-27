@@ -4,8 +4,10 @@ frostwire (6.1.3) stable; urgency=high
   * Hungarian translation update.
   * Simplified seeding settings. No more need to treat handpicked/partial
     downloads differently with jlibtorrent updates.
+  * Fixes crash when setting default save folder to the root
+    of a drive.
 	
- -- FrostWire Team <contact@frostwire.com>  Mon, 20 Jul 2015 12:39:00 -0500
+ -- FrostWire Team <contact@frostwire.com>  Mon, 27 Jul 2015 14:59:00 -0500
 
 frostwire (6.1.2) stable; urgency=high
   * Search performance improvements. New RxJava-based implementation.
