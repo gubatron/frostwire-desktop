@@ -39,7 +39,6 @@ import javax.swing.JDialog;
 import javax.swing.WindowConstants;
 
 import com.limegroup.gnutella.settings.ApplicationSettings;
-import org.appwork.utils.Application;
 import org.limewire.setting.IntSetting;
 import org.limewire.setting.SettingsGroupManager;
 import org.limewire.util.CommonUtils;
@@ -286,7 +285,9 @@ public final class OptionsConstructor {
         addOption(BITTORRENT_KEY, BITTORRENT_ADVANCED_KEY, I18n.tr("Advanced"), TorrentGlobalSpeedPaneItem.class, TorrentConnectionPaneItem.class);
 
         // library
-        addOption(OptionsMediator.ROOT_NODE_KEY, LIBRARY_KEY, I18n.tr("Library"), LibraryFoldersPaneItem.class, WiFiSharingPaneItem.class, LibraryInternetRadioPaneItem.class);
+        // REMOVE:WI-FI
+        //addOption(OptionsMediator.ROOT_NODE_KEY, LIBRARY_KEY, I18n.tr("Library"), LibraryFoldersPaneItem.class, WiFiSharingPaneItem.class, LibraryInternetRadioPaneItem.class);
+        addOption(OptionsMediator.ROOT_NODE_KEY, LIBRARY_KEY, I18n.tr("Library"), LibraryFoldersPaneItem.class, LibraryInternetRadioPaneItem.class);
 
         // player
         addOption(OptionsMediator.ROOT_NODE_KEY, PLAYER_KEY, I18n.tr("Player"), PlayerPaneItem.class);

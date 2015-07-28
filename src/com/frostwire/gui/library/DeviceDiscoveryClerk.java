@@ -99,6 +99,8 @@ public class DeviceDiscoveryClerk {
     }
 
     public void start() {
+        // REMOVE:WI-FI
+        /*
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -106,9 +108,12 @@ public class DeviceDiscoveryClerk {
                 peerManager.start(createLocalPeer());
             }
         }).start();
+        */
     }
 
     public void stop() {
+        // REMOVE:WI-FI
+        /*
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -121,6 +126,7 @@ public class DeviceDiscoveryClerk {
                 }
             }
         }).start();
+        */
     }
 
     public void handleDeviceState(String key, InetAddress address, int listeningPort, boolean bye, LocalPeer pinfo) {
