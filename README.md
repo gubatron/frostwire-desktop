@@ -41,6 +41,9 @@ layout has been simplified enourmously for FrostWire 6.
 - The search is built using the awesome [H2 database](http://www.h2database.com/html/main.html) and [Lucene indexes](http://lucene.apache.org/core/).
 - JSON parsing comes from [google-gson](https://code.google.com/p/google-gson/), and so on and so on.
 
+# Installers
+
+If you're just looking for a FrostWire installer here are the latest versions for [Windows, MacOSX, Linux](http://www.frostwire.com/downloads) and [Android](http://www.frostwire.com/android)
 
 # Build Requirements
 
