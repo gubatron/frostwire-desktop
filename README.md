@@ -43,7 +43,7 @@ layout has been simplified enourmously for FrostWire 6.
 
 # Installers
 
-If you're just looking for a FrostWire installer here are the latest versions for [Windows, MacOSX, Linux](http://www.frostwire.com/downloads) and [Android](http://www.frostwire.com/android)
+If you're just looking for a FrostWire installer here are the latest official builds for [Windows, MacOSX, Linux](http://www.frostwire.com/downloads) and [Android](http://www.frostwire.com/android)
 
 # Build Requirements
 
