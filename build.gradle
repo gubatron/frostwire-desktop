@@ -38,6 +38,8 @@ repositories {
 
 // add third party jars to classpath.
 dependencies {
+    compile 'com.frostwire:jlibtorrent:1.1.0.3'
+
     compile name: 'rxjava-1.0.12'
     compile name: 'messages'
 
@@ -56,9 +58,6 @@ sourceSets {
             srcDir '../frostwire-common/json'
             srcDir '../frostwire-common/mp4parser'
             srcDir '../frostwire-common/core'
-
-            // frostwire-jlibtorrent
-            srcDir '../frostwire-jlibtorrent/src/main/java'
 
             // jars-src (other third parties dependencies, we keep their sources
             // so that we can properly create the .deb sources for debian based mantainers
