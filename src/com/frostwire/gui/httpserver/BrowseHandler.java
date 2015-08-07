@@ -27,7 +27,6 @@ import com.frostwire.core.FileDescriptor;
 import com.frostwire.gui.Librarian;
 import com.frostwire.logging.Logger;
 import com.frostwire.util.JsonUtils;
-import com.frostwire.util.URLUtils;
 import com.sun.net.httpserver.HttpExchange;
 
 /**
