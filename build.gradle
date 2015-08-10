@@ -40,6 +40,7 @@ repositories {
 dependencies {
     compile 'com.frostwire:jlibtorrent:1.1.0.3'
 
+    compile name: 're2j-1.0'
     compile name: 'rxjava-1.0.12'
     compile name: 'messages'
 
