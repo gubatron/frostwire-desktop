@@ -57,5 +57,6 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="re2j-1.0" level="project" />
+    <orderEntry type="library" name="jlibtorrent-1.1.0.3" level="project" />
   </component>
 </module>
