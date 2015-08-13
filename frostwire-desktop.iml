@@ -28,9 +28,6 @@
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/lib/jars-src/h2-1.4.186/src/main" isTestSource="false" />
     </content>
-    <content url="file://$MODULE_DIR$/../frostwire-jlibtorrent">
-      <sourceFolder url="file://$MODULE_DIR$/../frostwire-jlibtorrent/src/main/java" isTestSource="false" />
-    </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="gettext-commons" level="project" />
@@ -44,7 +41,6 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="h2-1.4.186" level="project" />
     <orderEntry type="module-library">
       <library>
         <CLASSES>
@@ -57,7 +53,6 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="re2j-1.0" level="project" />
-    <orderEntry type="library" name="jlibtorrent-1.1.0.3" level="project" />
     <orderEntry type="library" name="jlibtorrent-1.1.0.4" level="project" />
   </component>
 </module>

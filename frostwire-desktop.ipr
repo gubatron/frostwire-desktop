@@ -194,26 +194,11 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../frostwire-common" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/../frostwire-jlibtorrent" vcs="Git" />
   </component>
   <component name="libraryTable">
     <library name="gettext-commons">
       <CLASSES>
         <root url="jar://$PROJECT_DIR$/lib/jars/gettext-commons.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES />
-    </library>
-    <library name="h2-1.4.186">
-      <CLASSES>
-        <root url="jar://$PROJECT_DIR$/lib/jars/h2-1.4.186.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES />
-    </library>
-    <library name="jlibtorrent-1.1.0.3">
-      <CLASSES>
-        <root url="jar://$PROJECT_DIR$/lib/jars/jlibtorrent-1.1.0.3.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />
