@@ -51,42 +51,42 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
     /**
      * Constant for the column with the wi-fi shared state.
      */
-    static final int SHARE_IDX = 1;
+    //static final int SHARE_IDX = 1;
 
     /**
      * Constant for the column with the icon of the file.
      */
-    static final int ICON_IDX = 2;
+    static final int ICON_IDX = 1;
 
     /**
      * Constant for the column with the name of the file.
      */
-    static final int NAME_IDX = 3;
+    static final int NAME_IDX = 2;
 
     /**
      * Constant for the column storing the size of the file.
      */
-    static final int SIZE_IDX = 4;
+    static final int SIZE_IDX = 3;
 
     /**
      * Constant for the column storing the file type (extension or more
      * more general type) of the file.
      */
-    static final int TYPE_IDX = 5;
+    static final int TYPE_IDX = 4;
 
     /**
      * Constant for the column storing the file's path
      */
-    static final int PATH_IDX = 6;
+    static final int PATH_IDX = 5;
 
     /**
      * Constant for the column indicating the mod time of a file.
      */
-    static final int MODIFICATION_TIME_IDX = 7;
+    static final int MODIFICATION_TIME_IDX = 6;
     
-    static final int PAYMENT_OPTIONS_IDX = 8;
+    static final int PAYMENT_OPTIONS_IDX = 7;
     
-    static final int LICENSE_IDX = 9;
+    static final int LICENSE_IDX = 8;
 
     private static final SizeHolder ZERO_SIZED_HOLDER = new SizeHolder(0);
 
@@ -259,8 +259,8 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
                 return new PlayableCell(this, _path, isPlaying, idx);
             case MODIFICATION_TIME_IDX:
                 return new PlayableCell(this, lastModified, lastModified.toString(), isPlaying, idx);
-            case SHARE_IDX:
-                return new FileShareCell(this, initializer.getAbsolutePath(), shared);
+//            case SHARE_IDX:
+//                return new FileShareCell(this, initializer.getAbsolutePath(), shared);
             case PAYMENT_OPTIONS_IDX:
                 return paymentOptions;
             case LICENSE_IDX:
@@ -309,7 +309,7 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
         if (ltColumns == null) {
             LimeTableColumn[] temp = { new LimeTableColumn(ACTIONS_IDX, "LIBRARY_TABLE_ACTIONS", I18n.tr("Actions"), 18, true, LibraryActionsHolder.class),
 
-            new LimeTableColumn(SHARE_IDX, "LIBRARY_TABLE_SHARE", I18n.tr("Wi-Fi Shared"), 18, true, FileShareCell.class),
+            //new LimeTableColumn(SHARE_IDX, "LIBRARY_TABLE_SHARE", I18n.tr("Wi-Fi Shared"), 18, true, FileShareCell.class),
 
             new LimeTableColumn(ICON_IDX, "LIBRARY_TABLE_ICON", I18n.tr("Icon"), GUIMediator.getThemeImage("question_mark"), 18, true, PlayableIconCell.class),
 

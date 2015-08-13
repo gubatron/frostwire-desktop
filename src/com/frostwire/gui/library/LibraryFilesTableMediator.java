@@ -81,8 +81,8 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
     private Action CREATE_TORRENT_ACTION;
     private Action DELETE_ACTION;
     private Action SEND_TO_ITUNES_ACTION;
-    private Action WIFI_UNSHARE_ACTION;
-    private Action WIFI_SHARE_ACTION;
+//    private Action WIFI_UNSHARE_ACTION;
+//    private Action WIFI_SHARE_ACTION;
 
     /**
      * instance, for singleton access
@@ -108,8 +108,8 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         CREATE_TORRENT_ACTION = new CreateTorrentAction();
         DELETE_ACTION = new RemoveAction();
         SEND_TO_ITUNES_ACTION = new SendAudioFilesToiTunes();
-        WIFI_SHARE_ACTION = new WiFiShareAction(true);
-        WIFI_UNSHARE_ACTION = new WiFiShareAction(false);
+//        WIFI_SHARE_ACTION = new WiFiShareAction(true);
+//        WIFI_UNSHARE_ACTION = new WiFiShareAction(false);
     }
 
     @Override
@@ -177,22 +177,22 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         //sharing takes a while...
         //there's an in between state while the file is changing from
         //unshare to shared, this is "being shared"
-        boolean noneSharing = !isAnyBeingShared();
-        boolean allShared = areAllSelectedFilesShared();
-
-        WIFI_SHARE_ACTION.setEnabled(noneSharing && !allShared);
-
-        //unsharing is immediate.
-        WIFI_UNSHARE_ACTION.setEnabled(noneSharing && allShared);
-
-        //menu.add(new SkinMenuItem(areAllSelectedFilesShared() ? WIFI_UNSHARE_ACTION : WIFI_SHARE_ACTION));
-        if (WIFI_SHARE_ACTION.isEnabled()) {
-            menu.add(WIFI_SHARE_ACTION);
-        }
-
-        if (WIFI_UNSHARE_ACTION.isEnabled()) {
-            menu.add(WIFI_UNSHARE_ACTION);
-        }
+//        boolean noneSharing = !isAnyBeingShared();
+//        boolean allShared = areAllSelectedFilesShared();
+//
+//        WIFI_SHARE_ACTION.setEnabled(noneSharing && !allShared);
+//
+//        //unsharing is immediate.
+//        WIFI_UNSHARE_ACTION.setEnabled(noneSharing && allShared);
+//
+//        //menu.add(new SkinMenuItem(areAllSelectedFilesShared() ? WIFI_UNSHARE_ACTION : WIFI_SHARE_ACTION));
+//        if (WIFI_SHARE_ACTION.isEnabled()) {
+//            menu.add(WIFI_SHARE_ACTION);
+//        }
+//
+//        if (WIFI_UNSHARE_ACTION.isEnabled()) {
+//            menu.add(WIFI_UNSHARE_ACTION);
+//        }
 
         menu.add(new SkinMenuItem(SEND_TO_FRIEND_ACTION));
         menu.add(new SkinMenuItem(SEND_TO_ITUNES_ACTION));
@@ -228,33 +228,33 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
      * If a file in the current selection is being shared, this returns true.
      * @return
      */
-    private boolean isAnyBeingShared() {
-        boolean oneBeingShared = false;
-        int[] selectedRows = TABLE.getSelectedRows();
-        for (int i : selectedRows) {
-            LibraryFilesTableDataLine libraryFilesTableDataLine = DATA_MODEL.get(i);
+//    private boolean isAnyBeingShared() {
+//        boolean oneBeingShared = false;
+//        int[] selectedRows = TABLE.getSelectedRows();
+//        for (int i : selectedRows) {
+//            LibraryFilesTableDataLine libraryFilesTableDataLine = DATA_MODEL.get(i);
+//
+//            if (Librarian.instance().getFileShareState(libraryFilesTableDataLine.getInitializeObject().getAbsolutePath()) == Librarian.FILE_STATE_SHARING) {
+//                oneBeingShared = true;
+//                break;
+//            }
+//        }
+//        return oneBeingShared;
+//    }
 
-            if (Librarian.instance().getFileShareState(libraryFilesTableDataLine.getInitializeObject().getAbsolutePath()) == Librarian.FILE_STATE_SHARING) {
-                oneBeingShared = true;
-                break;
-            }
-        }
-        return oneBeingShared;
-    }
-
-    private boolean areAllSelectedFilesShared() {
-        boolean allAreShared = true;
-        int[] selectedRows = TABLE.getSelectedRows();
-        for (int i : selectedRows) {
-            LibraryFilesTableDataLine libraryFilesTableDataLine = DATA_MODEL.get(i);
-
-            if (Librarian.instance().getFileShareState(libraryFilesTableDataLine.getInitializeObject().getAbsolutePath()) != Librarian.FILE_STATE_SHARED) {
-                allAreShared = false;
-                break;
-            }
-        }
-        return allAreShared;
-    }
+//    private boolean areAllSelectedFilesShared() {
+//        boolean allAreShared = true;
+//        int[] selectedRows = TABLE.getSelectedRows();
+//        for (int i : selectedRows) {
+//            LibraryFilesTableDataLine libraryFilesTableDataLine = DATA_MODEL.get(i);
+//
+//            if (Librarian.instance().getFileShareState(libraryFilesTableDataLine.getInitializeObject().getAbsolutePath()) != Librarian.FILE_STATE_SHARED) {
+//                allAreShared = false;
+//                break;
+//            }
+//        }
+//        return allAreShared;
+//    }
 
     private boolean areAllSelectedFilesMP4s() {
         boolean selectionIsAllMP4 = true;
@@ -340,10 +340,10 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
     protected void setDefaultEditors() {
         TableColumnModel model = TABLE.getColumnModel();
 
-        TableColumn tc = model.getColumn(LibraryFilesTableDataLine.SHARE_IDX);
-        tc.setCellEditor(new FileShareCellEditor(FILE_SHARE_CELL_RENDERER));
+//        TableColumn tc = model.getColumn(LibraryFilesTableDataLine.SHARE_IDX);
+//        tc.setCellEditor(new FileShareCellEditor(FILE_SHARE_CELL_RENDERER));
 
-        tc = model.getColumn(LibraryFilesTableDataLine.ACTIONS_IDX);
+        TableColumn tc = model.getColumn(LibraryFilesTableDataLine.ACTIONS_IDX);
         tc.setCellEditor(new GenericCellEditor(getAbstractActionsRenderer()));
 
         tc = model.getColumn(LibraryFilesTableDataLine.PAYMENT_OPTIONS_IDX);
@@ -744,9 +744,9 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
             LibraryMediator.instance().getLibraryCoverArt().setFile(selectedFile);
         }
 
-        boolean anyBeingShared = isAnyBeingShared();
-        WIFI_SHARE_ACTION.setEnabled(!anyBeingShared);
-        WIFI_UNSHARE_ACTION.setEnabled(!anyBeingShared);
+//        boolean anyBeingShared = isAnyBeingShared();
+//        WIFI_SHARE_ACTION.setEnabled(!anyBeingShared);
+//        WIFI_UNSHARE_ACTION.setEnabled(!anyBeingShared);
     }
 
     /**
@@ -1160,56 +1160,56 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         }
     }
 
-    private class WiFiShareAction extends AbstractAction {
-
-        private static final long serialVersionUID = 1889199111839641873L;
-        private boolean share;
-
-        public WiFiShareAction(boolean share) {
-            super(share ? I18n.tr("Share") : I18n.tr("Unshare"));
-            this.share = share;
-            String actionName = share ? I18n.tr("Share") : I18n.tr("Unshare");
-
-            putValue(LimeAction.SHORT_NAME, actionName);
-            putValue(Action.LONG_DESCRIPTION, actionName + " " + I18n.tr("file on local Wi-Fi network"));
-            putValue(Action.SMALL_ICON, GUIMediator.getThemeImage(share ? "file_shared" : "file_unshared"));
-            putValue(LimeAction.ICON_NAME, share ? "WIFI_SHARED" : "WIFI_UNSHARED");
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            int[] rows = TABLE.getSelectedRows();
-            for (int i = 0; i < rows.length; i++) {
-                int index = rows[i]; // current index to add
-                File file = DATA_MODEL.getFile(index);
-                LibraryFilesTableDataLine dataLine = DATA_MODEL.get(i);
-                try {
-                    //this is so that we avoid re-sharing what's already shared.
-                    //we nest this logic for clarity.
-                    if (share) {
-                        if (!Librarian.instance().isFileShared(file.getAbsolutePath())) {
-                            actualShare(dataLine, file);
-                        }
-                    }
-                    //this happens only when.
-                    else {
-                        actualShare(dataLine, file);
-                    }
-
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-            }
-
-            LibraryMediator.instance().getDeviceDiscoveryClerk().updateLocalPeer();
-            UXStats.instance().log(share ? UXAction.WIFI_SHARING_SHARED : UXAction.WIFI_SHARING_UNSHARED);
-        }
-
-        private void actualShare(LibraryFilesTableDataLine dataLine, File file) {
-            dataLine.setShared(share);
-            Librarian.instance().shareFile(file.getAbsolutePath(), share, false);
-        }
-    }
+//    private class WiFiShareAction extends AbstractAction {
+//
+//        private static final long serialVersionUID = 1889199111839641873L;
+//        private boolean share;
+//
+//        public WiFiShareAction(boolean share) {
+//            super(share ? I18n.tr("Share") : I18n.tr("Unshare"));
+//            this.share = share;
+//            String actionName = share ? I18n.tr("Share") : I18n.tr("Unshare");
+//
+//            putValue(LimeAction.SHORT_NAME, actionName);
+//            putValue(Action.LONG_DESCRIPTION, actionName + " " + I18n.tr("file on local Wi-Fi network"));
+//            putValue(Action.SMALL_ICON, GUIMediator.getThemeImage(share ? "file_shared" : "file_unshared"));
+//            putValue(LimeAction.ICON_NAME, share ? "WIFI_SHARED" : "WIFI_UNSHARED");
+//        }
+//
+//        @Override
+//        public void actionPerformed(ActionEvent e) {
+//            int[] rows = TABLE.getSelectedRows();
+//            for (int i = 0; i < rows.length; i++) {
+//                int index = rows[i]; // current index to add
+//                File file = DATA_MODEL.getFile(index);
+//                LibraryFilesTableDataLine dataLine = DATA_MODEL.get(i);
+//                try {
+//                    //this is so that we avoid re-sharing what's already shared.
+//                    //we nest this logic for clarity.
+//                    if (share) {
+//                        if (!Librarian.instance().isFileShared(file.getAbsolutePath())) {
+//                            actualShare(dataLine, file);
+//                        }
+//                    }
+//                    //this happens only when.
+//                    else {
+//                        actualShare(dataLine, file);
+//                    }
+//
+//                } catch (Exception ex) {
+//                    ex.printStackTrace();
+//                }
+//            }
+//
+//            LibraryMediator.instance().getDeviceDiscoveryClerk().updateLocalPeer();
+//            UXStats.instance().log(share ? UXAction.WIFI_SHARING_SHARED : UXAction.WIFI_SHARING_UNSHARED);
+//        }
+//
+//        private void actualShare(LibraryFilesTableDataLine dataLine, File file) {
+//            dataLine.setShared(share);
+//            Librarian.instance().shareFile(file.getAbsolutePath(), share, false);
+//        }
+//    }
 
     public static boolean hasExtension(String filename, String... extensionsWithoutDot) {
 
