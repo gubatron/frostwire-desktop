@@ -15,45 +15,20 @@
 
 package com.limegroup.gnutella.gui;
 
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.Box;
-import javax.swing.ImageIcon;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JSeparator;
-import javax.swing.SwingConstants;
-import javax.swing.ToolTipManager;
-
 import com.frostwire.bittorrent.BTEngine;
-import com.frostwire.jlibtorrent.*;
-import com.frostwire.jlibtorrent.alerts.Alert;
-import com.frostwire.jlibtorrent.alerts.AlertType;
-import com.frostwire.jlibtorrent.alerts.DhtStatsAlert;
-import com.limegroup.gnutella.gui.options.OptionsConstructor;
-import org.limewire.setting.BooleanSetting;
-
 import com.frostwire.gui.bittorrent.BTDownloadMediator;
 import com.frostwire.gui.theme.SkinCheckBoxMenuItem;
 import com.frostwire.gui.theme.SkinPopupMenu;
+import com.frostwire.jlibtorrent.Session;
+import com.limegroup.gnutella.gui.options.OptionsConstructor;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.settings.StatusBarSettings;
+import org.limewire.setting.BooleanSetting;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 
 /**
  * The component for the space at the bottom of the main application
@@ -592,9 +567,7 @@ public final class StatusLine {
             break;
         }
 
-        updateTotalDHTNodesInTooltipAsync();
-
-        _connectionQualityMeter.setToolTipText(tip);
+        updateTotalDHTNodesInTooltip(tip);
         _connectionQualityMeter.setText(status);
     }
 
@@ -604,57 +577,31 @@ public final class StatusLine {
      *  the routing buckets, then calls onTotalNodes(int) which safely updates
      *  the tooltip of the connection quality meter on the UI thread.
      */
-    private void updateTotalDHTNodesInTooltipAsync() {
-        if (System.currentTimeMillis() - _lastOnTotalNodesUpdate < 10000) {
+    private void updateTotalDHTNodesInTooltip(String tip) {
+        if (System.currentTimeMillis() - _lastOnTotalNodesUpdate < 5000) {
             return;
         }
 
         try {
-            final Session session = BTEngine.getInstance().getSession();
+            BTEngine engine = BTEngine.getInstance();
+            final Session session = engine.getSession();
             if (session != null && session.isDHTRunning()) {
-                session.addListener(new AlertListener() {
-                    @Override
-                    public int[] types() {
-                        return new int[] { AlertType.DHT_STATS.getSwig() };
-                    }
-
-                    @Override
-                    public void alert(Alert<?> alert) {
-                        if (alert instanceof DhtStatsAlert) {
-                            session.removeListener(this);
-                            DhtStatsAlert dhtAlert = (DhtStatsAlert) alert;
-                            final DHTRoutingBucket[] routingTable = ((DhtStatsAlert) alert).getRoutingTable();
-
-                            int totalNodes = 0;
-                            if (routingTable != null && routingTable.length > 0) {
-                                for (int i=0; i < routingTable.length; i++) {
-                                    DHTRoutingBucket bucket = routingTable[i];
-                                    totalNodes += bucket.numNodes();
-                                }
-                            }
-
-                            onTotalNodes(totalNodes);
-                        }
-                    }
-                });
                 session.postDHTStats();
+                int totalDHTNodes = engine.getTotalDHTNodes();
+                if (totalDHTNodes != -1) {
+                    final String updatedToolTip = tip + ". (DHT: " + totalDHTNodes + " " + I18n.tr("nodes") + ")";
+                    GUIMediator.safeInvokeAndWait(new Runnable() {
+                        @Override
+                        public void run() {
+                            _lastOnTotalNodesUpdate = System.currentTimeMillis();
+                            _connectionQualityMeter.setToolTipText(updatedToolTip);
+                        }
+                    });
+                }
             }
         } catch (Throwable t) {
 
         }
-    }
-
-    private void onTotalNodes(final int totalNodes) {
-        _lastOnTotalNodesUpdate = System.currentTimeMillis();
-        final String updatedToolTip= _connectionQualityMeter.getToolTipText() +
-                ". (DHT: " + totalNodes + " " + I18n.tr("nodes") + ")";
-
-        GUIMediator.safeInvokeAndWait(new Runnable() {
-            @Override
-            public void run() {
-                _connectionQualityMeter.setToolTipText(updatedToolTip);
-            }
-        });
     }
 
     /**
