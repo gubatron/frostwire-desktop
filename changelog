@@ -1,3 +1,11 @@
+frostwire (6.1.4) stable; urgency=high
+  * libtorrent/jlibtorrent core update (v 1.1.0.4).
+  * Torrent settings issues fixed.
+  * Fixes TorLock search.
+  * Considerably faster search source processing (new regex engine). 
+	
+ -- FrostWire Team <contact@frostwire.com>  Aug, 13 Jul 2015 14:42:00 -0500
+
 frostwire (6.1.3) stable; urgency=high
   * libtorrent/jlibtorrent core update.
   * Archive.org downloads are pausable/resumable.
