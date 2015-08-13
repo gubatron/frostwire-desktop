@@ -41,8 +41,10 @@ import javax.swing.SwingConstants;
 import javax.swing.ToolTipManager;
 
 import com.frostwire.bittorrent.BTEngine;
-import com.frostwire.jlibtorrent.DHT;
-import com.frostwire.jlibtorrent.Session;
+import com.frostwire.jlibtorrent.*;
+import com.frostwire.jlibtorrent.alerts.Alert;
+import com.frostwire.jlibtorrent.alerts.AlertType;
+import com.frostwire.jlibtorrent.alerts.DhtStatsAlert;
 import com.limegroup.gnutella.gui.options.OptionsConstructor;
 import org.limewire.setting.BooleanSetting;
 
@@ -589,18 +591,64 @@ public final class StatusLine {
             break;
         }
 
-        try {
-            Session session = BTEngine.getInstance().getSession();
-            if (session != null) {
-                DHT dht = new DHT(session);
-                tip = tip + ". (DHT: " + dht.totalNodes() + " " + I18n.tr("nodes") + ")";
-            }
+        updateTotalDHTNodesInTooltipAsync();
 
-            _connectionQualityMeter.setToolTipText(tip);
+        _connectionQualityMeter.setToolTipText(tip);
+        _connectionQualityMeter.setText(status);
+    }
+
+    /**
+     *  Adds a DhtStatsAlert listener to the session, has the session post the DHTStatsAlert
+     *  when it receives it, it removes the listener, calculates the node count from all
+     *  the routing buckets, then calls onTotalNodes(int) which safely updates
+     *  the tooltip of the connection quality meter on the UI thread.
+     */
+    private void updateTotalDHTNodesInTooltipAsync() {
+        try {
+            final Session session = BTEngine.getInstance().getSession();
+            if (session != null && session.isDHTRunning()) {
+                session.addListener(new AlertListener() {
+                    @Override
+                    public int[] types() {
+                        return new int[] { AlertType.DHT_STATS.getSwig() };
+                    }
+
+                    @Override
+                    public void alert(Alert<?> alert) {
+                        if (alert instanceof DhtStatsAlert) {
+                            session.removeListener(this);
+                            DhtStatsAlert dhtAlert = (DhtStatsAlert) alert;
+                            final DHTRoutingBucket[] routingTable = ((DhtStatsAlert) alert).getRoutingTable();
+
+                            int totalNodes = 0;
+                            if (routingTable != null && routingTable.length > 0) {
+                                for (int i=0; i < routingTable.length; i++) {
+                                    DHTRoutingBucket bucket = routingTable[i];
+                                    totalNodes += bucket.numNodes();
+                                }
+                            }
+
+                            onTotalNodes(totalNodes);
+                        }
+                    }
+                });
+                session.postDHTStats();
+            }
         } catch (Throwable t) {
 
         }
-        _connectionQualityMeter.setText(status);
+    }
+
+    private void onTotalNodes(final int totalNodes) {
+        final String updatedToolTip= _connectionQualityMeter.getToolTipText() +
+                ". (DHT: " + totalNodes + " " + I18n.tr("nodes") + ")";
+
+        GUIMediator.safeInvokeAndWait(new Runnable() {
+            @Override
+            public void run() {
+                _connectionQualityMeter.setToolTipText(updatedToolTip);
+            }
+        });
     }
 
     /**
