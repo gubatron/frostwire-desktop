@@ -114,6 +114,7 @@ public final class StatusLine {
     private StatusComponent STATUS_COMPONENT;
     private JPanel _centerPanel;
     private Component _centerComponent;
+    private long _lastOnTotalNodesUpdate;
 
     ///////////////////////////////////////////////////////////////////////////
     //  Construction
@@ -604,6 +605,10 @@ public final class StatusLine {
      *  the tooltip of the connection quality meter on the UI thread.
      */
     private void updateTotalDHTNodesInTooltipAsync() {
+        if (System.currentTimeMillis() - _lastOnTotalNodesUpdate < 10000) {
+            return;
+        }
+
         try {
             final Session session = BTEngine.getInstance().getSession();
             if (session != null && session.isDHTRunning()) {
@@ -640,6 +645,7 @@ public final class StatusLine {
     }
 
     private void onTotalNodes(final int totalNodes) {
+        _lastOnTotalNodesUpdate = System.currentTimeMillis();
         final String updatedToolTip= _connectionQualityMeter.getToolTipText() +
                 ". (DHT: " + totalNodes + " " + I18n.tr("nodes") + ")";
 
