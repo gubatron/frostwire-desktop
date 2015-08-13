@@ -61,7 +61,7 @@ import com.limegroup.gnutella.util.FrostWireUtils;
  *  - Send the bug directly to the servlet
  *  - Allow the bug to be reviewed before sending
  *  - Allow the user to copy the bug & email it if sending fails.
- *  - Supress the bug entirely
+ *  - Suppress the bug entirely
  */
 public final class BugManager {
     

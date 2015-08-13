@@ -1,28 +1,16 @@
 package com.limegroup.gnutella.gui;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-import javax.swing.WindowConstants;
-
+import com.limegroup.gnutella.util.FrostWireUtils;
+import org.limewire.service.ErrorService;
 import org.limewire.util.OSUtils;
 import org.limewire.util.VersionUtils;
 
-import com.limegroup.gnutella.util.FrostWireUtils;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 /**
  * Contains the <tt>JDialog</tt> instance that shows "about" information for the
@@ -75,6 +63,14 @@ final class AboutWindow {
 		JLabel client = new JLabel("FrostWire" + " "
 				+ FrostWireUtils.getFrostWireVersion() + " (build " + FrostWireUtils.getBuildNumber() + ")");
 		client.setHorizontalAlignment(SwingConstants.CENTER);
+
+		client.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				super.mouseClicked(e);
+				ErrorService.error(new Throwable(""),"Hi there you curious friend. Send us feedback!");
+			}
+		});
 
 		// set up java version label
 		JLabel java = new JLabel("Java " + VersionUtils.getJavaVersion());
