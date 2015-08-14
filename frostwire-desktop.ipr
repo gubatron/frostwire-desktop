@@ -203,9 +203,9 @@
       <JAVADOC />
       <SOURCES />
     </library>
-    <library name="jlibtorrent-1.1.0.4">
+    <library name="jlibtorrent-1.1.0.5">
       <CLASSES>
-        <root url="jar://$PROJECT_DIR$/lib/jars/jlibtorrent-1.1.0.4.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/jars/jlibtorrent-1.1.0.5.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />
