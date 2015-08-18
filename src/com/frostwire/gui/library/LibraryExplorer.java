@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011-2014, FrostWire(R). All rights reserved.
+ * Copyright (c) 2011-2015, FrostWire(R). All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -63,7 +63,6 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
     private JTree tree;
 
     private TextNode root;
-    private DevicesNode devicesNode;
 
     private Action refreshAction = new RefreshAction();
     private Action exploreAction = new ExploreAction();
@@ -79,40 +78,6 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
         tree.repaint();
     }
 
-    public void handleDeviceNew(Device device) {
-        DeviceNode deviceNode = new DeviceNode(device);
-        devicesNode.add(deviceNode);
-        model.insertNodeInto(deviceNode, devicesNode, devicesNode.getChildCount() - 1);
-        tree.expandPath(new TreePath(devicesNode.getPath()));
-
-        LOG.info("New Device: " + device);
-
-        refreshDeviceNode(device);
-    }
-
-    public void handleDeviceAlive(Device device) {
-        refreshDeviceNode(device);
-    }
-
-    public void handleDeviceStale(final Device device) {
-        GUIMediator.safeInvokeLater(new Runnable() {
-            @Override
-            public void run() {
-                DeviceNode node = findNode(device);
-                if (node != null) {
-                    model.removeNodeFromParent(node);
-
-                    // clear if necessary, pending refactor
-                    Device d = getSelectedDeviceFiles();
-                    DirectoryHolder dh = getSelectedDirectoryHolder();
-                    if (d == null && dh == null) {
-                        LibraryMediator.instance().clearLibraryTable();
-                    }
-                }
-            }
-        });
-    }
-
     public void refreshSelection(boolean clearCache) {
         LibraryNode node = (LibraryNode) tree.getLastSelectedPathComponent();
 
@@ -122,23 +87,7 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
             return;
         }
 
-        if (node instanceof DeviceFileTypeTreeNode) {
-            DeviceFileTypeTreeNode deviceFileTypeNode = (DeviceFileTypeTreeNode) node;
-            LibraryMediator.instance().updateTableFiles(deviceFileTypeNode.getDevice(), deviceFileTypeNode.getFileType());
-
-            if (deviceFileTypeNode.getDevice().isLocal()) {
-                searchPrompt = I18n.tr("Search your") + " " + node.getUserObject();
-            } else {
-                searchPrompt = I18n.tr("Search") + " " + deviceFileTypeNode.getDevice().getName() + I18n.tr("'s ") + deviceFileTypeNode.getUserObject();
-            }
-
-        } else {
-            LibraryMediator.instance().clearLibraryTable();
-        }
-
-        if (node instanceof DeviceNode || node instanceof DevicesNode) {
-            searchPrompt = "";
-        }
+        LibraryMediator.instance().clearLibraryTable();
 
         DirectoryHolder directoryHolder = getSelectedDirectoryHolder();
 
@@ -210,12 +159,7 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
         root.add(new DirectoryHolderNode(new TorrentDirectoryHolder()));
         root.add(new DirectoryHolderNode(new SavedFilesDirectoryHolder(SharingSettings.TORRENT_DATA_DIR_SETTING, I18n.tr("Default Save Folder"))));
 
-        devicesNode = new DevicesNode(I18n.tr("Wi-Fi Sharing"));
-        // REMOVE:WI-FI
-        //root.add(devicesNode);
-
         model = new DefaultTreeModel(root);
-
     }
 
     private void setupTree() {
@@ -265,77 +209,9 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
         root.add(node);
     }
 
-    private DeviceNode findNode(Device device) {
-        DeviceNode deviceNode = null;
-
-        for (int i = 0; i < devicesNode.getChildCount() && deviceNode == null; i++) {
-            TreeNode node = devicesNode.getChildAt(i);
-            if (node instanceof DeviceNode) {
-                if (((DeviceNode) node).getDevice().equals(device)) {
-                    deviceNode = (DeviceNode) node;
-                }
-            }
-        }
-
-        return deviceNode;
-    }
-
-    private DeviceFileTypeTreeNode findNode(DeviceNode deviceNode, byte fileType) {
-        DeviceFileTypeTreeNode deviceFileTypeNode = null;
-
-        for (int i = 0; i < deviceNode.getChildCount() && deviceFileTypeNode == null; i++) {
-            TreeNode node = deviceNode.getChildAt(i);
-            if (node instanceof DeviceFileTypeTreeNode) {
-                if (((DeviceFileTypeTreeNode) node).getFileType() == fileType) {
-                    deviceFileTypeNode = (DeviceFileTypeTreeNode) node;
-                }
-            }
-        }
-
-        return deviceFileTypeNode;
-    }
-
-    private void refreshDeviceNode(Device device) {
-        DeviceNode node = findNode(device);
-
-        if (node == null) {
-            return; // weird case, no need to do anything
-        }
-
-        refreshDeviceFileTypeNode(node, DeviceConstants.FILE_TYPE_AUDIO);
-        refreshDeviceFileTypeNode(node, DeviceConstants.FILE_TYPE_PICTURES);
-        refreshDeviceFileTypeNode(node, DeviceConstants.FILE_TYPE_VIDEOS);
-        refreshDeviceFileTypeNode(node, DeviceConstants.FILE_TYPE_DOCUMENTS);
-        refreshDeviceFileTypeNode(node, DeviceConstants.FILE_TYPE_APPLICATIONS);
-        refreshDeviceFileTypeNode(node, DeviceConstants.FILE_TYPE_RINGTONES);
-    }
-
-    private void refreshDeviceFileTypeNode(DeviceNode deviceNode, byte fileType) {
-        DeviceFileTypeTreeNode node = findNode(deviceNode, fileType);
-
-        if (node == null) {
-            if (UITool.getNumSharedFiles(deviceNode.getDevice().getFinger(), fileType) > 0) {
-                node = new DeviceFileTypeTreeNode(deviceNode.getDevice(), fileType);
-                model.insertNodeInto(node, deviceNode, 0);
-                tree.expandPath(new TreePath(deviceNode.getPath()));
-            }
-        } else {
-            if (UITool.getNumSharedFiles(deviceNode.getDevice().getFinger(), fileType) == 0) {
-                model.removeNodeFromParent(node);
-            } else {
-                node.updateText();
-            }
-        }
-    }
-
     public DirectoryHolder getSelectedDirectoryHolder() {
         LibraryNode node = (LibraryNode) tree.getLastSelectedPathComponent();
         return node != null && node instanceof DirectoryHolderNode ? ((DirectoryHolderNode) node).getDirectoryHolder() : null;
-    }
-
-    public Device getSelectedDeviceFiles() {
-        LibraryNode node = (LibraryNode) tree.getLastSelectedPathComponent();
-        return node != null && node instanceof DeviceFileTypeTreeNode ? ((DeviceFileTypeTreeNode) node).getDevice() : null;
     }
 
     public Dimension getRowDimension() {
@@ -693,47 +569,6 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
             if (directory != null) {
                 GUIMediator.launchExplorer(directory);
             }
-        }
-    }
-
-    public void selectDeviceFileType(Device device, byte fileType) {
-        try {
-            Object selectedNode = null;
-
-            if (tree.getSelectionPath() == null) {
-                tree.setSelectionRow(0);
-            }
-
-            selectedNode = tree.getSelectionPath().getLastPathComponent();
-
-            Enumeration<?> e = root.depthFirstEnumeration();
-            while (e.hasMoreElements()) {
-                final LibraryNode node = (LibraryNode) e.nextElement();
-                if (node instanceof DeviceFileTypeTreeNode) {
-                    Device dev = ((DeviceFileTypeTreeNode) node).getDevice();
-                    byte ft = ((DeviceFileTypeTreeNode) node).getFileType();
-                    if (dev.equals(device) && ft == fileType) {
-                        tree.setSelectionPath(new TreePath(node.getPath()));
-
-                        enqueueRunnable(new Runnable() {
-                            public void run() {
-                                GUIMediator.safeInvokeLater(new Runnable() {
-                                    public void run() {
-                                        tree.scrollPathToVisible(new TreePath(node.getPath()));
-                                    }
-                                });
-                            }
-                        });
-
-                        if (selectedNode != null && selectedNode.equals(node)) {
-                            executePendingRunnables();
-                        }
-                        return;
-                    }
-                }
-            }
-        } finally {
-            //executePendingRunnables();
         }
     }
 }

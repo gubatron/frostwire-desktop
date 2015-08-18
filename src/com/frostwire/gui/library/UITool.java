@@ -54,19 +54,7 @@ public class UITool {
         }
         return null;
     }
-    
-    public String getImageNameByFileType(int type) {
-        switch(type) {
-        case DeviceConstants.FILE_TYPE_APPLICATIONS: return "application";
-        case DeviceConstants.FILE_TYPE_DOCUMENTS: return "document";
-        case DeviceConstants.FILE_TYPE_PICTURES: return "picture";
-        case DeviceConstants.FILE_TYPE_VIDEOS: return "video";
-        case DeviceConstants.FILE_TYPE_RINGTONES: return "ringtone";
-        case DeviceConstants.FILE_TYPE_AUDIO: return "audio";
-        default: return "";
-        }
-    }
-    
+
     public String getBytesInHuman(long size) {
 
         int i = 0;
@@ -78,61 +66,6 @@ public class UITool {
         }
 
         return String.format("%.2f ", fSize) + BYTE_UNITS[i];
-    }
-    
-    public int getFileTypeByExt(String ext) {
-        
-        if (ext == null) {
-            return DeviceConstants.FILE_TYPE_DOCUMENTS;
-        }
-        
-        ext = ext.replace("\\.", "").trim().toLowerCase();
-        
-        Integer type = FILE_TYPES.get(ext);
-        if (type != null) {
-            return type;
-        } else {
-            return DeviceConstants.FILE_TYPE_DOCUMENTS;
-        }
-    }
-    
-    public static String getFileTypeAsString(int type) {
-
-        switch (type) {
-        case DeviceConstants.FILE_TYPE_APPLICATIONS:
-            return I18n.tr("Applications");
-        case DeviceConstants.FILE_TYPE_AUDIO:
-            return I18n.tr("Audio");
-        case DeviceConstants.FILE_TYPE_DOCUMENTS:
-            return I18n.tr("Documents");
-        case DeviceConstants.FILE_TYPE_PICTURES:
-            return I18n.tr("Pictures");
-        case DeviceConstants.FILE_TYPE_RINGTONES:
-            return I18n.tr("Ringtones");
-        case DeviceConstants.FILE_TYPE_VIDEOS:
-            return I18n.tr("Video");
-        default:
-            return I18n.tr("Unkown file type");
-        }
-    }
-    
-    public static int getNumSharedFiles(Finger finger, byte fileType) {
-        switch (fileType) {
-        case DeviceConstants.FILE_TYPE_AUDIO:
-            return finger.numSharedAudioFiles;
-        case DeviceConstants.FILE_TYPE_PICTURES:
-            return finger.numSharedPictureFiles;
-        case DeviceConstants.FILE_TYPE_VIDEOS:
-            return finger.numSharedVideoFiles;
-        case DeviceConstants.FILE_TYPE_DOCUMENTS:
-            return finger.numSharedDocumentFiles;
-        case DeviceConstants.FILE_TYPE_APPLICATIONS:
-            return finger.numSharedApplicationFiles;
-        case DeviceConstants.FILE_TYPE_RINGTONES:
-            return finger.numSharedRingtoneFiles;
-        default:
-            return 0;
-        }
     }
     
     private static void initFileTypes() {

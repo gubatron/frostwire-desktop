@@ -275,9 +275,6 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
                 } else if (currentMedia instanceof StreamMediaSource) {
                     LibraryMediator.instance().getLibraryCoverArt().setDefault();
                     playMedia(((StreamMediaSource) currentMedia).showPlayerWindow());
-                } else if (currentMedia instanceof DeviceMediaSource) {
-                    LibraryMediator.instance().getLibraryCoverArt().setDefault();
-                    playMedia(((DeviceMediaSource) currentMedia).showPlayerWindow());
                 }
                 notifyOpened(source);
             }
@@ -512,8 +509,6 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
             return true;
         } else if (mediaSource instanceof StreamMediaSource) {
             return true;
-        } else if (mediaSource instanceof DeviceMediaSource) {
-            return isPlayableFile(((DeviceMediaSource) mediaSource).getFileDescriptor().filePath);
         } else {
             return false;
         }
@@ -769,7 +764,7 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
                 if (currentMedia.equals(f1)) {
                     for (int j = 1; j < n; j++) {
                         MediaSource file = playlistFilesView[(j + i) % n];
-                        if (isPlayableFile(file) || file instanceof DeviceMediaSource) {
+                        if (isPlayableFile(file)) {
                             return file;
                         }
                     }

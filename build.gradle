@@ -54,7 +54,6 @@ sourceSets {
             srcDir '../frostwire-common/apache'
             srcDir '../frostwire-common/gson'
             srcDir '../frostwire-common/jdownloader'
-            srcDir '../frostwire-common/jmdns'
             srcDir '../frostwire-common/json'
             srcDir '../frostwire-common/mp4parser'
             srcDir '../frostwire-common/core'

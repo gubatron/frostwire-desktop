@@ -40,8 +40,6 @@ public class LibrarySettings extends LimeProps {
 
     public static final File LIBRARY_DATABASE = new File(CommonUtils.getUserSettingsDir(), "library_db");
 
-    public static final File DEFAULT_LIBRARY_FROM_DEVICE_DATA_DIR = new File((PORTABLE_ROOT_FOLDER == null) ? FrostWireUtils.getFrostWireRootFolder() : PORTABLE_ROOT_FOLDER, "From Device");
-
     /**
      * The include directories.
      */
@@ -54,11 +52,6 @@ public class LibrarySettings extends LimeProps {
     public static final FileSetting USER_MUSIC_FOLDER = FACTORY.createFileSetting("USER_MUSIC_FOLDER", FrostWireUtils.getUserMusicFolder());
 
     public static final FileSetting USER_VIDEO_FOLDER = FACTORY.createFileSetting("USER_VIDEO_FOLDER", FrostWireUtils.getUserVideoFolder());
-
-    public static final FileSetting LIBRARY_FROM_DEVICE_DATA_DIR_SETTING = FACTORY.createFileSetting("LIBRARY_FROM_DEVICE_DATA_DIR_SETTING", DEFAULT_LIBRARY_FROM_DEVICE_DATA_DIR).setAlwaysSave(true);
-
-    public static final BooleanSetting LIBRARY_WIFI_SHARING_ENABLED = FACTORY.createBooleanSetting("LIBRARY_WIFI_SHARING_ENABLED", true);
-
 
     public static void setupInitialLibraryFolders() {
         SharingSettings.initTorrentDataDirSetting();
@@ -79,20 +72,12 @@ public class LibrarySettings extends LimeProps {
                 LibrarySettings.DIRECTORIES_TO_INCLUDE.add(LibrarySettings.USER_VIDEO_FOLDER.getValue());
             }
         }
-
-        File fromDeviceFolder = LibrarySettings.LIBRARY_FROM_DEVICE_DATA_DIR_SETTING.getValue();
-        if (!fromDeviceFolder.exists()) {
-            fromDeviceFolder.mkdir();
-        }
-
-        LibrarySettings.DIRECTORIES_TO_INCLUDE.add(fromDeviceFolder);
     }
 
 
     public static void resetLibraryFoldersIfPortable() {
         if (CommonUtils.isPortable()) {
             LibrarySettings.DIRECTORIES_TO_INCLUDE.removeAll();
-            LibrarySettings.LIBRARY_FROM_DEVICE_DATA_DIR_SETTING.setValue(DEFAULT_LIBRARY_FROM_DEVICE_DATA_DIR);
             setupInitialLibraryFolders();
         }
     }

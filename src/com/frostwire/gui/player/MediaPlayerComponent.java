@@ -270,8 +270,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
         trackTitle.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                if (MediaPlayer.instance().getCurrentMedia().getFile() != null || MediaPlayer.instance().getCurrentMedia().getPlaylistItem() != null || MediaPlayer.instance().getCurrentMedia() instanceof InternetRadioAudioSource
-                        || MediaPlayer.instance().getCurrentMedia() instanceof DeviceMediaSource) {
+                if (MediaPlayer.instance().getCurrentMedia().getFile() != null || MediaPlayer.instance().getCurrentMedia().getPlaylistItem() != null || MediaPlayer.instance().getCurrentMedia() instanceof InternetRadioAudioSource) {
                     showCurrentMedia();
                 } else if (MediaPlayer.instance().getCurrentMedia() instanceof StreamMediaSource) {
                     StreamMediaSource mediaSource = (StreamMediaSource) MediaPlayer.instance().getCurrentMedia();
@@ -509,18 +508,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
 
             String currentText = null;
 
-            if (currentMedia instanceof DeviceMediaSource) {
-                FileDescriptor fd = ((DeviceMediaSource) currentMedia).getFileDescriptor();
-                String artistName = fd.artist;
-                String songTitle = fd.title;
-
-                String albumToolTip = fd.album;
-                String yearToolTip = fd.year;
-
-                currentText = artistName + " - " + songTitle;
-
-                trackTitle.setToolTipText(artistName + " - " + songTitle + albumToolTip + yearToolTip);
-            } else if (currentMedia != null && currentMedia instanceof StreamMediaSource) {
+            if (currentMedia != null && currentMedia instanceof StreamMediaSource) {
                 currentText = ((StreamMediaSource) currentMedia).getTitle();
             } else if (playlistItem != null) {
                 //Playing from Playlist.
@@ -980,10 +968,8 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
             private boolean isSC;
             private boolean isAR;
             private boolean isInternetRadio;
-            private boolean isWifiStream;
 
             private String playlistName;
-            private String deviceName;
 
             @Override
             protected Void doInBackground() throws Exception {
@@ -1009,11 +995,6 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
                     }
                 } else {
                     isInternetRadio = currentMedia instanceof InternetRadioAudioSource;
-                    isWifiStream = currentMedia instanceof DeviceMediaSource;
-
-                    if (isWifiStream) {
-                        setupDeviceName(currentMedia);
-                    }
                 }
                 return null;
             }
@@ -1044,25 +1025,14 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
                 } else if (isInternetRadio) {
                     tooltipText = I18n.tr("Playing Internet Radio");
                     iconUpName = iconDownName = "radio_light_small";
-                } else if (isWifiStream) {
-                    tooltipText = I18n.tr("Playing local Wi-Fi Stream from") + " " + deviceName;
-                    iconUpName = iconDownName = "wifi_sharing_light_small";
                 }
 
                 mediaSourceButton.init(tooltipText, iconUpName, iconDownName);
 
                 //TODO: Add "isLocalFile || isPlaylistItem ||" on FrostWire 6.x when we have room for 3 buttons.
-                boolean mediaSourceButtonVisible = (currentMedia != null) && (isYT || isSC || isAR || isInternetRadio || isWifiStream);
+                boolean mediaSourceButtonVisible = (currentMedia != null) && (isYT || isSC || isAR || isInternetRadio);
                 //System.out.println("mediaSourceButton should be visible? " + mediaSourceButtonVisible);
                 mediaSourceButton.setVisible(mediaSourceButtonVisible);
-            }
-
-            private void setupDeviceName(final MediaSource currentMedia) {
-                DeviceMediaSource deviceMediaSource = (DeviceMediaSource) currentMedia;
-                deviceName = I18n.tr("unknown device");
-                if (deviceMediaSource.getDevice() != null && deviceMediaSource.getDevice().getName() != null) {
-                    deviceName = deviceMediaSource.getDevice().getName();
-                }
             }
 
             private void setupPlaylistName(final MediaSource currentMedia) {
@@ -1160,7 +1130,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
                 if (!StringUtils.isNullOrEmpty(streamMedia.getDetailsUrl())) {
                     GUIMediator.openURL(streamMedia.getDetailsUrl());
                 }
-            } else if (currentMedia instanceof InternetRadioAudioSource || currentMedia instanceof DeviceMediaSource || currentMedia.getFile() != null) {
+            } else if (currentMedia instanceof InternetRadioAudioSource || currentMedia.getFile() != null) {
                 showCurrentMedia();
             }
         }

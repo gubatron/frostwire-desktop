@@ -55,19 +55,6 @@ public class NodeRenderer extends DefaultTreeCellRenderer {
             if (icon != null) {
                 setIcon(icon);
             }
-        } else if (value instanceof DevicesNode) {
-            DevicesNode node = (DevicesNode) value;
-            setIcon(leaf ? node.getMinusDevices() : node.getPlusDevices());
-        } else if (value instanceof DeviceNode) {
-            DeviceNode node = (DeviceNode) value;
-            setIcon(leaf ? node.getMinusIcon() : node.getPlusIcon());
-            if (node.getDevice().isLocal()) {
-                setText(I18n.tr("My files"));
-            }
-        } else if (value instanceof DeviceFileTypeTreeNode) {
-            DeviceFileTypeTreeNode node = (DeviceFileTypeTreeNode) value;
-            setIcon(node.getIcon());
-            setText(node.getUserObject().toString());
         }
 
         return this;

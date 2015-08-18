@@ -23,7 +23,6 @@ import com.frostwire.alexandria.Library;
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.alexandria.db.LibraryDatabase;
-import com.frostwire.gui.player.DeviceMediaSource;
 import com.frostwire.gui.player.InternetRadioAudioSource;
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.player.MediaSource;
@@ -53,7 +52,6 @@ public class LibraryMediator {
     private static final String FILES_TABLE_KEY = "LIBRARY_FILES_TABLE";
     private static final String PLAYLISTS_TABLE_KEY = "LIBRARY_PLAYLISTS_TABLE";
     private static final String INTERNET_RADIO_TABLE_KEY = "LIBRARY_INTERNET_RADIO_TABLE";
-    private static final String DEVICE_TABLE_KEY = "DEVICE_FILES_TABLE";
 
     private static JPanel MAIN_PANEL;
 
@@ -81,8 +79,6 @@ public class LibraryMediator {
     private Set<Integer> idScanned;
 
     private AbstractLibraryTableMediator<?, ?, ?> currentMediator;
-
-    private final DeviceDiscoveryClerk clerk;
 
     /**
      * @return the <tt>LibraryMediator</tt> instance
@@ -122,12 +118,6 @@ public class LibraryMediator {
         DividerLocationSettingUpdater.install(splitPane, UISettings.UI_LIBRARY_MAIN_DIVIDER_LOCATION);
 
         MAIN_PANEL.add(splitPane);
-        
-        clerk = new DeviceDiscoveryClerk();
-    }
-
-    public DeviceDiscoveryClerk getDeviceDiscoveryClerk() {
-        return clerk;
     }
 
     protected Object getSelectedKey() {
@@ -205,8 +195,6 @@ public class LibraryMediator {
             currentMediator = LibraryPlaylistsTableMediator.instance();
         } else if (key.equals(INTERNET_RADIO_TABLE_KEY)) {
             currentMediator = LibraryInternetRadioTableMediator.instance();
-        } else if (key.equals(DEVICE_TABLE_KEY)) {
-            currentMediator = LibraryDeviceTableMediator.instance();
         } else {
             currentMediator = null;
         }
@@ -222,9 +210,6 @@ public class LibraryMediator {
         } else if (key.equals(PLAYLISTS_TABLE_KEY)) {
             tableMediator = LibraryPlaylistsTableMediator.instance();
             listPanel = getLibraryPlaylists();
-        } else if (key.equals(DEVICE_TABLE_KEY)) {
-            tableMediator = LibraryDeviceTableMediator.instance();
-            listPanel = getLibraryExplorer();
         }
 
         if (tableMediator == null || listPanel == null) {
@@ -256,12 +241,6 @@ public class LibraryMediator {
         getLibraryExplorer().clearDirectoryHolderCaches();
     }
 
-    public void updateTableFiles(Device device, byte fileType) {
-        clearLibraryTable();
-        showView(DEVICE_TABLE_KEY);
-        LibraryDeviceTableMediator.instance().updateTableFiles(device, fileType);
-    }
-
     public void updateTableItems(Playlist playlist) {
         clearLibraryTable();
         showView(PLAYLISTS_TABLE_KEY);
@@ -277,7 +256,6 @@ public class LibraryMediator {
     public void clearLibraryTable() {
         LibraryFilesTableMediator.instance().clearTable();
         LibraryPlaylistsTableMediator.instance().clearTable();
-        LibraryDeviceTableMediator.instance().clearTable();
         getLibrarySearch().clear();
     }
 
@@ -319,7 +297,6 @@ public class LibraryMediator {
         _tablesPanel.add(LibraryFilesTableMediator.instance().getComponent(), FILES_TABLE_KEY);
         _tablesPanel.add(LibraryPlaylistsTableMediator.instance().getComponent(), PLAYLISTS_TABLE_KEY);
         _tablesPanel.add(LibraryInternetRadioTableMediator.instance().getComponent(), INTERNET_RADIO_TABLE_KEY);
-        _tablesPanel.add(LibraryDeviceTableMediator.instance().getComponent(), DEVICE_TABLE_KEY);
 
         panel.add(getLibrarySearch(), BorderLayout.PAGE_START);
         panel.add(_tablesPanel, BorderLayout.CENTER);
@@ -403,22 +380,6 @@ public class LibraryMediator {
             });
 
             libraryFiles.selectRadio();
-        } else if (currentMedia instanceof DeviceMediaSource) {
-            //selects the audio node at the top
-            LibraryExplorer libraryFiles = getLibraryExplorer();
-
-            //select the song once it's available on the right hand side
-            libraryFiles.enqueueRunnable(new Runnable() {
-                public void run() {
-                    GUIMediator.safeInvokeLater(new Runnable() {
-                        public void run() {
-                            LibraryDeviceTableMediator.instance().setItemSelected(((DeviceMediaSource) currentMedia).getFileDescriptor());
-                        }
-                    });
-                }
-            });
-
-            libraryFiles.selectDeviceFileType(((DeviceMediaSource) currentMedia).getDevice(), ((DeviceMediaSource) currentMedia).getFileDescriptor().fileType);
         }
 
         //Scroll to current song.
@@ -479,17 +440,5 @@ public class LibraryMediator {
         if (currentMediator != null) {
             currentMediator.playCurrentSelection();
         }
-    }
-
-    public void handleDeviceNew(Device device) {
-        getLibraryExplorer().handleDeviceNew(device);
-    }
-
-    public void handleDeviceAlive(Device device) {
-        getLibraryExplorer().handleDeviceAlive(device);
-    }
-
-    public void handleDeviceStale(Device device) {
-        getLibraryExplorer().handleDeviceStale(device);
     }
 }

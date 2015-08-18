@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011-2014, FrostWire(R). All rights reserved.
+ * Copyright (c) 2011-2015, FrostWire(R). All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,6 @@ package com.frostwire.gui.library;
 
 import java.util.List;
 
-import com.frostwire.gui.player.DeviceMediaSource;
 import com.frostwire.gui.player.InternetRadioAudioSource;
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.player.MediaSource;
@@ -58,16 +57,6 @@ public final class LibraryActionsRenderer extends AbstractActionsRenderer {
                 mediaSource = new InternetRadioAudioSource(irDataLine.getInitializeObject().getUrl(), irDataLine.getInitializeObject());
                 filesView = LibraryInternetRadioTableMediator.instance().getFilesView();
                 playNextSong = false;
-            } else if (dataLine instanceof LibraryDeviceTableDataLine) {
-                LibraryDeviceTableDataLine dl = (LibraryDeviceTableDataLine) dataLine;
-                Device device = LibraryMediator.instance().getLibraryExplorer().getSelectedDeviceFiles();
-                if (device != null) {
-                    String url = device.getDownloadURL(dl.getInitializeObject());
-                    mediaSource = new DeviceMediaSource(url, device, dl.getInitializeObject());
-                    filesView = LibraryDeviceTableMediator.instance().getFilesView();
-                    playNextSong = true;
-                }
-                UXStats.instance().log(UXAction.WIFI_SHARING_PREVIEW);
             }
 
             if (mediaSource != null && !actionsHolder.isPlaying()) {
@@ -78,16 +67,5 @@ public final class LibraryActionsRenderer extends AbstractActionsRenderer {
 
     @Override
     protected void onDownloadAction() {
-        if (actionsHolder != null && actionsHolder.getDataLine() != null) {
-            Object dataLine = actionsHolder.getDataLine();
-
-            if (dataLine instanceof LibraryDeviceTableDataLine) {
-                Device device = LibraryMediator.instance().getLibraryExplorer().getSelectedDeviceFiles();
-                if (device != null) {
-                    LibraryDeviceTableMediator.instance().downloadSelectedItems();
-                    UXStats.instance().log(UXAction.WIFI_SHARING_DOWNLOAD);
-                }
-            }
-        }
     }
 }

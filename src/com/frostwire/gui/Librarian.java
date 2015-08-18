@@ -294,10 +294,6 @@ public final class Librarian {
                 }
 
                 pathSharingSet.remove(filePath);
-
-                if (refreshPing) {
-                    LibraryMediator.instance().getDeviceDiscoveryClerk().updateLocalPeer();
-                }
             }
         };
 

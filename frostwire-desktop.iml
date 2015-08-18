@@ -12,7 +12,6 @@
     <output-test url="file://$MODULE_DIR$/build/classes/test" />
     <exclude-output />
     <content url="file://$MODULE_DIR$/../frostwire-common">
-      <sourceFolder url="file://$MODULE_DIR$/../frostwire-common/jmdns" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../frostwire-common/gson" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../frostwire-common/json" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../frostwire-common/core" isTestSource="false" />

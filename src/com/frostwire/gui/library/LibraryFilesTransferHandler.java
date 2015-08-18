@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011-2014, FrostWire(R). All rights reserved.
+ * Copyright (c) 2011-2015, FrostWire(R). All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -65,7 +65,7 @@ final class LibraryFilesTransferHandler extends TransferHandler {
         try {
             LibraryNode node = getNodeFromLocation(support.getDropLocation());
 
-            if (!(node instanceof DirectoryHolderNode) && !(node instanceof DeviceNode) && !(node instanceof DeviceFileTypeTreeNode)) {
+            if (!(node instanceof DirectoryHolderNode)) {
                 return false;
             }
 
@@ -86,10 +86,6 @@ final class LibraryFilesTransferHandler extends TransferHandler {
                 return true;
             } else if (DNDUtils.containsFileFlavors(support.getDataFlavors())) {
                 if (OSUtils.isMacOSX()) {
-                    return true;
-                }
-
-                if (node instanceof DeviceNode || node instanceof DeviceFileTypeTreeNode) {
                     return true;
                 }
 
@@ -158,31 +154,7 @@ final class LibraryFilesTransferHandler extends TransferHandler {
             Transferable transferable = support.getTransferable();
             LibraryNode node = getNodeFromLocation(support.getDropLocation());
 
-            if (node instanceof DeviceNode || node instanceof DeviceFileTypeTreeNode) {
-                File[] files = null;
-                if (DNDUtils.contains(transferable.getTransferDataFlavors(), LibraryPlaylistsTableTransferable.ITEM_ARRAY)) {
-                    PlaylistItem[] playlistItems = LibraryUtils.convertToPlaylistItems((LibraryPlaylistsTableTransferable.Item[]) transferable.getTransferData(LibraryPlaylistsTableTransferable.ITEM_ARRAY));
-                    files = LibraryUtils.convertToFiles(playlistItems);
-                } else {
-                    files = DNDUtils.getFiles(support.getTransferable());
-                }
-
-                if (files != null) {
-                    Device device = null;
-                    
-                    if (node instanceof DeviceNode) {
-                        device = ((DeviceNode) node).getDevice();
-                    }  else if (node instanceof DeviceFileTypeTreeNode) {
-                        device = ((DeviceFileTypeTreeNode) node).getDevice();
-                    }
-                    
-                    if (device != null) {
-                        device.upload(files);
-                        UXStats.instance().log(UXAction.WIFI_SHARING_DND_UPLOAD_TO_DEVICE);
-                    }
-                }
-
-            } else {
+             {
 
                 if (node instanceof DirectoryHolderNode) {
                     DirectoryHolder dirHolder = ((DirectoryHolderNode)node).getDirectoryHolder();

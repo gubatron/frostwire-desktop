@@ -178,35 +178,12 @@ public final class LibraryFoldersPaneItem extends AbstractPaneItem {
         	        }
 	        }
         }
-	    
-	    if (isDirty()) {
-	        updateSharedTable();
-	    }
-	    
+
 	    LibraryMediator.instance().clearDirectoryHolderCaches();
         return false;
 	}
-	
-	
-	/** If folders have been removed from the Library, let's make sure
-	 * no files in those folders remain shared on the Wi-Fi network.*/
-	private void updateSharedTable() {
-	    Set<File> initialCopy = new HashSet<File>(initialFoldersToInclude);
-	    initialCopy.removeAll(LibrarySettings.DIRECTORIES_TO_INCLUDE.getValue());
-	    initialCopy.addAll(LibrarySettings.DIRECTORIES_NOT_TO_INCLUDE.getValue());
-	    
-	    for (File folderToUnshare : initialCopy) {
-	        if (SharingSettings.TORRENT_DATA_DIR_SETTING.getValue().equals(folderToUnshare)) {
-	            continue;
-	        }
-	        System.out.println("Deleting from share table: " + folderToUnshare.getAbsolutePath());
-	        Librarian.instance().deleteFolderFilesFromShareTable(folderToUnshare.getAbsolutePath());
-	    }
-	    
-	    LibraryMediator.instance().getDeviceDiscoveryClerk().updateLocalPeer();
-    }
 
-    public boolean isDirty() {
+	public boolean isDirty() {
 	    return !initialFoldersToInclude.equals(directoryPanel.getRootsToInclude())
 	    || !initialFoldersToExclude.equals(directoryPanel.getFoldersToExclude());
     }

@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011-2014, 2013, FrostWire(R). All rights reserved.
+ * Copyright (c) 2011-2015, FrostWire(R). All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,8 +43,6 @@ public class LibraryActionsHolder extends AbstractActionsHolder {
             return true;
         } else if (dl instanceof LibraryInternetRadioTableDataLine) {
             return true;
-        } else if (dl instanceof LibraryDeviceTableDataLine) {
-            return MediaPlayer.isPlayableFile(((LibraryDeviceTableDataLine) dl).getInitializeObject().filePath);
         } else {
             return false;
         }
@@ -52,18 +50,6 @@ public class LibraryActionsHolder extends AbstractActionsHolder {
 
     @Override
     public boolean isDownloadable() {
-        return isDownloadableFromOtherDevice();
-    }
-
-    private boolean isDownloadableFromOtherDevice() {
-        boolean result = false;
-        if (getDataLine() instanceof LibraryDeviceTableDataLine) {
-
-            Device device = LibraryMediator.instance().getLibraryExplorer().getSelectedDeviceFiles();
-            if (device != null && !device.isLocal()) {
-                result = true;
-            }
-        }
-        return result;
+        return false;
     }
 }

@@ -58,7 +58,6 @@ final class Finalizer {
     static void shutdown() {
         UXStats.instance().flush();
 
-        LibraryMediator.instance().getDeviceDiscoveryClerk().stop();
         SearchMediator.instance().shutdown();
 
         MediaPlayer.instance().stop();

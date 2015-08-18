@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011-2014, FrostWire(R). All rights reserved.
+ * Copyright (c) 2011-2015, FrostWire(R). All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,7 +33,6 @@ import javax.swing.tree.TreePath;
 
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.db.LibraryDatabase;
-import com.frostwire.gui.player.DeviceMediaSource;
 import com.frostwire.gui.player.InternetRadioAudioSource;
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.mplayer.MediaPlaybackState;
@@ -76,11 +75,6 @@ public class LibraryIconTree extends JTree {
                     if (path != null) {
                         paintIcon(g, speaker, path);
                     }
-                } else if (player.getCurrentMedia() instanceof DeviceMediaSource) {
-                    TreePath path = getDeviceFileTypePath((DeviceMediaSource) player.getCurrentMedia());
-                    if (path != null) {
-                        paintIcon(g, speaker, path);
-                    }
                 } else if (player.getCurrentMedia() != null && player.getCurrentPlaylist() == null && player.getPlaylistFilesView() != null) {
                     TreePath path = getAudioPath();
                     if (path != null) {
@@ -96,21 +90,6 @@ public class LibraryIconTree extends JTree {
         } catch (Throwable e) {
             LOG.log(Level.WARNING, "Error painting the speaker icon", e);
         }
-    }
-
-    private TreePath getDeviceFileTypePath(DeviceMediaSource mediaSource) {
-        Enumeration<?> e = ((LibraryNode) getModel().getRoot()).depthFirstEnumeration();
-        while (e.hasMoreElements()) {
-            LibraryNode node = (LibraryNode) e.nextElement();
-            if (node instanceof DeviceFileTypeTreeNode) {
-                Device device = ((DeviceFileTypeTreeNode) node).getDevice();
-                byte fileType = ((DeviceFileTypeTreeNode) node).getFileType();
-                if (device.equals(mediaSource.getDevice()) && fileType == mediaSource.getFileDescriptor().fileType) {
-                    return new TreePath(node.getPath());
-                }
-            }
-        }
-        return null;
     }
 
     private void loadIcons() {

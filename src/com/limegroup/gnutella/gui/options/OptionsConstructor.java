@@ -85,7 +85,6 @@ import com.limegroup.gnutella.gui.options.panes.TorrentSaveFolderPaneItem;
 import com.limegroup.gnutella.gui.options.panes.TorrentSeedingSettingPaneItem;
 import com.limegroup.gnutella.gui.options.panes.UXStatsPaneItem;
 import com.limegroup.gnutella.gui.options.panes.VideoPlayerPaneItem;
-import com.limegroup.gnutella.gui.options.panes.WiFiSharingPaneItem;
 import com.limegroup.gnutella.gui.options.panes.iTunesPreferencePaneItem;
 import com.limegroup.gnutella.gui.shell.FrostAssociations;
 import com.limegroup.gnutella.settings.UISettings;
