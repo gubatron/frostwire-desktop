@@ -40,6 +40,7 @@ repositories {
 dependencies {
     compile name: 'jlibtorrent-1.1.0.5'
     compile name: 're2j-1.0'
+    compile name: 'gson-2.3.1'
     compile name: 'rxjava-1.0.12'
     compile name: 'messages'
 
@@ -52,7 +53,6 @@ sourceSets {
         java {
             // frostwire-common
             srcDir '../frostwire-common/apache'
-            srcDir '../frostwire-common/gson'
             srcDir '../frostwire-common/jdownloader'
             srcDir '../frostwire-common/json'
             srcDir '../frostwire-common/mp4parser'

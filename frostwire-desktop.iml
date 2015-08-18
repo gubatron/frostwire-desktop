@@ -12,7 +12,6 @@
     <output-test url="file://$MODULE_DIR$/build/classes/test" />
     <exclude-output />
     <content url="file://$MODULE_DIR$/../frostwire-common">
-      <sourceFolder url="file://$MODULE_DIR$/../frostwire-common/gson" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../frostwire-common/json" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../frostwire-common/core" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../frostwire-common/jdownloader" isTestSource="false" />
@@ -53,5 +52,6 @@
     </orderEntry>
     <orderEntry type="library" name="re2j-1.0" level="project" />
     <orderEntry type="library" name="jlibtorrent-1.1.0.5" level="project" />
+    <orderEntry type="library" name="gson-2.3.1" level="project" />
   </component>
 </module>
