@@ -38,7 +38,7 @@ repositories {
 
 // add third party jars to classpath.
 dependencies {
-    compile name: 'jlibtorrent-1.1.0.5'
+    compile name: 'jlibtorrent-1.1.0.6'
     compile name: 're2j-1.0'
     compile name: 'gson-2.3.1'
     compile name: 'rxjava-1.0.12'
