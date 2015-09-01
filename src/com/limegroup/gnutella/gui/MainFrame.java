@@ -199,7 +199,7 @@ public final class MainFrame {
         FRAME.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         this.setFrameDimensions();
 
-        FRAME.setJMenuBar(getMenuMediator().getMenuBar());
+        FRAME.setJMenuBar(MenuMediator.instance().getMenuBar());
         JPanel contentPane = new JPanel();
 
         FRAME.setContentPane(contentPane);
@@ -214,8 +214,6 @@ public final class MainFrame {
         contentPane.add(getStatusLine().getComponent(), "dock south, shrink 0");
 
         setMinimalSize(FRAME, APPLICATION_HEADER, APPLICATION_HEADER, TABBED_PANE, getStatusLine().getComponent());
-
-        FRAME.setJMenuBar(getMenuMediator().getMenuBar());
 
         if (ApplicationSettings.MAGNET_CLIPBOARD_LISTENER.getValue()) {
             FRAME.addWindowListener(MagnetClipboardListener.getInstance());
@@ -277,11 +275,8 @@ public final class MainFrame {
      * Build the Tab Structure based on advertising mode and Windows
      */
     private void buildTabs() {
-        TABBED_PANE.addMouseListener(com.frostwire.gui.tabs.TabRightClickAdapter.getInstance());
-
         TABS.put(GUIMediator.Tabs.SEARCH, new SearchDownloadTab(getBTDownloadMediator()));
         TABS.put(GUIMediator.Tabs.LIBRARY, new LibraryTab(getLibraryMediator()));
-        //TABS.put(GUIMediator.Tabs.CHAT, new ChatTab());
 
         TABBED_PANE.setPreferredSize(new Dimension(10000, 10000));
 
@@ -400,18 +395,6 @@ public final class MainFrame {
             STATUS_LINE = new StatusLine();
         }
         return STATUS_LINE;
-    }
-
-    /**
-     * Returns a reference to the <tt>MenuMediator</tt> instance.
-     *
-     * @return a reference to the <tt>MenuMediator</tt> instance
-     */
-    public final MenuMediator getMenuMediator() {
-        if (MENU_MEDIATOR == null) {
-            MENU_MEDIATOR = MenuMediator.instance();
-        }
-        return MENU_MEDIATOR;
     }
 
     /**
