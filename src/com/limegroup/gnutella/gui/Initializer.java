@@ -110,7 +110,6 @@ public final class Initializer {
         //System.out.println("Initializer.initialize() init early UI");
         initializeEarlyUI();
         startSetupManager(setupManager);
-        validateSaveDirectory();
 
         startBittorrentCore();
 
@@ -339,15 +338,6 @@ public final class Initializer {
             }
         });
         //stopwatch.resetAndLog("return from evt queue");
-    }
-
-    /**
-     * Ensures the save directory is valid.
-     */
-    private void validateSaveDirectory() {
-        // Make sure the save directory is valid.
-        SaveDirectoryHandler.handleSaveDirectory();
-        //stopwatch.resetAndLog("check save directory validity");
     }
 
     /**
