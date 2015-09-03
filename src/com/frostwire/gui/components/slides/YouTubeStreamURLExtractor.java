@@ -251,7 +251,7 @@ class YouTubeStreamURLExtractor {
         Browser br = new Browser();
 
         br.setFollowRedirects(true);
-        br.setCookiesExclusive(true);
+        //br.setCookiesExclusive(true);
         br.clearCookies("youtube.com");
 
         if (parameter.contains("watch#")) {
