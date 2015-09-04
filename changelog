@@ -1,3 +1,9 @@
+frostwire (6.1.5) stable; urgency=high
+  * libtorrent/jlibtorrent core update (v 1.1.0.8).
+  * Fixes EZTV search.
+	
+ -- FrostWire Team <contact@frostwire.com>  Fri, 04 Sep 2015 17:58:00 -0500
+
 frostwire (6.1.4) stable; urgency=high
   * libtorrent/jlibtorrent core update (v 1.1.0.5).
   * Torrent settings issues fixed.
