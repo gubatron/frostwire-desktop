@@ -153,7 +153,7 @@ public abstract class SearchEngine {
         }
     };
 
-    public static final SearchEngine EZTV = new SearchEngine(EZTV_ID, "Eztv", SearchEnginesSettings.EZTV_SEARCH_ENABLED, "eztv.ch") {
+    public static final SearchEngine EZTV = new SearchEngine(EZTV_ID, "Eztv", SearchEnginesSettings.EZTV_SEARCH_ENABLED, "eztv.ag") {
         @Override
         public SearchPerformer getPerformer(long token, String keywords) {
             return new EztvSearchPerformer(EZTV.getDomainName(), token, keywords, DEFAULT_TIMEOUT);
@@ -208,7 +208,7 @@ public abstract class SearchEngine {
     }
 
     public static List<SearchEngine> getEngines() {
-        return Arrays.asList(YOUTUBE, EXTRATORRENT, TPB, SOUNDCLOUD, FROSTCLICK, MININOVA, KAT, MONOVA, ARCHIVEORG, TORLOCK, YIFY, BTJUNKIE, BITSNOOP); //EZTV,
+        return Arrays.asList(YOUTUBE, EXTRATORRENT, TPB, SOUNDCLOUD, FROSTCLICK, MININOVA, KAT, MONOVA, ARCHIVEORG, TORLOCK, YIFY, BTJUNKIE, BITSNOOP, EZTV);
     }
 
     public static List<SearchEngine> getActiveEngines() {
