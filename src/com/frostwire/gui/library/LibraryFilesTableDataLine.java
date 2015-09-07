@@ -20,7 +20,6 @@ package com.frostwire.gui.library;
 
 import com.frostwire.bittorrent.BTInfoAdditionalMetadataHolder;
 import com.frostwire.bittorrent.PaymentOptions;
-import com.frostwire.gui.Librarian;
 import com.frostwire.gui.player.MediaPlayer;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -127,15 +126,9 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
      */
     private boolean _iconScheduledForLoad = false;
 
-    private boolean shared = false;
-
     public LibraryFilesTableDataLine(LibraryFilesTableModel ltm) {
         super();
         _model = ltm;
-    }
-
-    public boolean isShared() {
-        return shared;
     }
 
     public int getColumnCount() {
@@ -184,7 +177,6 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
         if (initializer.isFile()) {
             _size = initializer.length();
             _sizeHolder = new SizeHolder(_size);
-            shared = Librarian.instance().isFileShared(initializer.getAbsolutePath());
         } else {
             _sizeHolder = ZERO_SIZED_HOLDER;
         }
@@ -353,9 +345,5 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
         } else {
             return null;
         }
-    }
-
-    public void setShared(boolean share) {
-        shared = share;
     }
 }

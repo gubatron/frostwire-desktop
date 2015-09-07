@@ -20,7 +20,6 @@ package com.frostwire.gui.library;
 
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.bittorrent.PaymentOptions;
-import com.frostwire.gui.Librarian;
 import com.frostwire.gui.bittorrent.*;
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.player.MediaSource;
