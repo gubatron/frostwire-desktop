@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011-2014, FrostWire(R). All rights reserved.
+ * Copyright (c) 2011-2015, FrostWire(R). All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,15 +26,12 @@ import java.util.Locale;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
-import com.frostwire.util.OSUtils;
 import jd.http.Browser;
 import jd.http.Request;
 import jd.nutils.encoding.Encoding;
 import jd.parser.Regex;
 import jd.parser.html.Form;
 import jd.parser.html.Form.MethodType;
-
-import org.limewire.util.FileUtils;
 
 import com.frostwire.logging.Logger;
 
@@ -381,7 +378,7 @@ class YouTubeStreamURLExtractor {
                     String name = null;
                     if (convertTo != DestinationFormat.AUDIOMP3) {
                         name = YT_FILENAME + info.desc + convertTo.getExtFirst();
-                        name = OSUtils.escapeFilename(name);
+                        name = escapeFilename(name);
                         thislink.setFileName(name);
                     } else {
                         /*
@@ -409,6 +406,10 @@ class YouTubeStreamURLExtractor {
         }
 
         return decryptedLink;
+    }
+
+    private static String escapeFilename(String s) {
+        return s.replaceAll("[\\\\/:*?\"<>|\\[\\]]+", "_");
     }
 
     private static String unescape(final String s) {
