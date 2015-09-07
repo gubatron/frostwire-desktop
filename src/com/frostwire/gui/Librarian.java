@@ -240,66 +240,6 @@ public final class Librarian {
         return result;
     }
 
-    public void scan(File file) {
-        scan(file, TorrentUtil.getIgnorableFiles());
-    }
-
-    public int getFileShareState(String filePath) {
-        if (pathSharingSet.contains(filePath)) {
-            return FILE_STATE_SHARING;
-        }
-
-        if (isFileShared(filePath)) {// pathSharedSet.contains(path)) {
-            return FILE_STATE_SHARED;
-        }
-
-        return FILE_STATE_UNSHARED;
-    }
-
-    private void scan(File file, Set<File> ignorableFiles) {
-        if (ignorableFiles.contains(file)) {
-            return;
-        }
-
-        if (file.isDirectory()) {
-            for (File child : file.listFiles()) {
-                if (child.isDirectory() || child.isFile()) {
-                    scan(child);
-                }
-            }
-        } else if (file.isFile()) {
-            new UniversalScanner().scan(file.getAbsolutePath());
-        }
-    }
-
-    public void shareFile(final String filePath, final boolean share) {
-        shareFile(filePath, share, true);
-    }
-
-    public void shareFile(final String filePath, final boolean share, final boolean refreshPing) {
-        if (pathSharingSet.contains(filePath)) {
-            return;
-        }
-
-        pathSharingSet.add(filePath);
-
-        Runnable r = new Runnable() {
-            @Override
-            public void run() {
-                deleteFromShareTable(filePath);
-
-                if (share) {
-                    new UniversalScanner().scan(filePath);
-                    //pathSharedSet.add(filePath);
-                }
-
-                pathSharingSet.remove(filePath);
-            }
-        };
-
-        shareFileExec.execute(r);
-    }
-
     private void deleteFromShareTable(String filePath) {
         String where = Columns.FILE_PATH + " = ?";
         String[] whereArgs = new String[] { filePath };
@@ -307,19 +247,6 @@ public final class Librarian {
         ShareFilesDB db = ShareFilesDB.intance();
 
         db.delete(where, whereArgs);
-    }
-
-    public void deleteFolderFilesFromShareTable(String folderPath) {
-        String where = Columns.FILE_PATH + " LIKE ?";
-        String[] whereArgs = new String[] { folderPath + "%" };
-
-        ShareFilesDB db = ShareFilesDB.intance();
-
-        try {
-            db.delete(where, whereArgs);
-        } catch (Exception e) {
-
-        }
     }
 
     private FileDescriptor cursorToFileDescriptor(Cursor c) {
