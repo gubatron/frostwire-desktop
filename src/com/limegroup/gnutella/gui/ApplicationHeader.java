@@ -428,28 +428,6 @@ public final class ApplicationHeader extends JPanel implements RefreshListener {
         showUpdateButton(!UpdateMediator.instance().isUpdated() && UpdateMediator.instance().isUpdateDownloaded());
     }
 
-    public static class IntermittentButton {
-        private JLabel buttonReference;
-        private ImageIcon imgOn;
-        private ImageIcon imgOff;
-
-        /** Pass the label you want to animate */
-        public IntermittentButton(JLabel button, ImageIcon on, ImageIcon off) {
-            buttonReference = button;
-            imgOn = on;
-            imgOff = off;
-        }
-
-        public void setImage(final boolean on) {
-            GUIMediator.safeInvokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    buttonReference.setIcon((on) ? imgOn : imgOff);
-                }
-            });
-        }
-    }
-
     private void showUpdateButton(boolean show) {
         if (updateButton.isVisible() == show) {
             return;
