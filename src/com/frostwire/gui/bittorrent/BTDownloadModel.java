@@ -63,15 +63,8 @@ public class BTDownloadModel extends BasicDataLineModel<BTDownloadDataLine, BTDo
 
         for (int i = 0; i < size; i++) {
             BTDownload downloader = get(i).getInitializeObject();
-            // special case for peer uploads, needs refactor
-            if (downloader instanceof BTPeerHttpUpload) {
-                if (downloader.getState() == TransferState.SEEDING) {
-                    count++;
-                }
-            } else {
-                if (downloader.isCompleted() && downloader.getState() == TransferState.SEEDING) {
-                    count++;
-                }
+            if (downloader.isCompleted() && downloader.getState() == TransferState.SEEDING) {
+                count++;
             }
         }
         return count;

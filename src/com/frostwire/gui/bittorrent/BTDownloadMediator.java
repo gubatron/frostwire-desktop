@@ -573,7 +573,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     }
 
     private boolean isHttpTransfer(BTDownload d) {
-        return isYouTubeTransfer(d) || d instanceof SoundcloudDownload || d instanceof HttpDownload || d instanceof BTPeerHttpUpload;
+        return isYouTubeTransfer(d) || d instanceof SoundcloudDownload || d instanceof HttpDownload;
     }
 
     private boolean isYouTubeTransfer(BTDownload d) {
@@ -915,19 +915,6 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
                 }
             }
         });
-    }
-
-    public PeerHttpUpload upload(FileDescriptor fd) {
-        final BTPeerHttpUpload d = new BTPeerHttpUpload(fd);
-
-        GUIMediator.safeInvokeLater(new Runnable() {
-            @Override
-            public void run() {
-                add(d);
-            }
-        });
-
-        return d.getUpload();
     }
 
     public void openSlide(final Slide slide) {

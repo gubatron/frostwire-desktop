@@ -269,7 +269,7 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
             case TIME_INDEX:
                 if (initializer.isCompleted()) {
                     return new TimeRemainingHolder(0);
-                } else if (_downloadSpeed < 0.001 && !(initializer instanceof BTPeerHttpUpload)) {
+                } else if (_downloadSpeed < 0.001) {
                     return new TimeRemainingHolder(-1);
                 } else {
                     return new TimeRemainingHolder(_timeLeft);

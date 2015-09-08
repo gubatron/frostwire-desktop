@@ -135,15 +135,8 @@ public class BTDownloadRowFilteredModel extends BTDownloadModel {
         try {
             for (int i = 0; i < size; i++) {
                 BTDownload downloader = HIDDEN.get(i).getInitializeObject();
-                // special case for peer uploads, needs refactor
-                if (downloader instanceof BTPeerHttpUpload) {
-                    if (downloader.getState() == TransferState.SEEDING) {
-                        count++;
-                    }
-                } else {
-                    if (downloader.isCompleted() && downloader.getState() == TransferState.SEEDING) {
-                        count++;
-                    }
+                if (downloader.isCompleted() && downloader.getState() == TransferState.SEEDING) {
+                    count++;
                 }
             }
         } catch (Throwable e) {
