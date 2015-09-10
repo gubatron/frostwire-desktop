@@ -1,24 +1,5 @@
 package com.limegroup.gnutella.gui.options.panes;
 
-import java.awt.BorderLayout;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import javax.swing.Box;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
-
-import org.limewire.util.CommonUtils;
-import org.limewire.util.FileUtils;
-
-import com.frostwire.gui.Librarian;
 import com.frostwire.gui.library.AddLibraryDirectoryAction;
 import com.frostwire.gui.library.LibraryMediator;
 import com.frostwire.gui.library.RecursiveLibraryDirectoryPanel;
@@ -26,6 +7,20 @@ import com.frostwire.gui.library.RemoveLibraryDirectoryAction;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.LibrarySettings;
 import com.limegroup.gnutella.settings.SharingSettings;
+import org.limewire.util.CommonUtils;
+import org.limewire.util.FileUtils;
+
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * This class defines the panel in the options window that allows the user
@@ -48,13 +43,6 @@ public final class LibraryFoldersPaneItem extends AbstractPaneItem {
 	
 	private final boolean  isPortable;
 	
-	/**
-	 * The constructor constructs all of the elements of this 
-	 * <tt>AbstractPaneItem</tt>.
-	 *
-	 * @param key the key for this <tt>AbstractPaneItem</tt> that the
-	 *            superclass uses to generate strings
-	 */
 	public LibraryFoldersPaneItem() {
 	    super(TITLE, LABEL);
 	    isPortable = CommonUtils.isPortable();
