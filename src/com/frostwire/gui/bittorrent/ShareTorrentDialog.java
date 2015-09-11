@@ -46,8 +46,8 @@ import com.frostwire.jlibtorrent.TorrentInfo;
 import org.gudy.azureus2.core3.util.UrlUtils;
 import org.limewire.concurrent.ThreadExecutor;
 
-import com.frostwire.util.HttpClient;
-import com.frostwire.util.HttpClient.HttpClientListenerAdapter;
+import com.frostwire.util.http.HttpClient;
+import com.frostwire.util.http.HttpClient.HttpClientListenerAdapter;
 import com.frostwire.util.HttpClientFactory;
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.GUIMediator;

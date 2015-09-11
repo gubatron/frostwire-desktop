@@ -25,7 +25,7 @@ import com.frostwire.jlibtorrent.swig.file_storage;
 import com.frostwire.jlibtorrent.swig.libtorrent;
 import com.frostwire.bittorrent.CopyrightLicenseBroker;
 import com.frostwire.bittorrent.PaymentOptions;
-import com.frostwire.util.HttpClient;
+import com.frostwire.util.http.HttpClient;
 import com.frostwire.util.HttpClientFactory;
 import com.frostwire.uxstats.UXAction;
 import com.frostwire.uxstats.UXStats;

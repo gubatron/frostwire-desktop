@@ -30,7 +30,7 @@ import javax.imageio.ImageIO;
 import org.limewire.concurrent.ThreadExecutor;
 
 import com.frostwire.logging.Logger;
-import com.frostwire.util.HttpClient;
+import com.frostwire.util.http.HttpClient;
 import com.frostwire.util.HttpClientFactory;
 import com.limegroup.gnutella.settings.SharingSettings;
 

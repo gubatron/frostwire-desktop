@@ -19,7 +19,7 @@
 package com.frostwire.gui.searchfield;
 
 import com.frostwire.gui.theme.ThemeMediator;
-import com.frostwire.util.HttpClient;
+import com.frostwire.util.http.HttpClient;
 import com.frostwire.util.HttpClientFactory;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;

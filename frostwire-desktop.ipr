@@ -231,6 +231,20 @@
       <JAVADOC />
       <SOURCES />
     </library>
+    <library name="okhttp-2.5.0">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/lib/jars/okhttp-2.5.0.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="okio-1.6.0">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/lib/jars/okio-1.6.0.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
     <library name="re2j-1.0">
       <CLASSES>
         <root url="jar://$PROJECT_DIR$/lib/jars/re2j-1.0.jar!/" />

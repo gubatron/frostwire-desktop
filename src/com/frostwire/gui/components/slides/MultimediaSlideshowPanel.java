@@ -33,7 +33,7 @@ import com.frostwire.util.JsonUtils;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.logging.Logger;
-import com.frostwire.util.HttpClient;
+import com.frostwire.util.http.HttpClient;
 import com.frostwire.util.HttpClientFactory;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.settings.ApplicationSettings;

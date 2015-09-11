@@ -42,6 +42,9 @@ dependencies {
     compile name: 're2j-1.0'
     compile name: 'gson-2.3.1'
     compile name: 'rxjava-1.0.12'
+    compile name: 'okio-1.6.0'
+    compile name: 'okhttp-2.5.0'
+    compile name: 'rxjava-1.0.12'
     compile name: 'messages'
 
     def ant_jar_path = System.getenv('ANT_HOME') + '/lib/ant.jar'
