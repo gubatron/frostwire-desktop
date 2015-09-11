@@ -18,12 +18,10 @@
 
 package com.frostwire.gui.library;
 
-import com.frostwire.alexandria.InternetRadioStation;
 import com.frostwire.alexandria.Library;
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.alexandria.db.LibraryDatabase;
-import com.frostwire.gui.player.InternetRadioAudioSource;
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.player.MediaSource;
 import com.frostwire.gui.theme.ThemeMediator;
@@ -51,7 +49,6 @@ public class LibraryMediator {
 
     private static final String FILES_TABLE_KEY = "LIBRARY_FILES_TABLE";
     private static final String PLAYLISTS_TABLE_KEY = "LIBRARY_PLAYLISTS_TABLE";
-    private static final String INTERNET_RADIO_TABLE_KEY = "LIBRARY_INTERNET_RADIO_TABLE";
 
     private static JPanel MAIN_PANEL;
 
@@ -193,8 +190,6 @@ public class LibraryMediator {
             currentMediator = LibraryFilesTableMediator.instance();
         } else if (key.equals(PLAYLISTS_TABLE_KEY)) {
             currentMediator = LibraryPlaylistsTableMediator.instance();
-        } else if (key.equals(INTERNET_RADIO_TABLE_KEY)) {
-            currentMediator = LibraryInternetRadioTableMediator.instance();
         } else {
             currentMediator = null;
         }
@@ -247,12 +242,6 @@ public class LibraryMediator {
         LibraryPlaylistsTableMediator.instance().updateTableItems(playlist);
     }
 
-    public void showInternetRadioStations(List<InternetRadioStation> internetRadioStations) {
-        clearLibraryTable();
-        showView(INTERNET_RADIO_TABLE_KEY);
-        LibraryInternetRadioTableMediator.instance().updateTableItems(internetRadioStations);
-    }
-
     public void clearLibraryTable() {
         LibraryFilesTableMediator.instance().clearTable();
         LibraryPlaylistsTableMediator.instance().clearTable();
@@ -274,13 +263,6 @@ public class LibraryMediator {
         getLibrarySearch().addResults(items.size());
     }
 
-    public void addInternetRadioStationsToLibraryTable(List<InternetRadioStation> items) {
-        for (InternetRadioStation item : items) {
-            LibraryInternetRadioTableMediator.instance().add(item);
-        }
-        getLibrarySearch().addResults(items.size());
-    }
-
     private JComponent getLibraryLeftPanel() {
         if (libraryLeftPanel == null) {
             libraryLeftPanel = new LibraryLeftPanel(getLibraryExplorer(), getLibraryPlaylists(), getLibraryCoverArt());
@@ -296,7 +278,6 @@ public class LibraryMediator {
 
         _tablesPanel.add(LibraryFilesTableMediator.instance().getComponent(), FILES_TABLE_KEY);
         _tablesPanel.add(LibraryPlaylistsTableMediator.instance().getComponent(), PLAYLISTS_TABLE_KEY);
-        _tablesPanel.add(LibraryInternetRadioTableMediator.instance().getComponent(), INTERNET_RADIO_TABLE_KEY);
 
         panel.add(getLibrarySearch(), BorderLayout.PAGE_START);
         panel.add(_tablesPanel, BorderLayout.CENTER);
@@ -364,22 +345,6 @@ public class LibraryMediator {
             });
 
             libraryFiles.selectAudio();
-        } else if (currentMedia instanceof InternetRadioAudioSource) {
-            //selects the audio node at the top
-            LibraryExplorer libraryFiles = getLibraryExplorer();
-
-            //select the song once it's available on the right hand side
-            libraryFiles.enqueueRunnable(new Runnable() {
-                public void run() {
-                    GUIMediator.safeInvokeLater(new Runnable() {
-                        public void run() {
-                            LibraryInternetRadioTableMediator.instance().setItemSelected(((InternetRadioAudioSource) currentMedia).getInternetRadioStation());
-                        }
-                    });
-                }
-            });
-
-            libraryFiles.selectRadio();
         }
 
         //Scroll to current song.
@@ -405,14 +370,6 @@ public class LibraryMediator {
                 }
             }
         }
-    }
-
-    public long getTotalRadioStations() {
-        return getLibrary().getTotalRadioStations();
-    }
-
-    public void restoreDefaultRadioStations() {
-        getLibrary().restoreDefaultRadioStations();
     }
 
     /**

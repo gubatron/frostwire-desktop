@@ -18,10 +18,8 @@
 
 package com.frostwire.gui.library;
 
-import com.frostwire.alexandria.InternetRadioStation;
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
-import com.frostwire.alexandria.db.InternetRadioStationDB;
 import com.frostwire.alexandria.db.PlaylistItemDB;
 import com.frostwire.gui.bittorrent.TorrentUtil;
 import com.frostwire.gui.searchfield.JXSearchField.SearchMode;
@@ -218,10 +216,7 @@ public class LibrarySearch extends JPanel {
 
             DirectoryHolder directoryHolder = LibraryMediator.instance().getLibraryExplorer().getSelectedDirectoryHolder();
 
-            if (directoryHolder instanceof InternetRadioDirectoryHolder) {
-                currentSearchRunnable = new SearchInternetRadioStationsRunnable(query);
-                BackgroundExecutorService.schedule(currentSearchRunnable);
-            } else if (directoryHolder != null && !(directoryHolder instanceof StarredDirectoryHolder)) {
+            if (directoryHolder != null && !(directoryHolder instanceof StarredDirectoryHolder)) {
                 currentSearchRunnable = new SearchFilesRunnable(query);
                 BackgroundExecutorService.schedule(currentSearchRunnable);
             }
@@ -599,92 +594,6 @@ public class LibrarySearch extends JPanel {
             Runnable r = new Runnable() {
                 public void run() {
                     LibraryMediator.instance().addItemsToLibraryTable(results);
-                }
-            };
-            GUIMediator.safeInvokeLater(r);
-        }
-    }
-
-    private final class SearchInternetRadioStationsRunnable extends SearchRunnable {
-
-        private final String query;
-
-        public SearchInternetRadioStationsRunnable(String query) {
-            this.query = query;
-            canceled = false;
-        }
-
-        public void run() {
-            if (canceled) {
-                return;
-            }
-
-            GUIMediator.safeInvokeLater(new Runnable() {
-                public void run() {
-                    LibraryInternetRadioTableMediator.instance().clearTable();
-                    setStatus("");
-                    statusLabel.setText("");
-                    resultsCount = 0;
-                }
-            });
-
-            search();
-        }
-
-        private void search() {
-            if (canceled) {
-                return;
-            }
-
-            String sql = null;
-            List<List<Object>> rows = null;
-
-            //Show everything
-            if (StringUtils.isNullOrEmpty(query, true) || query.equals(".")) {
-                LibraryMediator.instance().getLibraryExplorer().selectRadio();
-                //sql="SELECT T.internetRadioStationId, T.name, T.description, T.url, T.bitrate, T.type, T.website, T.genre, T.pls FROM INTERNETRADIOSTATIONS T";
-                //rows = LibraryMediator.getLibrary().getDB().getDatabase().query(sql);
-                return;
-            } else {
-                String luceneQuery = com.frostwire.alexandria.LibraryUtils.wildcardLuceneQuery(query);
-                //Full text search
-                sql = "SELECT T.internetRadioStationId, T.name, T.description, T.url, T.bitrate, T.type, T.website, T.genre, T.pls, T.bookmarked FROM FTL_SEARCH_DATA(?, 0, 0) FT, INTERNETRADIOSTATIONS T WHERE FT.TABLE='INTERNETRADIOSTATIONS' AND T.internetRadioStationId = FT.KEYS[0]";
-                rows = LibraryMediator.getLibrary().getLibraryDatabase().query(sql, luceneQuery);
-            }
-
-            final List<InternetRadioStation> results = new ArrayList<InternetRadioStation>();
-
-            for (List<Object> row : rows) {
-                if (canceled) {
-                    return;
-                }
-
-                /////
-                //Stop search if the user selected another item in the playlist list
-                //                Playlist currentPlaylist = LibraryMediator.instance().getLibraryPlaylists().getSelectedPlaylist();
-                //                if (!playlist.equals(currentPlaylist)) {
-                //                    return;
-                //                }
-                /////
-
-                InternetRadioStation item = new InternetRadioStation(LibraryMediator.getLibrary().getLibraryDatabase());
-                InternetRadioStationDB.fill(row, item);
-                results.add(item);
-
-                if (results.size() > 100) {
-                    Runnable r = new Runnable() {
-                        public void run() {
-                            LibraryMediator.instance().addInternetRadioStationsToLibraryTable(results);
-                            results.clear(); // TODO: Fix this error, check for thread issues
-                        }
-                    };
-                    GUIMediator.safeInvokeLater(r);
-                }
-            }
-
-            Runnable r = new Runnable() {
-                public void run() {
-                    LibraryMediator.instance().addInternetRadioStationsToLibraryTable(results);
                 }
             };
             GUIMediator.safeInvokeLater(r);

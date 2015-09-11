@@ -20,7 +20,6 @@ package com.frostwire.gui.library;
 
 import java.util.List;
 
-import com.frostwire.gui.player.InternetRadioAudioSource;
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.player.MediaSource;
 import com.frostwire.uxstats.UXAction;
@@ -52,11 +51,6 @@ public final class LibraryActionsRenderer extends AbstractActionsRenderer {
                 mediaSource = new MediaSource(((LibraryPlaylistsTableDataLine) dataLine).getPlayListItem());
                 filesView = LibraryPlaylistsTableMediator.instance().getFilesView();
                 playNextSong = true;
-            } else if (dataLine instanceof LibraryInternetRadioTableDataLine) {
-                LibraryInternetRadioTableDataLine irDataLine = (LibraryInternetRadioTableDataLine) dataLine;
-                mediaSource = new InternetRadioAudioSource(irDataLine.getInitializeObject().getUrl(), irDataLine.getInitializeObject());
-                filesView = LibraryInternetRadioTableMediator.instance().getFilesView();
-                playNextSong = false;
             }
 
             if (mediaSource != null && !actionsHolder.isPlaying()) {

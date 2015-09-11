@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import com.frostwire.alexandria.db.InternetRadioStationDB;
 import com.frostwire.alexandria.db.LibraryDB;
 import com.frostwire.alexandria.db.LibraryDatabase;
 import com.frostwire.alexandria.db.LibraryDatabaseEntity;
@@ -67,16 +66,8 @@ public class Library extends LibraryDatabaseEntity {
         return PlaylistDB.getPlaylist(db, name);
     }
 
-    public List<InternetRadioStation> getInternetRadioStations() {
-        return InternetRadioStationDB.getInternetRadioStations(db);
-    }
-
     public Playlist newPlaylist(String name, String description) {
         return new Playlist(db, LibraryDatabase.OBJECT_NOT_SAVED_ID, name, description);
-    }
-
-    public InternetRadioStation newInternetRadioStation(String name, String description, String url, String bitrate, String type, String website, String genre, String pls, boolean bookmarked) {
-        return new InternetRadioStation(db, LibraryDatabase.OBJECT_NOT_SAVED_ID, name, description, url, bitrate, type, website, genre, pls, bookmarked);
     }
 
     public void dump() {
@@ -98,13 +89,5 @@ public class Library extends LibraryDatabaseEntity {
 
     public void updatePlaylistItemProperties(String filePath, String title, String artist, String album, String comment, String genre, String track, String year) {
         PlaylistDB.updatePlaylistItemProperties(db, filePath, title, artist, album, comment, genre, track, year);
-    }
-
-    public long getTotalRadioStations() {
-        return InternetRadioStationDB.getTotalRadioStations(db);
-    }
-
-    public void restoreDefaultRadioStations() {
-        InternetRadioStationDB.restoreDefaultRadioStations(db);
     }
 }

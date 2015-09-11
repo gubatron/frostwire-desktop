@@ -177,7 +177,6 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
     /**
      * Constructs the media panel.
      * 
-     * @param showPlaybackModeControls
      */
     private JPanel constructMediaPanel() {
 
@@ -270,7 +269,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
         trackTitle.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                if (MediaPlayer.instance().getCurrentMedia().getFile() != null || MediaPlayer.instance().getCurrentMedia().getPlaylistItem() != null || MediaPlayer.instance().getCurrentMedia() instanceof InternetRadioAudioSource) {
+                if (MediaPlayer.instance().getCurrentMedia().getFile() != null || MediaPlayer.instance().getCurrentMedia().getPlaylistItem() != null) {
                     showCurrentMedia();
                 } else if (MediaPlayer.instance().getCurrentMedia() instanceof StreamMediaSource) {
                     StreamMediaSource mediaSource = (StreamMediaSource) MediaPlayer.instance().getCurrentMedia();
@@ -527,9 +526,6 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
                 currentText = currentMedia.getFile().getName();
 
                 trackTitle.setToolTipText(currentMedia.getFile().getAbsolutePath());
-            } else if (currentMedia != null && currentMedia instanceof InternetRadioAudioSource) {
-                InternetRadioAudioSource radioSource = (InternetRadioAudioSource) currentMedia;
-                currentText = radioSource.getInternetRadioStation().getDescription();
             } else if (currentMedia != null && currentMedia.getFile() == null && currentMedia.getURL() != null) {
                 //
                 //System.out.println("StreamURL: " + currentMedia.getURL().toString());
@@ -967,7 +963,6 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
             private boolean isYT;
             private boolean isSC;
             private boolean isAR;
-            private boolean isInternetRadio;
 
             private String playlistName;
 
@@ -993,8 +988,6 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
                         isSC = streamMedia.getDetailsUrl().contains("soundcloud");
                         isAR = streamMedia.getDetailsUrl().contains("archive");
                     }
-                } else {
-                    isInternetRadio = currentMedia instanceof InternetRadioAudioSource;
                 }
                 return null;
             }
@@ -1022,15 +1015,12 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
                     tooltipText = I18n.tr("Open Archive.org source page");
                     iconUpName = "archive_off";
                     iconDownName = "archive_on";
-                } else if (isInternetRadio) {
-                    tooltipText = I18n.tr("Playing Internet Radio");
-                    iconUpName = iconDownName = "radio_light_small";
                 }
 
                 mediaSourceButton.init(tooltipText, iconUpName, iconDownName);
 
                 //TODO: Add "isLocalFile || isPlaylistItem ||" on FrostWire 6.x when we have room for 3 buttons.
-                boolean mediaSourceButtonVisible = (currentMedia != null) && (isYT || isSC || isAR || isInternetRadio);
+                boolean mediaSourceButtonVisible = (currentMedia != null) && (isYT || isSC || isAR);
                 //System.out.println("mediaSourceButton should be visible? " + mediaSourceButtonVisible);
                 mediaSourceButton.setVisible(mediaSourceButtonVisible);
             }
@@ -1130,8 +1120,6 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
                 if (!StringUtils.isNullOrEmpty(streamMedia.getDetailsUrl())) {
                     GUIMediator.openURL(streamMedia.getDetailsUrl());
                 }
-            } else if (currentMedia instanceof InternetRadioAudioSource || currentMedia.getFile() != null) {
-                showCurrentMedia();
             }
         }
     }

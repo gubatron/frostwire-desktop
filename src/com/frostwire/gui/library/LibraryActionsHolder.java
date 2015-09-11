@@ -41,8 +41,6 @@ public class LibraryActionsHolder extends AbstractActionsHolder {
             return MediaPlayer.isPlayableFile(((LibraryFilesTableDataLine) dl).getFile());
         } else if (dl instanceof LibraryPlaylistsTableDataLine) {
             return true;
-        } else if (dl instanceof LibraryInternetRadioTableDataLine) {
-            return true;
         } else {
             return false;
         }

@@ -63,7 +63,6 @@ import com.limegroup.gnutella.gui.options.panes.ForceIPPaneItem;
 import com.limegroup.gnutella.gui.options.panes.IgnoreResultsPaneItem;
 import com.limegroup.gnutella.gui.options.panes.ImageViewerPaneItem;
 import com.limegroup.gnutella.gui.options.panes.LibraryFoldersPaneItem;
-import com.limegroup.gnutella.gui.options.panes.LibraryInternetRadioPaneItem;
 import com.limegroup.gnutella.gui.options.panes.MaximumSearchesPaneItem;
 import com.limegroup.gnutella.gui.options.panes.NetworkInterfacePaneItem;
 import com.limegroup.gnutella.gui.options.panes.PlayerPaneItem;
@@ -286,7 +285,7 @@ public final class OptionsConstructor {
         // library
         // REMOVE:WI-FI
         //addOption(OptionsMediator.ROOT_NODE_KEY, LIBRARY_KEY, I18n.tr("Library"), LibraryFoldersPaneItem.class, WiFiSharingPaneItem.class, LibraryInternetRadioPaneItem.class);
-        addOption(OptionsMediator.ROOT_NODE_KEY, LIBRARY_KEY, I18n.tr("Library"), LibraryFoldersPaneItem.class, LibraryInternetRadioPaneItem.class);
+        addOption(OptionsMediator.ROOT_NODE_KEY, LIBRARY_KEY, I18n.tr("Library"), LibraryFoldersPaneItem.class);
 
         // player
         addOption(OptionsMediator.ROOT_NODE_KEY, PLAYER_KEY, I18n.tr("Player"), PlayerPaneItem.class);

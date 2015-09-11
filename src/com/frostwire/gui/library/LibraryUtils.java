@@ -41,7 +41,6 @@ import org.limewire.util.StringUtils;
 
 import com.frostwire.alexandria.IcyInputStream;
 import com.frostwire.alexandria.IcyInputStream.Track;
-import com.frostwire.alexandria.InternetRadioStation;
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.alexandria.db.LibraryDatabase;
@@ -730,115 +729,6 @@ public class LibraryUtils {
         int keyCode = e.getKeyCode();
         boolean ctrlCmdDown = e.isControlDown() || e.isAltGraphDown() || e.isMetaDown();
         return keyCode == KeyEvent.VK_F5 || (ctrlCmdDown && keyCode == KeyEvent.VK_R);
-    }
-
-    public static void asyncAddRadioStation(final String url) {
-        Thread t = new Thread(new Runnable() {
-            public void run() {
-                addRadioStation(url);
-            }
-        }, "ImportRadioStation");
-        t.setDaemon(true);
-        t.start();
-    }
-
-    public static void addRadioStation(final String url) {
-        try {
-            LibraryMediator.instance().getLibrarySearch().pushStatus(I18n.tr("Importing from") + " " + url);
-            final InternetRadioStation item = processInternetRadioStationUrl(url);
-
-            item.save();
-
-            GUIMediator.safeInvokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    LibraryInternetRadioTableMediator.instance().addUnsorted(item);
-                    LibraryMediator.instance().getLibraryExplorer().selectRadio();
-                    LibraryInternetRadioTableMediator.instance().selectItemAt(0);
-                }
-            });
-
-        } catch (Throwable e) {
-            LOG.error("Error adding radio station", e);
-            GUIMediator.safeInvokeLater(new Runnable() {
-                public void run() {
-                    JOptionPane.showMessageDialog(GUIMediator.getAppFrame(), I18n.tr("Error importing Radio Station from") + " " + url, I18n.tr("Error"), JOptionPane.ERROR_MESSAGE);
-                }
-            });
-        } finally {
-            LibraryMediator.instance().getLibrarySearch().revertStatus();
-        }
-    }
-
-    private static InternetRadioStation processInternetRadioStationUrl(String urlStr) throws Exception {
-        URL url = new URL(urlStr);
-        URLConnection conn = url.openConnection();
-        conn.setConnectTimeout(10000);
-        conn.setRequestProperty("User-Agent", "Java");
-        InputStream is = conn.getInputStream();
-        BufferedReader d = null;
-        if (conn.getContentEncoding() != null) {
-            d = new BufferedReader(new InputStreamReader(is, conn.getContentEncoding()));
-        } else {
-            d = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-        }
-
-        String pls = "";
-        String[] props = null;
-        String strLine;
-        int numLine = 0;
-        while ((strLine = d.readLine()) != null) {
-            pls += strLine + "\n";
-            if (strLine.startsWith("File1=")) {
-                String streamUrl = strLine.split("=")[1];
-                props = processStreamUrl(streamUrl);
-            } else if (strLine.startsWith("icy-name:")) {
-                pls = "";
-                props = processStreamUrl(urlStr);
-                break;
-            }
-
-            numLine++;
-            if (numLine > 10) {
-                if (props == null) { // not a valid pls
-                    break;
-                }
-            }
-        }
-
-        is.close();
-
-        if (props != null && props[0] != null) {
-            return LibraryMediator.getLibrary().newInternetRadioStation(props[0], props[0], props[1], props[2], props[3], props[4], props[5], pls, false);
-        } else {
-            return null;
-        }
-    }
-
-    private static String[] processStreamUrl(String streamUrl) throws Exception {
-        Track t = new Track();
-        IcyInputStream.create(streamUrl, t);
-
-        String name = clean(t.name);
-        String genre = clean(t.genre);
-        String website = clean(t.url);
-        String type = "";
-        String br = t.bitrate != null ? t.bitrate.trim() + " kbps" : "";
-
-        String contentType = t.contentType;
-        if (contentType.equals("audio/aacp")) {
-            type = "AAC+";
-        } else if (contentType.equals("audio/mpeg")) {
-            type = "MP3";
-        } else if (contentType.equals("audio/aac")) {
-            type = "AAC";
-        }
-
-        return new String[] { name, streamUrl, br, type, website, genre };
-    }
-
-    private static String clean(String str) {
-        return str.trim().replace("\"", "\\\"");
     }
 
     public static void movePlaylistItemsToIndex(Playlist playlist, int[] selectedIndexes, int index) {

@@ -18,7 +18,6 @@
 
 package com.frostwire.gui.library;
 
-import com.frostwire.alexandria.InternetRadioStation;
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.gui.bittorrent.TorrentUtil;
 import com.frostwire.gui.theme.SkinMenuItem;
@@ -99,12 +98,6 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
             LibraryMediator.instance().getLibrarySearch().setStatus(status);
 
         }
-        //RADIO
-        else if (directoryHolder instanceof InternetRadioDirectoryHolder) {
-
-            List<InternetRadioStation> internetRadioStations = LibraryMediator.getLibrary().getInternetRadioStations();
-            LibraryMediator.instance().showInternetRadioStations(internetRadioStations);
-        }
         //TORRENTS
         else if (directoryHolder instanceof TorrentDirectoryHolder) {
             LibraryMediator.instance().updateTableFiles(directoryHolder);
@@ -154,7 +147,6 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
 
         addNodesPerMediaType(root);
 
-        root.add(new DirectoryHolderNode(new InternetRadioDirectoryHolder()));
         root.add(new DirectoryHolderNode(new StarredDirectoryHolder()));
         root.add(new DirectoryHolderNode(new TorrentDirectoryHolder()));
         root.add(new DirectoryHolderNode(new SavedFilesDirectoryHolder(SharingSettings.TORRENT_DATA_DIR_SETTING, I18n.tr("Default Save Folder"))));
@@ -459,35 +451,6 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
             return true;
         }
         return false;
-    }
-
-    public void selectRadio() {
-        try {
-            if (selectionListenerForSameItem(InternetRadioDirectoryHolder.class)) {
-                return;
-            }
-
-            Enumeration<?> e = root.depthFirstEnumeration();
-            while (e.hasMoreElements()) {
-                final LibraryNode node = (LibraryNode) e.nextElement();
-                if (node instanceof DirectoryHolderNode) {
-                    DirectoryHolder holder = ((DirectoryHolderNode) node).getDirectoryHolder();
-                    if (holder instanceof InternetRadioDirectoryHolder) {
-                        GUIMediator.safeInvokeAndWait(new Runnable() {
-                            @Override
-                            public void run() {
-                                tree.setSelectionPath(new TreePath(node.getPath()));
-                                tree.scrollPathToVisible(new TreePath(node.getPath()));
-                            }
-                        });
-
-                        return;
-                    }
-                }
-            }
-        } finally {
-            executePendingRunnables();
-        }
     }
 
     public List<MediaTypeSavedFilesDirectoryHolder> getMediaTypeSavedFilesDirectoryHolders() {

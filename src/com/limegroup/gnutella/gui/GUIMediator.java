@@ -68,7 +68,6 @@ import com.frostwire.gui.HideExitDialog;
 import com.frostwire.gui.bittorrent.BTDownloadMediator;
 import com.frostwire.gui.components.slides.Slide;
 import com.frostwire.gui.library.LibraryMediator;
-import com.frostwire.gui.player.InternetRadioAudioSource;
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.player.MediaSource;
 import com.frostwire.gui.tabs.Tab;
@@ -1531,7 +1530,7 @@ public final class GUIMediator {
             }
 
         //MediaPlayer.instance().loadSong(song);
-        boolean playNextSong = !song.getClass().equals(InternetRadioAudioSource.class);
+        boolean playNextSong = true;
         if (song.getFile() != null && MediaType.getVideoMediaType().matches(song.getFile().getAbsolutePath())) {
             playNextSong = false;
         }

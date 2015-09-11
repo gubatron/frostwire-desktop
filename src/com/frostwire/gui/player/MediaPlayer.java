@@ -269,9 +269,6 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
                     LibraryMediator.instance().getLibraryCoverArt().setFile(new File(currentMedia.getPlaylistItem().getFilePath()));
                     playMedia();
                     durationInSeconds = (long) currentMedia.getPlaylistItem().getTrackDurationInSecs();
-                } else if (currentMedia instanceof InternetRadioAudioSource) {
-                    LibraryMediator.instance().getLibraryCoverArt().setDefault();
-                    playMedia(false);
                 } else if (currentMedia instanceof StreamMediaSource) {
                     LibraryMediator.instance().getLibraryCoverArt().setDefault();
                     playMedia(((StreamMediaSource) currentMedia).showPlayerWindow());
@@ -505,8 +502,6 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
             return mediaSource.getFile().exists() && isPlayableFile(mediaSource.getFile());
         } else if (mediaSource.getPlaylistItem() != null) {
             return new File(mediaSource.getPlaylistItem().getFilePath()).exists() && isPlayableFile(mediaSource.getPlaylistItem().getFilePath());
-        } else if (mediaSource instanceof InternetRadioAudioSource) {
-            return true;
         } else if (mediaSource instanceof StreamMediaSource) {
             return true;
         } else {
