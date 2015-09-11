@@ -301,7 +301,6 @@ abstract class LocalAbstractInfo {
     
     protected static final String USER_COMMENTS = "63";
     protected String _userComments;
-    
     /**
      * sets the variable _userComments value to the comments user entered
      * @param comments is the comment user entered
@@ -334,6 +333,9 @@ abstract class LocalAbstractInfo {
 		    pw.println("Detail: " + _detail);
 		    pw.println();
 		}
+
+        pw.println("-- class path --");
+        pw.println(System.getProperty("java.class.path").replaceAll("\\;|\\:","\n"));
 
         pw.println("-- listing session information --");
         pw.println("Current thread: " + _currentThread);
