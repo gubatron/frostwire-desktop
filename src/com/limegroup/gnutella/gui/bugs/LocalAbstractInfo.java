@@ -397,6 +397,7 @@ abstract class LocalAbstractInfo {
         pw.println();        
         pw.println("**************** Comments from the user ****************\n" + _userComments);
         pw.flush();
+        System.out.println(sw.toString());
         return sw.toString();
     }
     

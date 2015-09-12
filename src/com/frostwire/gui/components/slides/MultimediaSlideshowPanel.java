@@ -18,26 +18,22 @@
 
 package com.frostwire.gui.components.slides;
 
-import java.awt.BorderLayout;
-import java.awt.CardLayout;
-import java.awt.Component;
+import com.frostwire.logging.Logger;
+import com.frostwire.util.http.HttpClient;
+import com.frostwire.util.HttpClientFactory;
+import com.frostwire.util.JsonUtils;
+import com.limegroup.gnutella.gui.GUIMediator;
+import com.limegroup.gnutella.settings.ApplicationSettings;
+import com.limegroup.gnutella.util.FrostWireUtils;
+import org.limewire.util.OSUtils;
+
+import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.regex.Pattern;
-
-import javax.swing.JPanel;
-
-import com.frostwire.util.JsonUtils;
-import org.limewire.util.OSUtils;
-
-import com.frostwire.logging.Logger;
-import com.frostwire.util.http.HttpClient;
-import com.frostwire.util.HttpClientFactory;
-import com.limegroup.gnutella.gui.GUIMediator;
-import com.limegroup.gnutella.settings.ApplicationSettings;
-import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
  * Contains all the SlideshowPanels.
@@ -149,7 +145,7 @@ public class MultimediaSlideshowPanel extends JPanel implements SlideshowPanel {
 
     private void load(final String url) {
         try {
-            HttpClient client = HttpClientFactory.newInstance();
+            HttpClient client = HttpClientFactory.getInstance(HttpClientFactory.HttpContext.MISC);
             String jsonString = client.get(url);
 
             if (jsonString != null) {

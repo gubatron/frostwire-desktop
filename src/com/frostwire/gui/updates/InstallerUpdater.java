@@ -125,8 +125,7 @@ public class InstallerUpdater implements Runnable {
             updateFolder.setWritable(true);
         }
         try {
-            //new HttpFetcher(new URI(_updateMessage.getInstallerUrl())).save(installerFileLocation);
-            HttpClient httpClient = HttpClientFactory.newInstance();
+            HttpClient httpClient = HttpClientFactory.getInstance(HttpClientFactory.HttpContext.MISC);
             try {
                 httpClient.save(_updateMessage.getInstallerUrl(), installerFileLocation, true);
             } catch (HttpRangeException e) {
@@ -483,7 +482,7 @@ public class InstallerUpdater implements Runnable {
     }
 
     public final static void downloadTorrentFile(String torrentURL, File saveLocation) throws IOException, URISyntaxException {
-        byte[] contents = HttpClientFactory.newInstance().getBytes(torrentURL);
+        byte[] contents = HttpClientFactory.getInstance(HttpClientFactory.HttpContext.MISC).getBytes(torrentURL);
 
         // save the torrent locally if you have to
         if (saveLocation != null && contents != null && contents.length > 0) {

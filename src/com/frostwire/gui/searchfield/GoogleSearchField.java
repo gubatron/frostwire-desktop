@@ -148,7 +148,7 @@ public class GoogleSearchField extends SearchField {
             try {
                 String url = String.format(SUGGESTIONS_URL, URLEncoder.encode(constraint, "UTF-8"));
 
-                HttpClient httpClient = HttpClientFactory.newInstance();
+                HttpClient httpClient = HttpClientFactory.getInstance(HttpClientFactory.HttpContext.MISC);
 
                 String js = httpClient.get(url, HTTP_QUERY_TIMEOUT);
                 String json = stripJs(js);

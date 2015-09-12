@@ -133,7 +133,7 @@ public class ImageCache {
             public void run() {
                 try {
                     BufferedImage image = null;
-                    HttpClient newInstance = HttpClientFactory.newInstance();
+                    HttpClient newInstance = HttpClientFactory.getInstance(HttpClientFactory.HttpContext.MISC);
                     byte[] data = newInstance.getBytes(url.toString());
                     
                     if (data == null) {

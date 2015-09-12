@@ -91,7 +91,7 @@ public class SoundcloudDownload implements BTDownload {
 
         httpClientListener = new HttpDownloadListenerImpl();
 
-        httpClient = HttpClientFactory.newInstance();
+        httpClient = HttpClientFactory.getInstance(HttpClientFactory.HttpContext.DOWNLOAD);
         httpClient.setListener(httpClientListener);
 
         start();
@@ -480,7 +480,7 @@ public class SoundcloudDownload implements BTDownload {
 
     private boolean setAlbumArt(String mp3Filename, String mp3outputFilename) {
         try {
-            byte[] imageBytes = HttpClientFactory.newInstance().getBytes(sr.getThumbnailUrl());
+            byte[] imageBytes = HttpClientFactory.getInstance(HttpClientFactory.HttpContext.DOWNLOAD).getBytes(sr.getThumbnailUrl());
 
             Mp3File mp3 = new Mp3File(mp3Filename);
 

@@ -592,7 +592,7 @@ public final class BugManager {
         public void run() {
             String response = null;
             try {
-                response = HttpClientFactory.newInstance().post(BugSettings.BUG_REPORT_SERVER.getValue(), 6000, "FrostWire-"+FrostWireUtils.getFrostWireVersion(), INFO.toBugReport(), "text/plain", false);
+                response = HttpClientFactory.getInstance(HttpClientFactory.HttpContext.MISC).post(BugSettings.BUG_REPORT_SERVER.getValue(), 6000, "FrostWire-"+FrostWireUtils.getFrostWireVersion(), INFO.toBugReport(), "text/plain", false);
             } catch (Exception e) {
                 LOG.error("Error sending bug report", e);
             }

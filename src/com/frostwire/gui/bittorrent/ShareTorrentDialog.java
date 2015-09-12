@@ -261,7 +261,7 @@ public class ShareTorrentDialog extends JDialog {
 	}
 
     private void performAsyncURLShortening(final URLShortnerHttpClientListener listener) {
-        final HttpClient browser = HttpClientFactory.newInstance();
+        final HttpClient browser = HttpClientFactory.getInstance(HttpClientFactory.HttpContext.MISC);
         browser.setListener(listener);
         ThreadExecutor.startThread(new Runnable() {
             @Override

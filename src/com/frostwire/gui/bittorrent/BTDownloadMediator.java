@@ -42,6 +42,7 @@ import com.frostwire.search.youtube.YouTubeCrawledSearchResult;
 import com.frostwire.transfers.TransferState;
 import com.frostwire.util.HttpClientFactory;
 import com.frostwire.util.JsonUtils;
+import com.frostwire.util.http.HttpClient;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.PaddedPanel;
@@ -852,14 +853,16 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
 
                 final String resolveURL = "http://api.soundcloud.com/resolve.json?url=" + url + "&client_id=" + clientId + "&app_version=" + appVersion;
                 System.out.println("resolve: " + resolveURL);
-                final String json = HttpClientFactory.newInstance().get(resolveURL, 10000);
+
+                HttpClient client = HttpClientFactory.getInstance(HttpClientFactory.HttpContext.DOWNLOAD);
+                final String json = client.get(resolveURL, 10000);
                 //System.out.println(json);
 
                 if (json.contains("\"status\":\"30")) {
                     try {
                         System.out.println("Soundcloud Redirection! >> " + json);
                         final SoundCloudRedirectResponse redirectResponse = JsonUtils.toObject(json, SoundCloudRedirectResponse.class);
-                        final String redirectedJson = HttpClientFactory.newInstance().get(redirectResponse.location, 10000);
+                        final String redirectedJson = client.get(redirectResponse.location, 10000);
                         //System.out.println(redirectedJson);
                         downloadSoundcloudSetOrTrack(clientId, appVersion, url, redirectedJson);
                     } catch (Throwable t) {

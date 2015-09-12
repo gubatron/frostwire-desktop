@@ -92,7 +92,7 @@ public class SlideDownload extends HttpDownload {
 
     private boolean verifySignature(File saveLocation, String executableDownloadURL) {
     	String certificateURL = getCertificateURL(executableDownloadURL);
-    	HttpClient httpClient = HttpClientFactory.newInstance();
+    	HttpClient httpClient = HttpClientFactory.getInstance(HttpClientFactory.HttpContext.MISC);
     	
     	try {
     		String certificateInBase64 = httpClient.get(certificateURL);

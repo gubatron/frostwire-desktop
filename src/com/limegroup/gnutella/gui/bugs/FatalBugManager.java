@@ -163,7 +163,7 @@ public final class FatalBugManager {
      */
     private static void sendToServlet(LocalClientInfo info) {
         try {
-            HttpClientFactory.newInstance().post(BugSettings.BUG_REPORT_SERVER.getValue(), 6000, "FrostWire-" + FrostWireUtils.getFrostWireVersion(), info.toBugReport(), "text/plain", false);
+            HttpClientFactory.getInstance(HttpClientFactory.HttpContext.MISC).post(BugSettings.BUG_REPORT_SERVER.getValue(), 6000, "FrostWire-" + FrostWireUtils.getFrostWireVersion(), info.toBugReport(), "text/plain", false);
         } catch (Exception e) {
             LOG.error("Error sending bug report", e);
         }

@@ -677,7 +677,7 @@ public class CreateTorrentDialog extends JDialog {
      */
     private boolean checkWebSeedMirror(String mirror, create_torrent torrent, boolean isMultiFile) {
         String urlPath = getWebSeedTestPath(mirror, torrent, isMultiFile);
-        HttpClient browser = HttpClientFactory.newInstance();
+        HttpClient browser = HttpClientFactory.getInstance(HttpClientFactory.HttpContext.MISC);
 
         int responseCode = 500;
         try {

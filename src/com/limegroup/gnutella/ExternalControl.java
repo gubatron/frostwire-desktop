@@ -385,7 +385,7 @@ public class ExternalControl {
             }
 
             //LOG.info("urlParameter = " + urlParameter);
-            final String response = HttpClientFactory.newInstance().get("http://" + LOCALHOST_IP + ":" + SERVER_PORT + urlParameter, 1000);
+            final String response = HttpClientFactory.getInstance(HttpClientFactory.HttpContext.MISC).get("http://" + LOCALHOST_IP + ":" + SERVER_PORT + urlParameter, 1000);
 
             if (response != null) {
                 return true;
