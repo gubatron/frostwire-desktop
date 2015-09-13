@@ -326,8 +326,19 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
      */
     private double getBandwidth(boolean download) {
         BTEngine engine = BTEngine.getInstance();
-
-        return (download) ? engine.getDownloadRate() : engine.getUploadRate();
+        double totalBandwidth = download ? engine.getDownloadRate() : engine.getUploadRate();
+        if (download) {
+            double httpBandwidth = 0;
+            for (BTDownload btDownload : this.getDownloads()) {
+                if (btDownload instanceof HttpDownload ||
+                    btDownload instanceof BTDownload) {
+                    httpBandwidth += btDownload.getDownloadSpeed();
+                }
+            }
+            httpBandwidth = httpBandwidth * 1000;
+            totalBandwidth += httpBandwidth;
+        }
+        return totalBandwidth;
     }
 
     public double getDownloadsBandwidth() {
