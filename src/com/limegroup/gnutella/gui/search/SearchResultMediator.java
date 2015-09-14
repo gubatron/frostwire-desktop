@@ -15,41 +15,6 @@
 
 package com.limegroup.gnutella.gui.search;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
-
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JMenu;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
-import javax.swing.OverlayLayout;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.SwingConstants;
-import javax.swing.border.Border;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
-
-import net.miginfocom.swing.MigLayout;
-
-
 import com.frostwire.gui.bittorrent.TorrentUtil;
 import com.frostwire.gui.filters.TableLineFilter;
 import com.frostwire.gui.theme.SkinMenu;
@@ -67,15 +32,24 @@ import com.limegroup.gnutella.gui.PaddedPanel;
 import com.limegroup.gnutella.gui.actions.SearchAction;
 import com.limegroup.gnutella.gui.dnd.DNDUtils;
 import com.limegroup.gnutella.gui.dnd.MulticastTransferHandler;
-import com.limegroup.gnutella.gui.tables.AbstractTableMediator;
-import com.limegroup.gnutella.gui.tables.ColumnPreferenceHandler;
-import com.limegroup.gnutella.gui.tables.LimeJTable;
-import com.limegroup.gnutella.gui.tables.LimeTableColumn;
-import com.limegroup.gnutella.gui.tables.NameHolderRenderer;
-import com.limegroup.gnutella.gui.tables.TableSettings;
+import com.limegroup.gnutella.gui.tables.*;
 import com.limegroup.gnutella.gui.util.PopupUtils;
 import com.limegroup.gnutella.settings.SearchSettings;
 import com.limegroup.gnutella.util.QueryUtils;
+import net.miginfocom.swing.MigLayout;
+
+import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public final class SearchResultMediator extends AbstractTableMediator<TableRowFilteredModel, SearchResultDataLine, UISearchResult> {
 
@@ -155,7 +129,7 @@ public final class SearchResultMediator extends AbstractTableMediator<TableRowFi
     /**
      * Constructs a new ResultPanel for search results.
      *
-     * @param guid the guid of the query.  Used to match results.
+     * @param token the guid of the query.  Used to match results.
      * @param info the info of the search
      */
     SearchResultMediator(long token, List<String> searchTokens, SearchInformation info) {
@@ -724,6 +698,10 @@ public final class SearchResultMediator extends AbstractTableMediator<TableRowFi
                 buttonOptions.setText(scrollPaneSearchOptions.isVisible() ? strHideOpts : strShowOpts);
                 buttonOptions.setIcon(!scrollPaneSearchOptions.isVisible() ? GUIMediator.getThemeImage("search_tools_left") : GUIMediator.getThemeImage("search_tools_right"));
                 buttonOptions.setHorizontalTextPosition(!scrollPaneSearchOptions.isVisible() ? SwingConstants.RIGHT : SwingConstants.LEFT);
+
+                if (scrollPaneSearchOptions.isVisible()) {
+                    searchOptionsPanel.onOptionsPanelShown();
+                }
             }
         });
 

@@ -19,6 +19,8 @@ package com.limegroup.gnutella.gui.search;
 
 import java.awt.Dimension;
 import java.awt.event.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -83,6 +85,10 @@ final class SearchOptionsPanel extends JPanel {
         add(new JSeparator(SwingConstants.HORIZONTAL), "growx, wrap");
 
         resetFilters();
+    }
+
+    public void onOptionsPanelShown() {
+        textFieldKeywords.requestFocus();
     }
 
     public void updateFiltersPanel() {

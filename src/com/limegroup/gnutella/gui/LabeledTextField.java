@@ -131,7 +131,7 @@ public class LabeledTextField extends JPanel {
 
     /** 
      * Adds a ActionListener to the TextField.
-     * @param ActionListener A ActionListener implementation. 
+     * @param aa AbstractAction implementation.
      */
     public void addActionListener(AbstractAction aa) {
         _field.addActionListener(aa);
@@ -143,4 +143,7 @@ public class LabeledTextField extends JPanel {
     	_field.addKeyListener(l);
     }
 
+	public void requestFocus() {
+		_field.requestFocusInWindow();
+	}
 }
