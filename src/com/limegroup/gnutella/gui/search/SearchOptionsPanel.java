@@ -17,29 +17,23 @@
 
 package com.limegroup.gnutella.gui.search;
 
-import java.awt.Dimension;
-import java.awt.event.*;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
+import com.limegroup.gnutella.gui.I18n;
+import com.limegroup.gnutella.gui.LabeledTextField;
+import net.miginfocom.swing.MigLayout;
+import org.limewire.setting.BooleanSetting;
+
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import javax.swing.JCheckBox;
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-import javax.swing.JSeparator;
-import javax.swing.SwingConstants;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-
-import net.miginfocom.swing.MigLayout;
-
-import org.limewire.setting.BooleanSetting;
-
-import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.LabeledTextField;
 
 /**
  * 
@@ -180,11 +174,8 @@ final class SearchOptionsPanel extends JPanel {
         final Map<JCheckBox, BooleanSetting> cBoxes = new HashMap<JCheckBox, BooleanSetting>();
 
         ItemListener listener = new ItemListener() {
-
             public void itemStateChanged(ItemEvent e) {
-                boolean allDeSelected = true;
-                allDeSelected = areAll(false);
-                if (allDeSelected) {
+                if (areAll(false)) {
                     ((JCheckBox) e.getItemSelectable()).setSelected(true);
                 }
 
