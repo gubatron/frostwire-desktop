@@ -330,7 +330,8 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
             double httpBandwidth = 0;
             for (BTDownload btDownload : this.getDownloads()) {
                 if (btDownload instanceof HttpDownload ||
-                    btDownload instanceof BTDownload) {
+                    btDownload instanceof SoundcloudDownload ||
+                    btDownload instanceof YouTubeDownload) {
                     httpBandwidth += btDownload.getDownloadSpeed();
                 }
             }
