@@ -47,7 +47,6 @@ import net.miginfocom.swing.MigLayout;
 
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
-import com.frostwire.core.FileDescriptor;
 import com.frostwire.gui.bittorrent.SendFileProgressDialog;
 import com.frostwire.gui.library.LibraryMediator;
 import com.frostwire.gui.library.LibraryUtils;
@@ -74,8 +73,6 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
 
     private static final int MAX_TITLE_CHARS = 36;
     private static final int BOUND_TITLE_CHARS = 18;
-
-    public static final String STREAMING_AUDIO = I18n.tr("Streaming Audio");
 
     /**
      * Constant for the play button.
