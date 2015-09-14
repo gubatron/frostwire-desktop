@@ -433,6 +433,7 @@ public class HttpDownload implements BTDownload {
                 state = TransferState.CANCELED;
             } else if (state.equals(TransferState.PAUSING)) {
                 state = TransferState.PAUSED;
+                isResumable = true;
             } else {
                 state = TransferState.CANCELED;
             }
@@ -440,12 +441,26 @@ public class HttpDownload implements BTDownload {
 
         @Override
         public void onHeaders(HttpClient httpClient, Map<String, List<String>> headerFields) {
+            if (headerFields == null) {
+                isResumable = false;
+                size=-1;
+                return;
+            }
+
             if (headerFields.containsKey("Accept-Ranges")) {
                 isResumable = headerFields.get("Accept-Ranges").contains("bytes");
             } else if (headerFields.containsKey("Content-Range")) {
                 isResumable = true;
             } else {
                 isResumable = false;
+            }
+
+            if (headerFields.containsKey("Content-Length")) {
+                try {
+                    size = Long.valueOf(headerFields.get("Content-Length").get(0));
+                } catch (Throwable t) {
+
+                }
             }
             
             //try figuring out file size from HTTP headers depending on the response.
