@@ -29,8 +29,8 @@ import com.frostwire.database.Cursor;
 import com.frostwire.database.sqlite.SQLiteDatabase;
 import com.frostwire.database.sqlite.SQLiteOpenHelper;
 import com.frostwire.database.sqlite.SQLiteQueryBuilder;
-import com.frostwire.gui.TextUtils;
 import com.limegroup.gnutella.settings.SearchSettings;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author gubatron
@@ -77,7 +77,7 @@ public final class CrawlCacheDB {
         // If no sort order is specified use the default
         String orderBy;
 
-        if (TextUtils.isEmpty(sortOrder)) {
+        if (StringUtils.isEmpty(sortOrder)) {
             orderBy = DEFAULT_SORT_ORDER;
         } else {
             orderBy = sortOrder;

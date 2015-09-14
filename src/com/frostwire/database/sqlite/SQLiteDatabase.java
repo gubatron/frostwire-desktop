@@ -28,7 +28,7 @@ import com.frostwire.content.ContentValues;
 import com.frostwire.database.Cursor;
 import com.frostwire.database.SQLException;
 import com.frostwire.logging.Logger;
-import com.frostwire.gui.TextUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author gubatron
@@ -237,7 +237,7 @@ public class SQLiteDatabase {
     public int delete(String table, String whereClause, String[] whereArgs) {
         verifyDbIsOpen();
 
-        String sql = "DELETE FROM " + table + (!TextUtils.isEmpty(whereClause) ? " WHERE " + whereClause : "");
+        String sql = "DELETE FROM " + table + (!StringUtils.isEmpty(whereClause) ? " WHERE " + whereClause : "");
         return executeSql(sql, whereArgs);
     }
 
@@ -279,7 +279,7 @@ public class SQLiteDatabase {
                 bindArgs[i] = whereArgs[i - setValuesSize];
             }
         }
-        if (!TextUtils.isEmpty(whereClause)) {
+        if (!StringUtils.isEmpty(whereClause)) {
             sql.append(" WHERE ");
             sql.append(whereClause);
         }
@@ -334,7 +334,7 @@ public class SQLiteDatabase {
      * @return the first table listed
      */
     public static String findEditTable(String tables) {
-        if (!TextUtils.isEmpty(tables)) {
+        if (!StringUtils.isEmpty(tables)) {
             // find the first word terminated by either a space or a comma
             int spacepos = tables.indexOf(' ');
             int commapos = tables.indexOf(',');

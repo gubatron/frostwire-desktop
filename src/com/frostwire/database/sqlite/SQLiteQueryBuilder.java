@@ -23,7 +23,7 @@ import java.util.Set;
 import java.util.regex.Pattern;
 
 import com.frostwire.database.Cursor;
-import com.frostwire.gui.TextUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * This is a convience class that helps build SQL queries to be sent to
@@ -194,11 +194,11 @@ public class SQLiteQueryBuilder
     public static String buildQueryString(
             boolean distinct, String tables, String[] columns, String where,
             String groupBy, String having, String orderBy, String limit) {
-        if (TextUtils.isEmpty(groupBy) && !TextUtils.isEmpty(having)) {
+        if (StringUtils.isEmpty(groupBy) && !StringUtils.isEmpty(having)) {
             throw new IllegalArgumentException(
                     "HAVING clauses are only permitted when using a groupBy clause");
         }
-        if (!TextUtils.isEmpty(limit) && !sLimitPattern.matcher(limit).matches()) {
+        if (!StringUtils.isEmpty(limit) && !sLimitPattern.matcher(limit).matches()) {
             throw new IllegalArgumentException("invalid LIMIT clauses:" + limit);
         }
 
@@ -225,7 +225,7 @@ public class SQLiteQueryBuilder
     }
 
     private static void appendClause(StringBuilder s, String name, String clause) {
-        if (!TextUtils.isEmpty(clause)) {
+        if (!StringUtils.isEmpty(clause)) {
             s.append(name);
             s.append(clause);
         }
