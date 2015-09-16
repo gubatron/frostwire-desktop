@@ -39,8 +39,6 @@ import org.limewire.concurrent.ExecutorsHelper;
 import org.limewire.util.FileUtils;
 import org.limewire.util.StringUtils;
 
-import com.frostwire.alexandria.IcyInputStream;
-import com.frostwire.alexandria.IcyInputStream.Track;
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.alexandria.db.LibraryDatabase;

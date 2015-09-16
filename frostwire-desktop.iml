@@ -15,7 +15,6 @@
       <sourceFolder url="file://$MODULE_DIR$/../frostwire-common/json" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../frostwire-common/core" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../frostwire-common/jdownloader" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/../frostwire-common/mp4parser" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../frostwire-common/apache" isTestSource="false" />
     </content>
     <content url="file://$MODULE_DIR$">
@@ -55,5 +54,6 @@
     <orderEntry type="library" name="jlibtorrent-1.1.0.6" level="project" />
     <orderEntry type="library" name="okio-1.6.0" level="project" />
     <orderEntry type="library" name="okhttp-2.5.0" level="project" />
+    <orderEntry type="library" name="isoparser-1.1.8-SNAPSHOT" level="project" />
   </component>
 </module>

@@ -30,22 +30,11 @@ compileJava {
 
 repositories {
     mavenCentral()
-
-    flatDir {
-        dirs 'lib/jars'
-    }
 }
 
 // add third party jars to classpath.
 dependencies {
-    compile name: 'jlibtorrent-1.1.0.6'
-    compile name: 're2j-1.0'
-    compile name: 'gson-2.3.1'
-    compile name: 'rxjava-1.0.12'
-    compile name: 'okio-1.6.0'
-    compile name: 'okhttp-2.5.0'
-    compile name: 'rxjava-1.0.12'
-    compile name: 'messages'
+    compile fileTree(dir: 'lib/jars', include: ['*.jar'])
 
     def ant_jar_path = System.getenv('ANT_HOME') + '/lib/ant.jar'
     compile files(new File(ant_jar_path).toURI())
@@ -58,7 +47,6 @@ sourceSets {
             srcDir '../frostwire-common/apache'
             srcDir '../frostwire-common/jdownloader'
             srcDir '../frostwire-common/json'
-            srcDir '../frostwire-common/mp4parser'
             srcDir '../frostwire-common/core'
 
             // jars-src (other third parties dependencies, we keep their sources
