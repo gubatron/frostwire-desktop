@@ -20,7 +20,6 @@ package com.frostwire.gui.bittorrent;
 
 import com.frostwire.bittorrent.BTEngine;
 import com.frostwire.bittorrent.PaymentOptions;
-import com.frostwire.core.CommonConstants;
 import com.frostwire.gui.bittorrent.BTDownloadActions.PlaySingleMediaFileAction;
 import com.frostwire.gui.components.slides.Slide;
 import com.frostwire.gui.filters.TableLineFilter;
@@ -31,10 +30,7 @@ import com.frostwire.gui.theme.SkinMenuItem;
 import com.frostwire.gui.theme.SkinPopupMenu;
 import com.frostwire.logging.Logger;
 import com.frostwire.search.ScrapedTorrentFileSearchResult;
-import com.frostwire.search.soundcloud.SoundCloudRedirectResponse;
-import com.frostwire.search.soundcloud.SoundcloudItem;
-import com.frostwire.search.soundcloud.SoundcloudPlaylist;
-import com.frostwire.search.soundcloud.SoundcloudSearchResult;
+import com.frostwire.search.soundcloud.*;
 import com.frostwire.search.torrent.TorrentCrawledSearchResult;
 import com.frostwire.search.torrent.TorrentSearchResult;
 import com.frostwire.search.youtube.YouTubeCrawledSearchResult;
@@ -854,8 +850,8 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
             });
         } else if (trackUrl != null) {
             //resolve track information using http://api.soundcloud.com/resolve?url=<url>&client_id=b45b1aa10f1ac2941910a7f0d10f8e28
-            final String clientId = CommonConstants.SOUNDCLOUD_CLIENTID;
-            final String appVersion = CommonConstants.SOUNDCLOUD_APP_VERSION;
+            final String clientId = SoundcloudSearchPerformer.SOUNDCLOUD_CLIENTID;
+            final String appVersion = SoundcloudSearchPerformer.SOUNDCLOUD_APP_VERSION;
             try {
                 String url = trackUrl;
                 if (trackUrl.contains("?in=")) {
