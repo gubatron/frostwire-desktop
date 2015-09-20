@@ -26,6 +26,7 @@ import com.frostwire.jlibtorrent.TorrentInfo;
 import com.frostwire.logging.Logger;
 import com.frostwire.transfers.TransferState;
 import com.frostwire.util.HttpClientFactory;
+import com.frostwire.util.UserAgentGenerator;
 import com.limegroup.gnutella.gui.GUIMediator;
 import org.gudy.azureus2.core3.util.UrlUtils;
 
@@ -303,9 +304,9 @@ public class TorrentFetcherDownload implements BTDownload {
             }
 
             try {
-                byte[] data = null;
+                byte[] data;
                 if (uri.startsWith("http")) {
-                    data = HttpClientFactory.getInstance(HttpClientFactory.HttpContext.DOWNLOAD).getBytes(uri, 15000, referer, cookie);
+                    data = HttpClientFactory.getInstance(HttpClientFactory.HttpContext.DOWNLOAD).getBytes(uri, 15000, UserAgentGenerator.getUserAgent(), referer, cookie);
                 } else {
                     data = BTEngine.getInstance().fetchMagnet(uri, 90000);
                 }

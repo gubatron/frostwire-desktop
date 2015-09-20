@@ -174,7 +174,7 @@ public abstract class SearchEngine {
         }
     };
     
-    private SearchEngine(int id, String name, BooleanSetting setting, String domainName) {
+    public SearchEngine(int id, String name, BooleanSetting setting, String domainName) {
         _id = id;
         _name = name;
         _setting = setting;

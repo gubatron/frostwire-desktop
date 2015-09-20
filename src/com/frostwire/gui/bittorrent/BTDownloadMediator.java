@@ -29,6 +29,7 @@ import com.frostwire.gui.theme.SkinMenu;
 import com.frostwire.gui.theme.SkinMenuItem;
 import com.frostwire.gui.theme.SkinPopupMenu;
 import com.frostwire.logging.Logger;
+import com.frostwire.search.ReferrerSearchResult;
 import com.frostwire.search.ScrapedTorrentFileSearchResult;
 import com.frostwire.search.soundcloud.*;
 import com.frostwire.search.torrent.TorrentCrawledSearchResult;
@@ -37,6 +38,7 @@ import com.frostwire.search.youtube.YouTubeCrawledSearchResult;
 import com.frostwire.transfers.TransferState;
 import com.frostwire.util.HttpClientFactory;
 import com.frostwire.util.JsonUtils;
+import com.frostwire.util.StringUtils;
 import com.frostwire.util.http.HttpClient;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -717,21 +719,17 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     }
 
     public void openTorrentSearchResult(final TorrentSearchResult sr, final boolean partialDownload) {
-        GUIMediator.safeInvokeLater(new Runnable() {
-            public void run() {
-                BTDownload downloader = new TorrentFetcherDownload(sr.getTorrentUrl(), sr.getDetailsUrl(), sr.getDisplayName(), partialDownload);
+//        GUIMediator.safeInvokeLater(new Runnable() {
+//            public void run() {
+                BTDownload downloader;
+                if (sr instanceof ReferrerSearchResult && !StringUtils.isNullOrEmpty(((ReferrerSearchResult) sr).getReferrerUrl())) {
+                    downloader  =  new TorrentFetcherDownload(sr.getTorrentUrl(), ((ReferrerSearchResult) sr).getReferrerUrl(), sr.getDisplayName(), partialDownload);
+                } else {
+                    downloader = new TorrentFetcherDownload(sr.getTorrentUrl(), sr.getDetailsUrl(), sr.getDisplayName(), partialDownload);
+                }
                 add(downloader);
-            }
-        });
-    }
-
-    public void openSearchResult(final ScrapedTorrentFileSearchResult sr) {
-        GUIMediator.safeInvokeLater(new Runnable() {
-            public void run() {
-                BTDownload downloader = new TorrentFetcherDownload(sr.getTorrentUrl(), sr.getReferrerUrl(), sr.getDisplayName(), false, sr.getFilePath());
-                add(downloader);
-            }
-        });
+//            }
+//        });
     }
 
     public BTDownload[] getSelectedDownloaders() {

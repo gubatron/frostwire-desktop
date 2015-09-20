@@ -15,55 +15,6 @@
 
 package com.limegroup.gnutella.gui;
 
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.Cursor;
-import java.awt.Dimension;
-import java.awt.EventQueue;
-import java.awt.Frame;
-import java.awt.Point;
-import java.awt.PopupMenu;
-import java.awt.Toolkit;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.StringSelection;
-import java.awt.event.ActionEvent;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
-import java.io.File;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.lang.reflect.InvocationTargetException;
-import java.net.NetworkInterface;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
-import java.util.Locale;
-import java.util.concurrent.LinkedBlockingQueue;
-
-import javax.swing.Action;
-import javax.swing.Box;
-import javax.swing.ImageIcon;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
-
-import com.frostwire.search.ScrapedTorrentFileSearchResult;
-import com.frostwire.search.torrent.TorrentCrawledSearchResult;
-import com.frostwire.util.ThreadPool;
-import org.limewire.concurrent.ThreadExecutor;
-import org.limewire.service.ErrorService;
-import org.limewire.service.Switch;
-import org.limewire.setting.IntSetting;
-import org.limewire.setting.StringSetting;
-import org.limewire.setting.evt.SettingEvent;
-import org.limewire.setting.evt.SettingListener;
-import org.limewire.util.OSUtils;
-import org.limewire.util.StringUtils;
-import org.limewire.util.VersionUtils;
-
 import com.frostwire.gui.HideExitDialog;
 import com.frostwire.gui.bittorrent.BTDownloadMediator;
 import com.frostwire.gui.components.slides.Slide;
@@ -72,9 +23,11 @@ import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.player.MediaSource;
 import com.frostwire.gui.tabs.Tab;
 import com.frostwire.search.soundcloud.SoundcloudSearchResult;
+import com.frostwire.search.torrent.TorrentCrawledSearchResult;
 import com.frostwire.search.torrent.TorrentSearchResult;
 import com.frostwire.search.youtube.YouTubeCrawledSearchResult;
 import com.frostwire.search.youtube.YouTubeCrawledStreamableSearchResult;
+import com.frostwire.util.ThreadPool;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.actions.AbstractAction;
 import com.limegroup.gnutella.gui.bugs.FatalBugManager;
@@ -86,9 +39,37 @@ import com.limegroup.gnutella.gui.shell.ShellAssociationManager;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.QuestionsHandler;
 import com.limegroup.gnutella.settings.StartupSettings;
-import com.limegroup.gnutella.util.FrostWireUtils;
 import com.limegroup.gnutella.util.LaunchException;
 import com.limegroup.gnutella.util.Launcher;
+import org.limewire.concurrent.ThreadExecutor;
+import org.limewire.service.ErrorService;
+import org.limewire.service.Switch;
+import org.limewire.setting.IntSetting;
+import org.limewire.setting.StringSetting;
+import org.limewire.setting.evt.SettingEvent;
+import org.limewire.setting.evt.SettingListener;
+import org.limewire.util.OSUtils;
+import org.limewire.util.StringUtils;
+import org.limewire.util.VersionUtils;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.ActionEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+import java.io.File;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.lang.reflect.InvocationTargetException;
+import java.net.NetworkInterface;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
+import java.util.Locale;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * This class acts as a central point of access for all gui components, a sort
@@ -117,7 +98,7 @@ public final class GUIMediator {
     /**
      * Message key for the disconnected message
      */
-    private static final String DISCONNECTED_MESSAGE = I18n.tr("Your machine does not appear to have an active Internet connection or a firewall is blocking FrostWire from accessing the internet. FrostWire will automatically keep trying to connect you to the network unless you select \"Disconnect\" from the File menu.");
+    private static String DISCONNECTED_MESSAGE = I18n.tr("Your machine does not appear to have an active Internet connection or a firewall is blocking FrostWire from accessing the internet. FrostWire will automatically keep trying to connect you to the network unless you select \"Disconnect\" from the File menu.");
 
     /**
      * Singleton for easy access to the mediator.
@@ -126,7 +107,7 @@ public final class GUIMediator {
 
     private boolean _remoteDownloadsAllowed;
 
-    public static enum Tabs {
+    public enum Tabs {
         SEARCH(I18n.tr("&Search")), LIBRARY(I18n.tr("&Library"));
 
         private Action navAction;
@@ -137,13 +118,13 @@ public final class GUIMediator {
 
         private final PropertyChangeSupport propertyChangeSupport;
 
-        private Tabs(String nameWithAmpers) {
+        Tabs(String nameWithAmpers) {
             this.name = GUIUtils.stripAmpersand(nameWithAmpers);
             navAction = new NavigationAction(nameWithAmpers, I18n.tr("Display the {0} Screen", name));
             this.propertyChangeSupport = new PropertyChangeSupport(this);
         }
 
-        private Tabs(StringSetting nameSetting) {
+        Tabs(StringSetting nameSetting) {
             this(nameSetting.getValue());
             nameSetting.addSettingListener(new SettingListener() {
                 public void settingChanged(final SettingEvent evt) {
@@ -158,11 +139,6 @@ public final class GUIMediator {
             });
         }
 
-        private Tabs(String nameWithAmpers, String url) {
-            this(nameWithAmpers);
-            this.navAction = new BrowseAction(nameWithAmpers, url);
-        }
-
         void setName(String newName) {
             String oldName = name;
             this.name = GUIUtils.stripAmpersand(newName);
@@ -175,20 +151,11 @@ public final class GUIMediator {
             navAction.setEnabled(enabled);
         }
 
-        public Action getNavigationAction() {
-            return navAction;
-        }
-
         public String getName() {
             return name;
         }
 
         private class NavigationAction extends AbstractAction {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -575503118703093157L;
-
             public NavigationAction(String name, String description) {
                 super(name);
                 putValue(Action.LONG_DESCRIPTION, description);
@@ -199,47 +166,9 @@ public final class GUIMediator {
             }
         }
 
-        /**
-         * The tabs are also used on the View Menu, sometimes, you don't need to
-         * add a tab, but instead point to a website when the user wants to view
-         * the action shown on the menu, in this case, we use a BrowseAction.
-         * <p/>
-         * A BrowseAction will be used with the Third Tab enum constructor,
-         * which takes an url as the third parameter.
-         */
-        private class BrowseAction extends AbstractAction {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -6546640610645484649L;
-            private String url;
-
-            public BrowseAction(String name, String url) {
-                super(name);
-                this.url = url;
-            }
-
-            public void actionPerformed(ActionEvent e) {
-                GUIMediator.openURL(FrostWireUtils.addLWInfoToUrl(this.url, new byte[0]));
-            }
-        }
-
-        // To make sure we're always working with te same instances
-        // so that the actions update all the components listening to them.
-        private static Tabs[] OPTIONAL_TABS = null;
-
-        public static Tabs[] getOptionalTabs() {
-            if (OPTIONAL_TABS == null) {
-                OPTIONAL_TABS = new Tabs[]{LIBRARY};
-            }
-
-            return OPTIONAL_TABS;
-        }
-
         public void addPropertyChangeListener(PropertyChangeListener listener) {
             propertyChangeSupport.addPropertyChangeListener(listener);
         }
-
     }
 
     /**
@@ -248,7 +177,7 @@ public final class GUIMediator {
     private static JFrame FRAME;
 
     /**
-     * The popup menu on the icon in the sytem tray.
+     * The popup menu on the icon in the system tray.
      */
     private static PopupMenu TRAY_MENU;
 
@@ -256,12 +185,12 @@ public final class GUIMediator {
      * <tt>List</tt> of <tt>RefreshListener</tt> classes to notify of UI refresh
      * events.
      */
-    private static final List<RefreshListener> REFRESH_LIST = new ArrayList<RefreshListener>();
+    private static List<RefreshListener> REFRESH_LIST = new ArrayList<>();
 
     /**
      * String to be displayed in title bar of LW client.
      */
-    private static final String APP_TITLE = I18n.tr("FrostWire: Share Big Files");
+    private static String APP_TITLE = I18n.tr("FrostWire: Share Big Files");
 
     /**
      * Handle to the <tt>OptionsMediator</tt> class that is responsible for
@@ -285,17 +214,6 @@ public final class GUIMediator {
      * responsible for displaying active downloads to the user.
      */
     private BTDownloadMediator BT_DOWNLOAD_MEDIATOR;
-
-    /**
-     * Constant handle to the <tt>LibraryMediator</tt> class that is responsible
-     * for displaying files in the user's repository.
-     */
-    private LibraryMediator LIBRARY_MEDIATOR;
-
-    /**
-     * Media Player Mediator
-     */
-    private MPlayerMediator MPLAYER_MEDIATOR;
 
     /**
      * Constant handle to the <tt>DownloadView</tt> class that is responsible
@@ -372,7 +290,7 @@ public final class GUIMediator {
      * @return <tt>true</tt> if the <tt>JFrame</tt> is visible, <tt>false</tt>
      * otherwise
      */
-    public static final boolean isAppVisible() {
+    public static boolean isAppVisible() {
         return getAppFrame().isShowing();
     }
 
@@ -383,7 +301,7 @@ public final class GUIMediator {
      * @param visible specifies whether or not the application should be made
      *                visible or not
      */
-    public static final void setAppVisible(final boolean visible) {
+    public static void setAppVisible(final boolean visible) {
         safeInvokeLater(new Runnable() {
             public void run() {
                 try {
@@ -392,14 +310,7 @@ public final class GUIMediator {
                     getAppFrame().setVisible(visible);
                 } catch (NullPointerException npe) {
                     System.out.println("GUIMediator - NULL POINTER EXCEPTION HAPPENED");
-                    // NPE being thrown on WinXP sometimes. First try
-                    // reverting to the limewire theme. If NPE still
-                    // thrown, tell user to change LimeWire's Windows
-                    // compatibility mode to Win2k.
-                    // null pointer found
-                    // Update: no idea if the NPE also happens on vista, use the
-                    // workaround
-                    // just in case.
+
                     if (OSUtils.isNativeThemeWindows()) {
                         try {
                             GUIMediator
@@ -426,7 +337,7 @@ public final class GUIMediator {
                 }
                 if (visible) {
                     SearchMediator.requestSearchFocus();
-                    // forcibily revalidate the FRAME
+                    // forcibly revalidate the FRAME
                     // after making it visible.
                     // on Java 1.5, it does not validate correctly.
                     SwingUtilities.invokeLater(new Runnable() {
@@ -453,7 +364,7 @@ public final class GUIMediator {
      * Displays various dialog boxes that should only be shown the first time
      * the application is made visible.
      */
-    private static final void showDialogsForFirstVisibility() {
+    private static void showDialogsForFirstVisibility() {
         if (_displayedMessage)
             return;
         _displayedMessage = true;
@@ -515,7 +426,7 @@ public final class GUIMediator {
      * @return a <tt>Dimension</tt> instance containing the width and height of
      * the wrapped JFrame
      */
-    public static final Dimension getAppSize() {
+    public static Dimension getAppSize() {
         return getAppFrame().getSize();
     }
 
@@ -523,10 +434,10 @@ public final class GUIMediator {
      * Returns a <tt>Point</tt> instance containing the x, y position of the
      * wrapped <ttJFrame</tt> on the screen.
      *
-     * @return a <tt>Point</tt> instance containting the x, y position of the
+     * @return a <tt>Point</tt> instance containing the x, y position of the
      * wrapped JFrame
      */
-    public static final Point getAppLocation() {
+    public static Point getAppLocation() {
         return getAppFrame().getLocation();
     }
 
@@ -540,19 +451,12 @@ public final class GUIMediator {
         return MAIN_FRAME;
     }
 
-    public final MPlayerMediator getMPlayerMediator() {
-        if (MPLAYER_MEDIATOR == null) {
-            MPLAYER_MEDIATOR = MPlayerMediator.instance();
-        }
-        return MPLAYER_MEDIATOR;
-    }
-
     /**
      * Returns the main application <tt>JFrame</tt> instance.
      *
      * @return the main application <tt>JFrame</tt> instance
      */
-    public static final JFrame getAppFrame() {
+    public static JFrame getAppFrame() {
         if (FRAME == null) {
             FRAME = new LimeJFrame();
             FRAME.setTitle(APP_TITLE);
@@ -565,7 +469,7 @@ public final class GUIMediator {
      *
      * @return The tray popup menu
      */
-    public static final PopupMenu getTrayMenu() {
+    public static PopupMenu getTrayMenu() {
         if (TRAY_MENU == null) {
             TRAY_MENU = new PopupMenu();
         }
@@ -586,9 +490,9 @@ public final class GUIMediator {
      * Refreshes the various gui components that require refreshing.
      */
     public final void refreshGUI() {
-        for (int i = 0; i < REFRESH_LIST.size(); i++) {
+        for (RefreshListener aREFRESH_LIST : REFRESH_LIST) {
             try {
-                REFRESH_LIST.get(i).refresh();
+                aREFRESH_LIST.refresh();
             } catch (Throwable t) {
                 // Show the error for each RefreshListener individually
                 // so that we continue refreshing the other items.
@@ -599,7 +503,7 @@ public final class GUIMediator {
         updateConnectionQualityAsync();
     }
 
-    private static final ThreadPool pool = new ThreadPool("GUIMediator-updateConnectionQuality", 1, 1, Integer.MAX_VALUE, new LinkedBlockingQueue<Runnable>(), true);
+    private static ThreadPool pool = new ThreadPool("GUIMediator-updateConnectionQuality", 1, 1, Integer.MAX_VALUE, new LinkedBlockingQueue<>(), true);
 
     private void updateConnectionQualityAsync() {
         pool.execute(new Runnable() {
@@ -621,7 +525,7 @@ public final class GUIMediator {
     }
 
     /**
-     * Returns the connectiong quality.
+     * Returns the connection quality.
      */
     public int getConnectionQuality() {
         if (isInternetReachable()) {
@@ -662,9 +566,7 @@ public final class GUIMediator {
      * otherwise
      */
     public static boolean isOptionsVisible() {
-        if (OPTIONS_MEDIATOR == null)
-            return false;
-        return OPTIONS_MEDIATOR.isOptionsVisible();
+        return OPTIONS_MEDIATOR != null && OPTIONS_MEDIATOR.isOptionsVisible();
     }
 
     /**
@@ -695,7 +597,7 @@ public final class GUIMediator {
      * Sets the tab pane to display the given tab.
      * Tip: Try to leave this method call last on your actions.
      *
-     * @param the tab enum index of the tab to display
+     * @param tabEnum index of the tab to display
      */
     public void setWindow(GUIMediator.Tabs tabEnum) {
         getMainFrame().getApplicationHeader().showSearchField(getMainFrame().getTab(tabEnum));
@@ -724,7 +626,7 @@ public final class GUIMediator {
     /**
      * Sets the connected/disconnected visual status of the client.
      *
-     * @param connected the connected/disconnected status of the client
+     * @param quality the connected/disconnected status of the client
      */
     private void updateConnectionUI(int quality) {
         getStatusLine().setConnectionQuality(quality);
@@ -750,11 +652,6 @@ public final class GUIMediator {
 
     public final int getCurrentDownloads() {
         return getBTDownloadMediator().getActiveDownloads();
-    }
-
-    public final void openTorrentSearchResult(TorrentSearchResult sr, boolean partialDownload) {
-        getBTDownloadMediator().openTorrentSearchResult(sr, partialDownload);
-        setWindow(GUIMediator.Tabs.SEARCH);
     }
 
     public final void openTorrentFile(File torrentFile, boolean partialSelection) {
@@ -800,7 +697,7 @@ public final class GUIMediator {
     public static void startupHidden() {
         // sends us to the system tray on windows, ignored otherwise.
         GUIMediator.showTrayIcon();
-        // If on OSX, we must set the framestate appropriately.
+        // If on OSX, we must set the frame state appropriately.
         if (OSUtils.isMacOSX())
             GUIMediator.hideView();
     }
@@ -850,7 +747,7 @@ public final class GUIMediator {
      * window. Mimimize behavior occurs on platforms which do not support the
      * System Tray.
      *
-     * @see restoreView
+     * @see GUIMediator#restoreView()
      */
     public static void hideView() {
         getAppFrame().setState(Frame.ICONIFIED);
@@ -864,7 +761,7 @@ public final class GUIMediator {
      * Makes the GUI visible by either restoring it from the System Tray or the
      * task bar.
      *
-     * @see hideView
+     * @see GUIMediator#hideView()
      */
     public static void restoreView() {
         // Frame must be visible for setState to work. Make visible
@@ -951,14 +848,10 @@ public final class GUIMediator {
         Finalizer.shutdown();
     }
 
-    public static void flagUpdate(String toExecute) {
-        Finalizer.flagUpdate(toExecute);
-    }
-
     /**
      * Shows the "About" menu with more information about the program.
      */
-    public static final void showAboutWindow() {
+    public static void showAboutWindow() {
         new AboutWindow().showDialog();
     }
 
@@ -1007,7 +900,7 @@ public final class GUIMediator {
     }
 
     /**
-     * @param tabs (tabs is actually a Singular word, it referes to the Tabs enum)
+     * @param tabs (tabs is actually a Singular word, it refers to the Tabs enum)
      * @return
      */
     public Tab getTab(Tabs tabs) {
@@ -1017,33 +910,19 @@ public final class GUIMediator {
     /**
      * Serves as a single point of access for any icons used in the program.
      *
-     * @param imageName the name of the icon to return without path information, as in
+     * @param name the name of the icon to return without path information, as in
      *                  "plug"
      * @return the <tt>ImageIcon</tt> object specified in the param string
      */
-    public static final ImageIcon getThemeImage(final String name) {
+    public static ImageIcon getThemeImage(final String name) {
         return ResourceManager.getThemeImage(name);
     }
 
     /**
      * Returns an ImageIcon for the specified resource.
      */
-    public static final ImageIcon getImageFromResourcePath(final String loc) {
+    public static ImageIcon getImageFromResourcePath(final String loc) {
         return ResourceManager.getImageFromResourcePath(loc);
-    }
-
-    /**
-     * Returns a new <tt>URL</tt> instance for the specified file name. The file
-     * must be located in the org/limewire/gui/resources directory, or this will
-     * return <tt>null</tt>.
-     *
-     * @param FILE_NAME the name of the file to return a url for without path
-     *                  information, as in "about.html"
-     * @return the <tt>URL</tt> instance for the specified file, or
-     * <tt>null</tt> if the <tt>URL</tt> could not be loaded
-     */
-    public static URL getURLResource(final String FILE_NAME) {
-        return ResourceManager.getURLResource(FILE_NAME);
     }
 
     /**
@@ -1052,22 +931,6 @@ public final class GUIMediator {
     public static void resetLocale() {
         ResourceManager.resetLocaleOptions();
         GUIUtils.resetLocale();
-    }
-
-    /**
-     * Acts as a proxy for the <tt>MessageService</tt> class. Displays a
-     * locale-specific question message to the user with an input field
-     * <p/>
-     * <p/>
-     * The <tt>messageKey</tt> parameter must be the key for a locale- specific
-     * message <tt>String</tt> and not a hard-coded value.
-     *
-     * @param message      the locale-specific message to display
-     * @param initialValue the initial input value
-     * @return a String containing the user input
-     */
-    public static final String showInputMessage(final String message, String initialValue) {
-        return MessageService.instance().showInputMessage(message, initialValue);
     }
 
     /**
@@ -1081,7 +944,7 @@ public final class GUIMediator {
      * @param message the locale-specific message to display
      * @return an integer indicating a yes or a no response from the user
      */
-    public static final DialogOption showYesNoMessage(final String message, final DialogOption defaultOption) {
+    public static DialogOption showYesNoMessage(final String message, final DialogOption defaultOption) {
         return MessageService.instance().showYesNoMessage(message, defaultOption);
     }
 
@@ -1094,7 +957,7 @@ public final class GUIMediator {
      * @param msgType      type messages example JOptionPane.QUESTION_MESSAGE
      * @return an integer indicating a yes or a no response from the user
      */
-    public static final DialogOption showYesNoMessage(final String message, final String title, final int msgType) {
+    public static DialogOption showYesNoMessage(final String message, final String title, final int msgType) {
       return MessageService.instance().showYesNoMessage(message, title, msgType);
     }
 
@@ -1109,11 +972,11 @@ public final class GUIMediator {
      * @param defaultValue the IntSetting to store/retrieve the default value
      * @return an integer indicating a yes or a no response from the user
      */
-    public static final DialogOption showYesNoMessage(final String message, final IntSetting defaultValue, final DialogOption defaultOption) {
+    public static DialogOption showYesNoMessage(final String message, final IntSetting defaultValue, final DialogOption defaultOption) {
         return MessageService.instance().showYesNoMessage(message, defaultValue, defaultOption);
     }
 
-    public static final DialogOption showYesNoTitledMessage(final String message, final String title, final DialogOption defaultOption) {
+    public static DialogOption showYesNoTitledMessage(final String message, final String title, final DialogOption defaultOption) {
         return MessageService.instance().showYesNoMessage(message, title, defaultOption);
     }
 
@@ -1130,7 +993,7 @@ public final class GUIMediator {
      * @param otherOptions the name of the other option
      * @return an integer indicating a yes or a no response from the user
      */
-    public static final DialogOption showYesNoOtherMessage(final String message, final IntSetting defaultValue, String otherOptions) {
+    public static DialogOption showYesNoOtherMessage(final String message, final IntSetting defaultValue, String otherOptions) {
         return MessageService.instance().showYesNoOtherMessage(message, defaultValue, otherOptions);
     }
 
@@ -1146,7 +1009,7 @@ public final class GUIMediator {
      * @param message the locale-specific message to display
      * @return an integer indicating a yes or a no response from the user
      */
-    public static final DialogOption showYesNoCancelMessage(final String message) {
+    public static DialogOption showYesNoCancelMessage(final String message) {
         return MessageService.instance().showYesNoCancelMessage(message);
     }
 
@@ -1163,7 +1026,7 @@ public final class GUIMediator {
      * @param defaultValue the IntSetting to store/retrieve the default value
      * @return an integer indicating a yes or a no response from the user
      */
-    public static final DialogOption showYesNoCancelMessage(final String message, final IntSetting defaultValue) {
+    public static DialogOption showYesNoCancelMessage(final String message, final IntSetting defaultValue) {
         return MessageService.instance().showYesNoCancelMessage(message, defaultValue);
     }
 
@@ -1177,7 +1040,7 @@ public final class GUIMediator {
      *
      * @param messageKey the key for the locale-specific message to display
      */
-    public static final void showMessage(final String messageKey) {
+    public static void showMessage(final String messageKey) {
         MessageService.instance().showMessage(messageKey);
     }
 
@@ -1193,7 +1056,7 @@ public final class GUIMediator {
      * @param ignore  the BooleanSetting that stores/retrieves whether or not to
      *                display this message.
      */
-    public static final void showMessage(final String message, final Switch ignore) {
+    public static void showMessage(final String message, final Switch ignore) {
         MessageService.instance().showMessage(message, ignore);
     }
 
@@ -1210,9 +1073,8 @@ public final class GUIMediator {
      *                   display this message.
      * @param msgType    The <tt>JOptionPane</tt> message type. @see
      *                   javax.swing.JOptionPane.
-     * @param msgTitle   The title of the message window.
      */
-    public static final void showDisposableMessage(final String messageKey, final String message, final Switch ignore, int msgType) {
+    public static void showDisposableMessage(final String messageKey, final String message, final Switch ignore, int msgType) {
         MessageService.instance().showDisposableMessage(messageKey, message, ignore, msgType);
     }
 
@@ -1226,38 +1088,8 @@ public final class GUIMediator {
      *
      * @param messageKey the key for the locale-specific message to display
      */
-    public static final void hideDisposableMessage(final String messageKey) {
+    public static void hideDisposableMessage(final String messageKey) {
         MessageService.instance().hideDisposableMessage(messageKey);
-    }
-
-    /**
-     * Acts as a proxy for the <tt>MessageService</tt> class. Displays a
-     * confirmation message to the user.
-     * <p/>
-     * <p/>
-     * The <tt>messageKey</tt> parameter must be the key for a locale- specific
-     * message <tt>String</tt> and not a hard-coded value.
-     *
-     * @param message the locale-specific message to display
-     */
-    public static final void showConfirmMessage(final String message) {
-        MessageService.instance().showConfirmMessage(message);
-    }
-
-    /**
-     * Acts as a proxy for the <tt>MessageService</tt> class. Displays a
-     * confirmation message to the user.
-     * <p/>
-     * <p/>
-     * The <tt>messageKey</tt> parameter must be the key for a locale- specific
-     * message <tt>String</tt> and not a hard-coded value.
-     *
-     * @param message the locale-specific message to display
-     * @param ignore  the BooleanSetting for that stores/retrieves whether or not to
-     *                display this message.
-     */
-    public static final void showConfirmMessage(final String message, final Switch ignore) {
-        MessageService.instance().showConfirmMessage(message, ignore);
     }
 
     /**
@@ -1270,7 +1102,7 @@ public final class GUIMediator {
      *
      * @param message the locale-specific message to display.
      */
-    public static final void showError(final String message) {
+    public static void showError(final String message) {
         closeStartupDialogs();
         MessageService.instance().showError(message);
     }
@@ -1287,7 +1119,7 @@ public final class GUIMediator {
      * @param ignore  the BooleanSetting for that stores/retrieves whether or not to
      *                display this message.
      */
-    public static final void showError(final String message, final Switch ignore) {
+    public static void showError(final String message, final Switch ignore) {
         closeStartupDialogs();
         MessageService.instance().showError(message, ignore);
     }
@@ -1301,26 +1133,8 @@ public final class GUIMediator {
      * message <tt>String</tt> and not a hard-coded value.
      *
      * @param message the locale-specific message to display.
-     * @param ignore  the BooleanSetting for that stores/retrieves whether or not to
-     *                display this message.
      */
-    public static final void showWarning(final String message, final Switch ignore) {
-
-        closeStartupDialogs();
-        MessageService.instance().showWarning(message, ignore);
-    }
-
-    /**
-     * Acts as a proxy for the <tt>MessageService</tt> class. Displays a
-     * locale-specific warning message to the user.
-     * <p/>
-     * <p/>
-     * The <tt>messageKey</tt> parameter must be the key for a locale- specific
-     * message <tt>String</tt> and not a hard-coded value.
-     *
-     * @param message the locale-specific message to display.
-     */
-    public static final void showWarning(final String message) {
+    public static void showWarning(final String message) {
         closeStartupDialogs();
         MessageService.instance().showWarning(message);
     }
@@ -1335,7 +1149,7 @@ public final class GUIMediator {
      * @param url the url to open
      * @return an int indicating the success of the browser launch
      */
-    public static final int openURL(String url) {
+    public static int openURL(String url) {
         try {
             return Launcher.openURL(url);
         } catch (Throwable e) {
@@ -1353,9 +1167,8 @@ public final class GUIMediator {
      *
      * @param file a <tt>File</tt> instance denoting the abstract pathname of the
      *             file to launch
-     * @throws IOException if the file cannot be launched do to an IO problem
      */
-    public static final void launchFile(File file) {
+    public static void launchFile(File file) {
         try {
             Launcher.launchFile(file);
         } catch (SecurityException se) {
@@ -1376,9 +1189,8 @@ public final class GUIMediator {
      *
      * @param file a <tt>File</tt> instance denoting the abstract pathname of the
      *             file to launch
-     * @throws IOException if the file cannot be launched do to an IO problem
      */
-    public static final void launchExplorer(File file) {
+    public static void launchExplorer(File file) {
         try {
             Launcher.launchExplorer(file);
         } catch (SecurityException e) {
@@ -1391,22 +1203,12 @@ public final class GUIMediator {
     }
 
     /**
-     * Returns a <tt>Component</tt> standardly sized for horizontal separators.
-     *
-     * @return the constant <tt>Component</tt> used as a standard horizontal
-     * separator
-     */
-    public static final Component getHorizontalSeparator() {
-        return Box.createRigidArea(new Dimension(6, 0));
-    }
-
-    /**
      * Returns a <tt>Component</tt> standardly sized for vertical separators.
      *
      * @return the constant <tt>Component</tt> used as a standard vertical
      * separator
      */
-    public static final Component getVerticalSeparator() {
+    public static Component getVerticalSeparator() {
         return Box.createRigidArea(new Dimension(0, 6));
     }
 
@@ -1460,40 +1262,20 @@ public final class GUIMediator {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int appWidth = Math.min(screenSize.width, COMPONENT_DIMENSION.width);
         // compare against a little bit less than the screen size,
-        // as the screen size includes the taskbar
+        // as the screen size includes the task bar
         int appHeight = Math.min(screenSize.height - 40, COMPONENT_DIMENSION.height);
         return new Point((screenSize.width - appWidth) / 2, (screenSize.height - appHeight) / 2);
-    }
-
-    /**
-     * Adds the <tt>FinalizeListener</tt> class to the list of classes that
-     * should be notified of finalize events.
-     *
-     * @param fin the <tt>FinalizeListener</tt> class that should be notified
-     */
-    public static void addFinalizeListener(FinalizeListener fin) {
-        Finalizer.addFinalizeListener(fin);
     }
 
     /**
      * Adds the specified <tt>RefreshListener</tt> instance to the list of
      * listeners to be notified when a UI refresh event occurs.
      *
-     * @param the new <tt>RefreshListener</tt> to add
+     * @param listener new <tt>RefreshListener</tt> to add
      */
     public static void addRefreshListener(RefreshListener listener) {
         if (!REFRESH_LIST.contains(listener))
             REFRESH_LIST.add(listener);
-    }
-
-    /**
-     * Removes the specified <tt>RefreshListener</tt> instance from the list of
-     * listeners to be notified when a UI refresh event occurs.
-     *
-     * @param the <tt>RefreshListener</tt> to remove
-     */
-    public static void removeRefreshListener(RefreshListener listener) {
-        REFRESH_LIST.remove(listener);
     }
 
     /**
@@ -1564,8 +1346,8 @@ public final class GUIMediator {
             children = ((Container) c).getComponents();
         }
         if (children != null) {
-            for (int i = 0; i < children.length; i++) {
-                updateButtonView(children[i]);
+            for (Component aChildren : children) {
+                updateButtonView(aChildren);
             }
         }
     }
@@ -1603,7 +1385,7 @@ public final class GUIMediator {
     }
 
     /**
-     * Sets the cursor on limewire's frame.
+     * Sets the cursor on FrostWire's frame.
      *
      * @param cursor the cursor that should be shown on the frame and all its child
      *               components that don't have their own cursor set
@@ -1637,13 +1419,6 @@ public final class GUIMediator {
         return BT_DOWNLOAD_MEDIATOR;
     }
 
-    public LibraryMediator getLibraryMediator() {
-        if (LIBRARY_MEDIATOR == null) {
-            LIBRARY_MEDIATOR = getMainFrame().getLibraryMediator();
-        }
-        return LIBRARY_MEDIATOR;
-    }
-
     public static void setClipboardContent(String str) {
         try {
             StringSelection data = new StringSelection(str);
@@ -1674,7 +1449,6 @@ public final class GUIMediator {
 
             while (interfaces.hasMoreElements()) {
                 NetworkInterface iface = interfaces.nextElement();
-                //System.out.println(iface);
                 if (iface.isUp() && !iface.isLoopback()) {
                     _wasInternetReachable = true;
                     return true;
@@ -1697,17 +1471,17 @@ public final class GUIMediator {
         _remoteDownloadsAllowed = remoteDownloadsAllowed;
     }
 
-    public void openTorrentSearchResult(TorrentCrawledSearchResult sr) {
-        getBTDownloadMediator().openSearchResult(sr);
-        setWindow(GUIMediator.Tabs.SEARCH);
+    public void openTorrentSearchResult(TorrentSearchResult sr, boolean partial) {
+        getBTDownloadMediator().openTorrentSearchResult(sr, partial);
+        setWindow(Tabs.SEARCH);
     }
 
-    public void openTorrentSearchResult(ScrapedTorrentFileSearchResult sr) {
-        getBTDownloadMediator().openSearchResult(sr);
-        setWindow(GUIMediator.Tabs.SEARCH);
-    }
+//    public void openTorrentSearchResult(TorrentCrawledSearchResult sr) {
+//        getBTDownloadMediator().openSearchResult(sr);
+//        setWindow(GUIMediator.Tabs.SEARCH);
+//    }
 
-    public void openSoundcloudTrackUrl(String trackUrl, String title) {
+     public void openSoundcloudTrackUrl(String trackUrl, String title) {
         getBTDownloadMediator().downloadSoundcloudFromTrackUrlOrSearchResult(trackUrl, null);
         setWindow(GUIMediator.Tabs.SEARCH);
     }

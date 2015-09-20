@@ -21,6 +21,8 @@ import com.frostwire.gui.theme.SkinMenu;
 import com.frostwire.gui.theme.SkinMenuItem;
 import com.frostwire.gui.theme.SkinPopupMenu;
 import com.frostwire.gui.theme.ThemeMediator;
+import com.frostwire.search.ScrapedTorrentFileSearchResult;
+import com.frostwire.search.SearchResult;
 import com.frostwire.search.torrent.TorrentSearchResult;
 import com.frostwire.uxstats.UXAction;
 import com.frostwire.uxstats.UXStats;
@@ -278,8 +280,14 @@ public final class SearchResultMediator extends AbstractTableMediator<TableRowFi
             public void actionPerformed(ActionEvent e) {
                 SearchResultDataLine[] lines = getAllSelectedLines();
                 if (lines.length == 1 && lines[0] != null) {
-                    if (lines[0].getInitializeObject().getSearchResult() instanceof TorrentSearchResult) {
-                        GUIMediator.instance().openTorrentSearchResult((TorrentSearchResult) lines[0].getInitializeObject().getSearchResult(), true);
+                    final SearchResult sr = lines[0].getInitializeObject().getSearchResult();
+                    if (sr instanceof TorrentSearchResult) {
+                        // GUIMediator gm = GUIMediator.instance();
+                        //if (sr instanceof ScrapedTorrentFileSearchResult) {
+                        //    gm.openTorrentSearchResult((ScrapedTorrentFileSearchResult) sr);
+                        //} else {
+                        GUIMediator.instance(). openTorrentSearchResult((TorrentSearchResult) sr, true);
+                        //}
                     }
                 }
             }

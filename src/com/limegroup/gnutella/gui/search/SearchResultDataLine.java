@@ -272,7 +272,7 @@ public final class SearchResultDataLine extends AbstractDataLine<UISearchResult>
     }
 
     /**
-     * Returns the underlying search result.  This is needed by {@link StoreResultPanel}.
+     * Returns the underlying search result.
      * 
      * @return the underlying search result
      */

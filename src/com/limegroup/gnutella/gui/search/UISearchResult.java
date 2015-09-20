@@ -1,15 +1,15 @@
 /*
  * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
+ * it under the terms of the GNU General License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * GNU General License for more details.
  *
- * You should have received a copy of the GNU General Public License
+ * You should have received a copy of the GNU General License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
@@ -40,32 +40,32 @@ public interface UISearchResult {
      */
     long getCreationTime();
     
-    public String getSource();
+    String getSource();
     
     /**
      * Returns the extension of this result.
      */
     String getExtension();
 
-    public void download(boolean partial);
+    void download(boolean partial);
 
     JPopupMenu createMenu(JPopupMenu popupMenu, SearchResultDataLine[] lines, SearchResultMediator rp);
     
-    public String getHash();
+    String getHash();
 
-    public int getSeeds();
+    int getSeeds();
     
-    public SearchEngine getSearchEngine();
+    SearchEngine getSearchEngine();
     
-    public SearchResult getSearchResult();
+    SearchResult getSearchResult();
     
-    public void showDetails(boolean now);
+    void showDetails(boolean now);
     
-    public String getDetailsUrl();
+    String getDetailsUrl();
     
-    public String getDisplayName();
+    String getDisplayName();
     
-    public String getQuery();
+    String getQuery();
     
-    public void play();
+    void play();
 }
