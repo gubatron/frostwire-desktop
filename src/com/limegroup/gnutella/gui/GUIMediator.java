@@ -23,7 +23,6 @@ import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.player.MediaSource;
 import com.frostwire.gui.tabs.Tab;
 import com.frostwire.search.soundcloud.SoundcloudSearchResult;
-import com.frostwire.search.torrent.TorrentCrawledSearchResult;
 import com.frostwire.search.torrent.TorrentSearchResult;
 import com.frostwire.search.youtube.YouTubeCrawledSearchResult;
 import com.frostwire.search.youtube.YouTubeCrawledStreamableSearchResult;
@@ -98,7 +97,7 @@ public final class GUIMediator {
     /**
      * Message key for the disconnected message
      */
-    private static String DISCONNECTED_MESSAGE = I18n.tr("Your machine does not appear to have an active Internet connection or a firewall is blocking FrostWire from accessing the internet. FrostWire will automatically keep trying to connect you to the network unless you select \"Disconnect\" from the File menu.");
+    private final static String DISCONNECTED_MESSAGE = I18n.tr("Your machine does not appear to have an active Internet connection or a firewall is blocking FrostWire from accessing the internet. FrostWire will automatically keep trying to connect you to the network unless you select \"Disconnect\" from the File menu.");
 
     /**
      * Singleton for easy access to the mediator.
@@ -185,12 +184,12 @@ public final class GUIMediator {
      * <tt>List</tt> of <tt>RefreshListener</tt> classes to notify of UI refresh
      * events.
      */
-    private static List<RefreshListener> REFRESH_LIST = new ArrayList<>();
+    private static final List<RefreshListener> REFRESH_LIST = new ArrayList<>();
 
     /**
      * String to be displayed in title bar of LW client.
      */
-    private static String APP_TITLE = I18n.tr("FrostWire: Share Big Files");
+    private static final String APP_TITLE = I18n.tr("FrostWire: Share Big Files");
 
     /**
      * Handle to the <tt>OptionsMediator</tt> class that is responsible for
@@ -490,9 +489,9 @@ public final class GUIMediator {
      * Refreshes the various gui components that require refreshing.
      */
     public final void refreshGUI() {
-        for (RefreshListener aREFRESH_LIST : REFRESH_LIST) {
+        for (int i = 0; i < REFRESH_LIST.size(); i++) {
             try {
-                aREFRESH_LIST.refresh();
+                REFRESH_LIST.get(i).refresh();
             } catch (Throwable t) {
                 // Show the error for each RefreshListener individually
                 // so that we continue refreshing the other items.
@@ -1475,11 +1474,6 @@ public final class GUIMediator {
         getBTDownloadMediator().openTorrentSearchResult(sr, partial);
         setWindow(Tabs.SEARCH);
     }
-
-//    public void openTorrentSearchResult(TorrentCrawledSearchResult sr) {
-//        getBTDownloadMediator().openSearchResult(sr);
-//        setWindow(GUIMediator.Tabs.SEARCH);
-//    }
 
      public void openSoundcloudTrackUrl(String trackUrl, String title) {
         getBTDownloadMediator().downloadSoundcloudFromTrackUrlOrSearchResult(trackUrl, null);

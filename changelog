@@ -2,6 +2,7 @@ frostwire (6.1.5) stable; urgency=high
   * New http engine based on okhttp, uses pooled connections, less threads,
     less memory.
   * libtorrent/jlibtorrent core update (v 1.1.0.8).
+  * Fixes KAT search.
   * Fixes EZTV search.
   * Removes Radio functionality from Library.
   * When the search options are opened, the keyword textfield is autofocused.

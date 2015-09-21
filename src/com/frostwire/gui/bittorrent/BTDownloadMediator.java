@@ -719,8 +719,8 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     }
 
     public void openTorrentSearchResult(final TorrentSearchResult sr, final boolean partialDownload) {
-//        GUIMediator.safeInvokeLater(new Runnable() {
-//            public void run() {
+        GUIMediator.safeInvokeLater(new Runnable() {
+            public void run() {
                 BTDownload downloader;
                 if (sr instanceof ReferrerSearchResult && !StringUtils.isNullOrEmpty(((ReferrerSearchResult) sr).getReferrerUrl())) {
                     downloader  =  new TorrentFetcherDownload(sr.getTorrentUrl(), ((ReferrerSearchResult) sr).getReferrerUrl(), sr.getDisplayName(), partialDownload);
@@ -728,8 +728,8 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
                     downloader = new TorrentFetcherDownload(sr.getTorrentUrl(), sr.getDetailsUrl(), sr.getDisplayName(), partialDownload);
                 }
                 add(downloader);
-//            }
-//        });
+            }
+        });
     }
 
     public BTDownload[] getSelectedDownloaders() {
