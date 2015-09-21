@@ -18,8 +18,6 @@
 
 package com.limegroup.gnutella.gui.search;
 
-import com.frostwire.search.ReferrerSearchResult;
-import com.frostwire.search.ScrapedTorrentFileSearchResult;
 import com.frostwire.search.torrent.TorrentCrawledSearchResult;
 import com.frostwire.search.torrent.TorrentSearchResult;
 import com.frostwire.uxstats.UXAction;
