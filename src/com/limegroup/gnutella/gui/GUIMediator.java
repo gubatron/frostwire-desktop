@@ -506,7 +506,7 @@ public final class GUIMediator {
         updateConnectionQualityAsync();
     }
 
-    private static ThreadPool pool = new ThreadPool("GUIMediator-updateConnectionQuality", 1, 1, Integer.MAX_VALUE, new LinkedBlockingQueue<>(), true);
+    private static ThreadPool pool = new ThreadPool("GUIMediator-updateConnectionQuality", 1, 1, Integer.MAX_VALUE, new LinkedBlockingQueue<Runnable>(), true);
 
     private void updateConnectionQualityAsync() {
         pool.execute(new Runnable() {
