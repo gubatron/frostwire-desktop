@@ -36,23 +36,6 @@ public class ApplicationSettings extends LimeProps {
     }
 
     /**
-     * The average time this user leaves the application running.
-     */
-    public static final IntSetting AVERAGE_UPTIME = FACTORY.createExpirableIntSetting("AVERAGE_UPTIME", 0);
-
-    /**
-     * The total time this user has used the application.
-     */
-    public static final IntSetting TOTAL_UPTIME = FACTORY.createIntSetting("TOTAL_UPTIME", 0);
-
-    /**
-     * The total number of times the application  has been run --
-     * used in calculating the average amount of time this user
-     * leaves the application on.
-     */
-    public static final IntSetting SESSIONS = FACTORY.createIntSetting("SESSIONS", 1);
-
-    /**
      * Specifies whether or not the program has been installed, either by
      * a third-party installer, or by our own.  This is the old value for 
      * legacy InstallShield installers that set the save directory and the
@@ -155,8 +138,6 @@ public class ApplicationSettings extends LimeProps {
      * Whether or not to show SEEDING torrents on the transfer manager
      */
     public static final BooleanSetting SHOW_SEEDING_TRANSFERS = FACTORY.createBooleanSetting("SHOW_SEEDING_TRANSFERS", true);
-
-    public static final StringSetting APP_UUID = FACTORY.createStringSetting("APP_UUID", ByteUtils.encodeHex(ByteUtils.uuidToByteArray(UUID.randomUUID())));
 
     public static final FileSetting APP_DATABASES_PATH = FACTORY.createFileSetting("APP_DATABASES_PATH", new File(CommonUtils.getUserSettingsDir(), "dbs"));
 

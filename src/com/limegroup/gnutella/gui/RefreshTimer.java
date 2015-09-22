@@ -11,19 +11,12 @@ import com.limegroup.gnutella.settings.ApplicationSettings;
  * This class handles the timer that refreshes the gui after every 
  * specified interval.
  */
-//2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
 public final class RefreshTimer {
 
 	/** 
 	 * The interval between statistics updates in milliseconds. 
 	 */
 	private final int UPDATE_TIME = 1000;
-
-	/** 
-	 * The interval between statistics updates in seconds for convenience
-	 * and added efficiency.. 
-	 */
-	private final int UPDATE_TIME_IN_SECONDS = UPDATE_TIME/1000;	
 
 	/**
 	 * variable for timer that updates the gui.
@@ -55,10 +48,5 @@ public final class RefreshTimer {
 	 */
 	private void refreshGUI() {
 		GUIMediator.instance().refreshGUI();
-        
-        int totalUptime = ApplicationSettings.TOTAL_UPTIME.getValue() + UPDATE_TIME_IN_SECONDS;
-        ApplicationSettings.TOTAL_UPTIME.setValue(totalUptime);
-        ApplicationSettings.AVERAGE_UPTIME.setValue(totalUptime/ApplicationSettings.SESSIONS.getValue());
-        
 	}
 }
