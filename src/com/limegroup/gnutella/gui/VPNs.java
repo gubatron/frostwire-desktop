@@ -122,23 +122,4 @@ public final class VPNs {
         }
         return result;
     }
-    
-    public static void printNetworkInterfaces() {
-        try {
-            Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();
-            while (networkInterfaces.hasMoreElements()) {
-                NetworkInterface iface = networkInterfaces.nextElement();
-                System.out.println(iface.getIndex() + ":" + iface.getDisplayName() + ":" +
-                "virtual=" + iface.isVirtual() + ":" + "mtu=" + iface.getMTU() + ":mac=" + (iface.getHardwareAddress()!=null ? "0x"+ ByteUtils.encodeHex(iface.getHardwareAddress()) : "n/a"));
-            }
-        } catch (SocketException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
-    
-    public static void main(String[] args) {
-        System.out.println("GOT VPN? " + isVPNActive());
-        printNetworkInterfaces();
-    }
 }
