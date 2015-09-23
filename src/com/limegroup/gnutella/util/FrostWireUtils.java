@@ -15,15 +15,12 @@
 
 package com.limegroup.gnutella.util;
 
-import com.frostwire.util.ByteUtils;
-import com.limegroup.gnutella.settings.ApplicationSettings;
 import org.apache.commons.io.IOUtils;
 import org.limewire.setting.SettingsFactory;
 import org.limewire.util.CommonUtils;
 import org.limewire.util.OSUtils;
 import org.limewire.util.SystemUtils;
 import org.limewire.util.SystemUtils.SpecialLocations;
-import org.limewire.util.VersionUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -39,105 +36,92 @@ import java.util.Set;
  */
 public final class FrostWireUtils {
 
-	/** 
-	 * Constant for the current version of FrostWire.
-	 */
-	private static final String FROSTWIRE_VERSION = "6.1.4";
-	
-	/** Build number for the current version, gets reset to 1 on every version bump*/
-	private static final int BUILD_NUMBER = 2;
-
-	/**
-	 * Make sure the constructor can never be called.
-	 */
-	private FrostWireUtils() {
-	}
-
-	/**
-	 * Returns the current version number of FrostWire as
-         * a string, e.g., "5.2.9".
-	 */
-	public static String getFrostWireVersion() {
-            return FROSTWIRE_VERSION;
-	}
-	
-	public static int getBuildNumber() {
-	    return BUILD_NUMBER;
-	}
-    
     /**
-     * Updates a URL to contain common information about the LW installation.
+     * Constant for the current version of FrostWire.
      */
-    public static String addLWInfoToUrl(String url, byte[] myClientGUID) {
-        if(url.indexOf('?') == -1)
-            url += "?";
-        else
-            url += "&";
-        url += "guid=" + EncodingUtils.encode(ByteUtils.encodeHex(myClientGUID))+
-            "&lang=" + EncodingUtils.encode(ApplicationSettings.getLanguage()) +
-            "&lv="   + EncodingUtils.encode(FrostWireUtils.getFrostWireVersion()) +
-            "&jv="   + EncodingUtils.encode(VersionUtils.getJavaVersion()) +
-            "&os="   + EncodingUtils.encode(OSUtils.getOS()) +
-            "&osv="  + EncodingUtils.encode(OSUtils.getOSVersion());
-               
-        return url;
+    private static final String FROSTWIRE_VERSION = "6.1.4";
+
+    /**
+     * Build number for the current version, gets reset to 1 on every version bump
+     */
+    private static final int BUILD_NUMBER = 2;
+
+    /**
+     * Make sure the constructor can never be called.
+     */
+    private FrostWireUtils() {
     }
-    
-    /** Returns whether or not failures were encountered in load/save settings on startup. */
+
+    /**
+     * Returns the current version number of FrostWire as
+     * a string, e.g., "5.2.9".
+     */
+    public static String getFrostWireVersion() {
+        return FROSTWIRE_VERSION;
+    }
+
+    public static int getBuildNumber() {
+        return BUILD_NUMBER;
+    }
+
+    /**
+     * Returns whether or not failures were encountered in load/save settings on startup.
+     */
     public static boolean hasSettingsLoadSaveFailures() {
         return SettingsFactory.hasLoadSaveFailure();
     }
-    
+
     public static void resetSettingsLoadSaveFailures() {
         SettingsFactory.resetLoadSaveFailure();
     }
-    
+
     /**
      * Returns the path of the FrostWire.jar executable.
      * For a windows binary distribution this is the same path as FrostWire.exe since those files live together.
+     *
      * @return
      */
     public static String getFrostWireJarPath() {
-    	return new File(FrostWireUtils.class.getProtectionDomain().getCodeSource().getLocation().getPath()).getParent();
+        return new File(FrostWireUtils.class.getProtectionDomain().getCodeSource().getLocation().getPath()).getParent();
     }
-    
+
     /**
      * Returns the root folder from which all Saved/Shared/etc..
      * folders should be placed.
      */
     public static File getFrostWireRootFolder() {
         String root = null;
-        
+
         if (OSUtils.isWindowsVista() || OSUtils.isWindows7()) {
             root = SystemUtils.getSpecialPath(SpecialLocations.DOWNLOADS);
-        } else if(OSUtils.isWindows()) {
+        } else if (OSUtils.isWindows()) {
             root = SystemUtils.getSpecialPath(SpecialLocations.DOCUMENTS);
         }
-        
-        if(root == null || "".equals(root))
+
+        if (root == null || "".equals(root))
             root = CommonUtils.getUserHomeDir().getPath();
-        
+
         return new File(root, "FrostWire");
     }
-    
+
     public static interface IndexedMapFunction<T> {
-    	public void map(int i, T obj);
+        public void map(int i, T obj);
     }
-    
-	/**
-	 * Make sure your List implements RandomAccess.
-	 * 
-	 * @param <T>
-	 * @param list
-	 * @param mapFunction
-	 */
-	public static <T> void map(List<T> list, IndexedMapFunction<T> mapFunction) {
-		int size = list.size();
-		for (int i = 0; i < size; i++) {
-			mapFunction.map(i, list.get(i));
-		}
-	}
-	
+
+    /**
+     * Make sure your List implements RandomAccess.
+     *
+     * @param <T>
+     * @param list
+     * @param mapFunction
+     */
+    public static <T> void map(List<T> list, IndexedMapFunction<T> mapFunction) {
+        int size = list.size();
+        for (int i = 0; i < size; i++) {
+            mapFunction.map(i, list.get(i));
+        }
+    }
+
     public static Set<File> getFrostWire4SaveDirectories() {
         Set<File> result = new HashSet<File>();
 
@@ -152,7 +136,7 @@ public final class FrostWireUtils {
                 result.add(new File(props.getProperty("DIRECTORY_FOR_SAVING_FILES")));
             }
 
-            String[] types = new String[] { "document", "application", "audio", "video", "image" };
+            String[] types = new String[]{"document", "application", "audio", "video", "image"};
 
             for (String type : types) {
                 String key = "DIRECTORY_FOR_SAVING_" + type + "_FILES";
@@ -167,7 +151,7 @@ public final class FrostWireUtils {
 
         return result;
     }
-    
+
     public static File getUserMusicFolder() {
         File musicFile;
         if (OSUtils.isMacOSX()) {
@@ -199,6 +183,6 @@ public final class FrostWireUtils {
             videoFile = new File(CommonUtils.getUserHomeDir(), "Videos");
         }
 
-        return videoFile;    
+        return videoFile;
     }
 }
