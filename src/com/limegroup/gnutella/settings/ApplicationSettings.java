@@ -15,17 +15,15 @@
 
 package com.limegroup.gnutella.settings;
 
-import java.io.File;
-import java.util.UUID;
-
 import com.limegroup.gnutella.gui.options.OptionsConstructor;
 import org.limewire.setting.BooleanSetting;
 import org.limewire.setting.FileSetting;
 import org.limewire.setting.IntSetting;
 import org.limewire.setting.StringSetting;
-import com.frostwire.util.ByteUtils;
 import org.limewire.util.CommonUtils;
 import org.limewire.util.OSUtils;
+
+import java.io.File;
 
 /**
  * Settings for FrostWire application
@@ -37,7 +35,7 @@ public class ApplicationSettings extends LimeProps {
 
     /**
      * Specifies whether or not the program has been installed, either by
-     * a third-party installer, or by our own.  This is the old value for 
+     * a third-party installer, or by our own.  This is the old value for
      * legacy InstallShield installers that set the save directory and the
      * connection speed.
      */
@@ -71,12 +69,14 @@ public class ApplicationSettings extends LimeProps {
      */
     public static final IntSetting WINDOW_Y = (IntSetting) FACTORY.createIntSetting("WINDOW_Y", 0).setAlwaysSave(true);
 
-    /** Setting for whether or not LW should start maximized. */
+    /**
+     * Setting for whether or not LW should start maximized.
+     */
     public static final BooleanSetting MAXIMIZE_WINDOW = FACTORY.createBooleanSetting("MAXIMIZE_WINDOW", false);
 
     /**
      * A flag for whether or not to display the system
-     * tray icon while the application is visible. 
+     * tray icon while the application is visible.
      */
     public static final BooleanSetting DISPLAY_TRAY_ICON = FACTORY.createBooleanSetting("DISPLAY_TRAY_ICON", true);
 
@@ -116,15 +116,17 @@ public class ApplicationSettings extends LimeProps {
      */
     public static final BooleanSetting HANDLE_TORRENTS = FACTORY.createBooleanSetting("HANDLE_TORRENTS", true);
 
-    /** The last directory used for opening a file chooser. */
+    /**
+     * The last directory used for opening a file chooser.
+     */
     public static final FileSetting LAST_FILECHOOSER_DIRECTORY = FACTORY.createFileSetting("LAST_FILECHOOSER_DIR", new File("")).setAlwaysSave(true);
 
 
     public static final IntSetting FILECHOOSER_WIDTH = (IntSetting) FACTORY.createIntSetting("FILECHOOSER_WIDTH", 900).setAlwaysSave(true);
     public static final IntSetting FILECHOOSER_HEIGHT = (IntSetting) FACTORY.createIntSetting("FILECHOOSER_HEIGHT", 700).setAlwaysSave(true);
 
-    public static final IntSetting FILECHOOSER_X_POS = (IntSetting) FACTORY.createIntSetting("FILECHOOSER_X_POS",-1).setAlwaysSave(true);
-    public static final IntSetting FILECHOOSER_Y_POS = (IntSetting) FACTORY.createIntSetting("FILECHOOSER_Y_POS",-1).setAlwaysSave(true);
+    public static final IntSetting FILECHOOSER_X_POS = (IntSetting) FACTORY.createIntSetting("FILECHOOSER_X_POS", -1).setAlwaysSave(true);
+    public static final IntSetting FILECHOOSER_Y_POS = (IntSetting) FACTORY.createIntSetting("FILECHOOSER_Y_POS", -1).setAlwaysSave(true);
 
     /**
      * A flag for whether or not the application should be minimized
