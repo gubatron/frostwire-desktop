@@ -1,15 +1,16 @@
 frostwire (6.1.5) stable; urgency=high
   * New http engine based on okhttp, uses pooled connections, less threads,
-    less memory.
+    less memory. Faster and more reliable search & cloud downloads.
   * libtorrent/jlibtorrent core update (v 1.1.0.8).
   * Fixes KAT search.
   * Fixes Bitsnoop search.
   * Fixes EZTV search.
   * Removes Radio functionality from Library.
   * When the search options are opened, the keyword textfield is autofocused.
+  * Java Runtime upgrade to v1.8.0_60.
   * Codebase cleanup and refactors.
 	
- -- FrostWire Team <contact@frostwire.com>  Sun, 20 Sep 2015 20:45:40 -0500
+ -- FrostWire Team <contact@frostwire.com>  Thu, 24 Sep 2015 11:04:00 -0500
 
 frostwire (6.1.4) stable; urgency=high
   * libtorrent/jlibtorrent core update (v 1.1.0.5).
