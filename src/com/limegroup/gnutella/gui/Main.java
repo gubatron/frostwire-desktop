@@ -17,6 +17,7 @@ package com.limegroup.gnutella.gui;
 
 import java.awt.Frame;
 import java.awt.Image;
+import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.URL;
@@ -26,6 +27,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JPopupMenu;
 import javax.swing.ToolTipManager;
 
+import com.limegroup.gnutella.util.FrostWireUtils;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.gui.theme.ThemeMediator;
@@ -55,6 +57,10 @@ public class Main {
         if (OSUtils.isMacOSX()) {
             System.setProperty("apple.laf.useScreenMenuBar", "true");
             System.setProperty("com.apple.eawt.CocoaComponent.CompatibilityMode", "false");
+        }
+        if (OSUtils.isLinux() && !OSUtils.isMachineX64()) {
+            String jlibtorrentPath = getLinux32JLibtorrentPath();
+            System.setProperty("jlibtorrent.jni.path", jlibtorrentPath);
         }
         //System.out.println("1: Main.main("+args+")");
 
@@ -130,5 +136,21 @@ public class Main {
         int major = Integer.parseInt(tk.nextToken());
         int minor = Integer.parseInt(tk.nextToken());
         return major == 10 && minor < 6;
+    }
+
+    private static String getLinux32JLibtorrentPath() {
+        String jarPath = new File(FrostWireUtils.getFrostWireJarPath()).getAbsolutePath();
+
+        boolean isRelease = !jarPath.contains("frostwire-desktop");
+
+        String libPath = jarPath + File.separator + ((isRelease) ? "libjlibtorrentx86.so" : "lib/native/libjlibtorrentx86.so");
+
+        if (!new File(libPath).exists()) {
+            libPath = new File(jarPath + File.separator + "../../lib/native/libjlibtorrentx86.so").getAbsolutePath();
+        }
+
+        System.out.println("Using jlibtorrent 32 bits: " + libPath);
+
+        return libPath;
     }
 }
