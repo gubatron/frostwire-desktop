@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011-2014, FrostWire(R). All rights reserved.
+ * Copyright (c) 2011-2015, FrostWire(R). All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,31 +17,6 @@
  */
 
 package com.frostwire.gui.player;
-
-import java.awt.Dimension;
-import java.awt.KeyEventDispatcher;
-import java.awt.KeyboardFocusManager;
-import java.awt.event.KeyEvent;
-import java.io.File;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
-import java.util.Random;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.ExecutorService;
-
-import javax.swing.JCheckBox;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
-
-import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.io.IOUtils;
-import org.limewire.concurrent.ExecutorsHelper;
-import org.limewire.util.FileUtils;
-import org.limewire.util.OSUtils;
 
 import com.coremedia.iso.BoxParser;
 import com.coremedia.iso.IsoFile;
@@ -65,6 +40,22 @@ import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.MPlayerMediator;
 import com.limegroup.gnutella.gui.RefreshListener;
 import com.limegroup.gnutella.settings.PlayerSettings;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.IOUtils;
+import org.limewire.concurrent.ExecutorsHelper;
+import org.limewire.util.FileUtils;
+import org.limewire.util.OSUtils;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
+import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ExecutorService;
 
 /**
  * An media player to play compressed and uncompressed media.
@@ -81,7 +72,7 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
      * Our list of MediaPlayerListeners that are currently listening for events
      * from this player
      */
-    private List<MediaPlayerListener> listenerList = new CopyOnWriteArrayList<MediaPlayerListener>();
+    private List<MediaPlayerListener> listenerList = new CopyOnWriteArrayList<>();
 
     private MPlayer mplayer;
     private MediaSource currentMedia;
@@ -118,7 +109,7 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
     }
 
     protected MediaPlayer() {
-        lastRandomFiles = new LinkedList<MediaSource>();
+        lastRandomFiles = new LinkedList<>();
         playExecutor = ExecutorsHelper.newProcessingQueue("AudioPlayer-PlayExecutor");
 
         String playerPath;
@@ -221,13 +212,6 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
      */
     public void addMediaPlayerListener(MediaPlayerListener listener) {
         listenerList.add(listener);
-    }
-
-    /**
-     * Removes the specified MediaPlayer listener from the list
-     */
-    public void removeMediaPlayerListener(MediaPlayerListener listener) {
-        listenerList.remove(listener);
     }
 
     public MediaPlaybackState getState() {
@@ -344,6 +328,7 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
     public void asyncLoadMedia(final MediaSource source, final boolean play, final boolean isPreview, final boolean playNextSong) {
         playExecutor.execute(new Runnable() {
             public void run() {
+                System.out.println("asyncLoadMedia!!!");
                 loadMedia(source, play, isPreview, playNextSong);
             }
         });
@@ -360,7 +345,7 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
                 if (currentMedia.getFile() != null) {
                     filename = currentMedia.getFile().getAbsolutePath();
                 } else if (currentMedia.getURL() != null) {
-                    filename = currentMedia.getURL().toString();
+                    filename = currentMedia.getURL();
                 } else if (currentMedia.getPlaylistItem() != null) {
                     filename = currentMedia.getPlaylistItem().getFilePath();
                 }
@@ -444,15 +429,12 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
     }
 
     /**
-     * Sets the gain(volume) for the outputline
+     * Sets the gain(volume) for the output line.
      * 
-     * @param gain
-     *            - [0.0 <-> 1.0]
-     * @throws IOException
-     *             - thrown when the soundcard does not support this operation
+     * @param fGain - [0.0 <-> 1.0]
+     *
      */
     public void setVolume(double fGain) {
-
         volume = Math.max(Math.min(fGain, 1.0), 0.0);
         mplayer.setVolume(getAdjustedVolume());
         PlayerSettings.PLAYER_VOLUME.setValue((float) volume);
@@ -502,18 +484,13 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
             return mediaSource.getFile().exists() && isPlayableFile(mediaSource.getFile());
         } else if (mediaSource.getPlaylistItem() != null) {
             return new File(mediaSource.getPlaylistItem().getFilePath()).exists() && isPlayableFile(mediaSource.getPlaylistItem().getFilePath());
-        } else if (mediaSource instanceof StreamMediaSource) {
-            return true;
-        } else {
-            return false;
-        }
+        } else return mediaSource instanceof StreamMediaSource;
     }
 
     /**
      * Notify listeners when a new audio source has been opened.
      * 
-     * @param properties
-     *            - any properties about the source that we extracted
+     * @param mediaSource
      */
     protected void notifyOpened(final MediaSource mediaSource) {
         SwingUtilities.invokeLater(new Runnable() {
@@ -528,13 +505,7 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
      * modifications to the player such as the transition from opened to playing
      * to paused to end of song.
      * 
-     * @param code
-     *            - the type of player event.
-     * @param position
-     *            in the stream when the event occurs.
-     * @param value
-     *            if the event was a modification such as a volume update, list
-     *            the new value
+     * @param state
      */
     protected void notifyState(final MediaPlaybackState state) {
 
@@ -630,7 +601,7 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
             return;
         }
 
-        MediaSource media = null;
+        MediaSource media;
 
         if (getRepeatMode() == RepeatMode.SONG) {
             media = currentMedia;
@@ -669,11 +640,7 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
             return true;
 
         PlaylistItem playlistItem = currentMedia.getPlaylistItem();
-        if (playlistItem != null && new File(playlistItem.getFilePath()).equals(file)) {
-            return true;
-        }
-
-        return false;
+        return playlistItem != null && new File(playlistItem.getFilePath()).equals(file);
     }
 
     public boolean isThisBeingPlayed(String file) {
@@ -688,11 +655,7 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
 
         String currentMediaUrl = currentMedia.getURL();
 
-        if (currentMediaUrl != null && file.toLowerCase().equals(currentMediaUrl.toString().toLowerCase())) {
-            return true;
-        }
-
-        return false;
+        return (currentMediaUrl != null) && file.toLowerCase().equals(currentMediaUrl.toLowerCase());
     }
 
     public boolean isThisBeingPlayed(PlaylistItem playlistItem) {
@@ -707,10 +670,7 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
 
         PlaylistItem currentMediaFile = currentMedia.getPlaylistItem();
 
-        if (currentMediaFile != null && playlistItem.equals(currentMediaFile))
-            return true;
-
-        return false;
+        return currentMediaFile != null && playlistItem.equals(currentMediaFile);
     }
 
     public synchronized void setPlaylistFilesView(List<MediaSource> playlistFilesView) {
@@ -724,8 +684,8 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
 
         MediaSource songFile;
         int count = 4;
-        while ((songFile = findRandomMediaFile(currentMedia)) == null && count-- > 0)
-            ;
+        while ((songFile = findRandomMediaFile(currentMedia)) == null && count-- > 0) {
+        }
 
         if (songFile != null) {
             if (count > 0) {
