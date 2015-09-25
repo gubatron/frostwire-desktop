@@ -681,7 +681,7 @@ public class CreateTorrentDialog extends JDialog {
 
         int responseCode = 500;
         try {
-            responseCode = browser.head(urlPath,2000);
+            responseCode = browser.head(urlPath, 2000 , null);
             System.out.println(responseCode + ": " + urlPath);
         } catch (IOException e) {
             e.printStackTrace();

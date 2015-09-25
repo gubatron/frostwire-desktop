@@ -20,6 +20,7 @@ package com.frostwire.gui.mplayer;
 
 import java.awt.Dimension;
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -27,6 +28,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.frostwire.util.HttpClientFactory;
+import com.frostwire.util.http.HttpClient;
 import org.gudy.azureus2.core3.internat.MessageText;
 import org.gudy.azureus2.core3.util.Debug;
 
@@ -491,6 +494,21 @@ public class MPlayer extends BaseMediaPlayer {
 
 		firstLengthReceived = false;
 		firstVolumeReceived = false;
+
+		if (fileOrUrl.startsWith("http://")) {
+			// perform a 302 check, mplayer having issues with redirects.
+			final HttpClient httpClient = HttpClientFactory.getInstance(HttpClientFactory.HttpContext.MISC);
+			Map<String, List<String>> responseHeaders = new HashMap<>();
+			try {
+				int responseCode = httpClient.head(fileOrUrl, 5000, responseHeaders);
+				if (responseCode == 302 &&
+                    responseHeaders.containsKey("Location") &&
+                    responseHeaders.get("Location").get(0) != null) {
+					fileOrUrl = responseHeaders.get("Location").get(0);
+				}
+			} catch (IOException ioException) {
+			}
+		}
 
 		instance.doOpen(fileOrUrl, initialVolume, new MPlayerInstance.OutputConsumer() {
 			public void consume(String line) {

@@ -328,7 +328,6 @@ public abstract class MediaPlayer implements RefreshListener, MPlayerUIEventList
     public void asyncLoadMedia(final MediaSource source, final boolean play, final boolean isPreview, final boolean playNextSong) {
         playExecutor.execute(new Runnable() {
             public void run() {
-                System.out.println("asyncLoadMedia!!!");
                 loadMedia(source, play, isPreview, playNextSong);
             }
         });
