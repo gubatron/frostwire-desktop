@@ -235,6 +235,13 @@
         <root url="jar://$USER_HOME$/.ideaLibSources/jlibtorrent-1.1.0.6-sources.jar!/" />
       </SOURCES>
     </library>
+    <library name="jlibtorrent-1.1.0.9">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/lib/jars/jlibtorrent-1.1.0.9.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
     <library name="messages">
       <CLASSES>
         <root url="jar://$PROJECT_DIR$/lib/jars/messages.jar!/" />
