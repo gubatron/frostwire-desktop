@@ -4,13 +4,12 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FTA <saintrecall@gmail.com>, 2007.
 #
-#: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryInternetRadioTableDataLine.java:46
 msgid ""
 msgstr ""
 "Project-Id-Version: frostwire\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-05-11 19:46+0300\n"
-"PO-Revision-Date: 2014-08-05 22:15-0300\n"
+"PO-Revision-Date: 2015-09-26 00:15-0300\n"
 "Last-Translator: Dennis Tobar <dennis.tobar@gmail.com>\n"
 "Language-Team: FTA <saintrecall@gmail.com>\n"
 "Language: es\n"
@@ -19,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Launchpad-Export-Date: 2008-09-16 15:59+0000\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 1.8.4\n"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/HideExitDialog.java:57
 msgid "Do you want to hide FrostWire?"
@@ -137,10 +136,16 @@ msgid ""
 "handpicked file from a torrent.\n"
 "\n"
 msgstr ""
+"Compartir archivos torrent a mano está desactivado, sin embargo has escogido "
+"compartir un archivo a mano desde un torrent.\n"
+"\n"
+"\n"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadActions.java:253
 msgid "Would you like to seed handpicked torrent files from now on?"
 msgstr ""
+"¿Te gustaría compartir el archivo torrent seleccionado a mano a partir de "
+"ahora?"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/BTDownloadActions.java:272
 msgid "Pause Download"
@@ -1038,7 +1043,7 @@ msgstr "Editar trackers"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:592
 msgid "Calculating piece hashes..."
-msgstr ""
+msgstr "Calculando trozos de los haches…"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:596
 #, fuzzy
@@ -1327,7 +1332,7 @@ msgstr "Escoja otra carpeta"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/TorrentSeedingSettingComponent.java:49
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/TorrentSeedingSettingPaneItem.java:38
 msgid "Seeding Settings"
-msgstr "Configuración compartiendo"
+msgstr "Configuración de compartir"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/TorrentSeedingSettingComponent.java:76
 msgid ""
@@ -1707,7 +1712,7 @@ msgstr "Extracción de audio finalizada."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1131
 msgid "out of"
-msgstr ""
+msgstr "fuera de"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/library/LibraryFilesTableMediator.java:1134
 msgid "Could not extract audio from"
@@ -2415,9 +2420,8 @@ msgid "ProgressMonitor.progressText"
 msgstr "ProgressMonitor.progressText"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/updates/UpdateManager.java:251
-#, fuzzy
 msgid "New FrostWire Update Available"
-msgstr "¡Nueva versión disponible!"
+msgstr "¡Nueva versión disponible de FrostWire!"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/updates/UpdateManager.java:251
 #, fuzzy
@@ -2431,11 +2435,11 @@ msgstr "Descargando torrent"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/updates/UpdateManager.java:269
 msgid "Thanks, but not now"
-msgstr ""
+msgstr "Gracias, pero no ahora"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/updates/UpdateManager.java:270
 msgid "Go to webpage"
-msgstr ""
+msgstr "Ir al sitio web"
 
 #. These are used as resource keys to retreive descriptions in the GUI
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/MediaType.java:44
@@ -2567,8 +2571,8 @@ msgid ""
 "For making the world a better place with such an excellent distro, you'll be "
 "the ones to make a difference on the desktop."
 msgstr ""
-"<p>Gracias por hacer del mundo un lugar mejor con tan excelente distro, son "
-"únicos haciendo la diferencia en el escritorio.</p>"
+"Gracias por hacer del mundo un lugar mejor con tan excelente distro, son "
+"únicos haciendo la diferencia en el escritorio."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/AboutWindow.java:295
 msgid "Thanks to the NSIS Project"
@@ -2577,8 +2581,7 @@ msgstr "Gracias al Proyecto del NSIS"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/AboutWindow.java:296
 msgid "Thanks for such an awesome installer builder system and documentation."
 msgstr ""
-"<p>Gracias por tan increíble sistema de instalador, constructor y "
-"documentación.</p>"
+"Gracias por tan increíble sistema de instalador, constructor y documentación."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/AboutWindow.java:298
 msgid "Thanks to our families"
@@ -2618,11 +2621,11 @@ msgstr "Marcar todos los elementos como seleccionados"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/CheckBoxList.java:629
 msgid "Deselect All"
-msgstr "Des-seleccionarlo todo"
+msgstr "Deseleccionar todo"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/CheckBoxList.java:631
 msgid "Deselects all Items in the List"
-msgstr "Des-seleccionar todos los elementos en la lista"
+msgstr "Deseleccionar todos los elementos en la lista"
 
 #. NOTE: The IDs are serialized to disk, and should never change.
 #. *
@@ -4220,7 +4223,7 @@ msgstr "Mostrar la pantalla de opciones"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:109
 msgid "&Update FrostWire"
-msgstr "Act&ualizar FrostWire"
+msgstr "&Actualizar FrostWire"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/ToolsMenu.java:110
 msgid "Update FrostWire to the latest version"
@@ -4851,7 +4854,7 @@ msgid ""
 "offers and software recommendations to complement your experience."
 msgstr ""
 "Al habilitar esta característica, permite recibir ofertas auspiciadas y "
-"recomendaciones de software realizadas por FrostWrite para complementar tu "
+"recomendaciones de software realizadas por FrostWire para complementar tu "
 "experiencia."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ShowFrostWireRecommendationsPaneItem.java:43
@@ -5014,7 +5017,7 @@ msgstr "Descargas máximas activas"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:40
 msgid "Enable Distributed Hash Table (DHT)"
-msgstr ""
+msgstr "Activar Distributed Hash Table (DHT)"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:34
 msgid "BitTorrent Global Tranfer Speeds"
@@ -5041,10 +5044,8 @@ msgid ""
 "Note: Too low upload speeds (leeching) could be penalized by some trackers, "
 "resulting in slower downloads."
 msgstr ""
-"Establecer un máximo para la velocidad de subida de BitTorrent en KB/s."
-"<p>Nota: Una velocidad de subida demasiado baja (sanguijuelear) podría ser "
-"penalizada por algunos rastreadores, resultando en descargas más lentas.</"
-"html>"
+"Nota: Una velocidad de subida demasiado baja (leeching) podría ser "
+"penalizada por algunos rastreadores, resultando en descargas más lentas."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:52
 msgid "Upload Speed:"
