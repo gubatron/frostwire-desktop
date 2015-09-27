@@ -18,27 +18,6 @@
 
 package com.frostwire.gui.library;
 
-import java.awt.event.KeyEvent;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map.Entry;
-import java.util.Set;
-import java.util.concurrent.ExecutorService;
-
-import javax.swing.Icon;
-import javax.swing.JOptionPane;
-
-import org.apache.commons.io.FilenameUtils;
-import org.limewire.concurrent.ExecutorsHelper;
-import org.limewire.util.FileUtils;
-import org.limewire.util.StringUtils;
-
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.alexandria.db.LibraryDatabase;
@@ -53,6 +32,19 @@ import com.frostwire.uxstats.UXAction;
 import com.frostwire.uxstats.UXStats;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
+import org.apache.commons.io.FilenameUtils;
+import org.limewire.concurrent.ExecutorsHelper;
+import org.limewire.util.FileUtils;
+import org.limewire.util.StringUtils;
+
+import javax.swing.*;
+import java.awt.event.KeyEvent;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.concurrent.ExecutorService;
 
 /**
  * @author gubatron

@@ -18,12 +18,10 @@
 
 package com.frostwire.gui.library;
 
-import java.awt.Component;
-
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
-
 import com.limegroup.gnutella.gui.tables.DefaultTableBevelledCellRenderer;
+
+import javax.swing.*;
+import java.awt.*;
 
 /**
  *  Creates both a renderer and an editor for cells in the playlist table that display the name

@@ -1,6 +1,5 @@
 package com.limegroup.gnutella.gui;
 
-import com.frostwire.gui.library.LibraryMediator;
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.uxstats.UXStats;
 import com.limegroup.gnutella.gui.bugs.BugManager;

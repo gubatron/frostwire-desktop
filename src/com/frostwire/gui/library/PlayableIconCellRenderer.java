@@ -18,14 +18,10 @@
 
 package com.frostwire.gui.library;
 
-import java.awt.Component;
-
-import javax.swing.JLabel;
-import javax.swing.JTable;
-import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableCellRenderer;
-
 import com.limegroup.gnutella.gui.tables.DefaultTableBevelledCellRenderer;
+
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * 

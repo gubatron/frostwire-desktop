@@ -34,8 +34,6 @@ import org.limewire.util.OSUtils;
 import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.logging.Logger;
-import com.frostwire.uxstats.UXAction;
-import com.frostwire.uxstats.UXStats;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.dnd.DNDUtils;

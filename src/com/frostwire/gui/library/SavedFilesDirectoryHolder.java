@@ -18,23 +18,17 @@
 
 package com.frostwire.gui.library;
 
-import java.io.File;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.swing.Icon;
-
-import org.limewire.setting.FileSetting;
-import org.limewire.util.FileUtils;
-
 import com.frostwire.gui.bittorrent.TorrentUtil;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.settings.LibrarySettings;
 import com.limegroup.gnutella.settings.SharingSettings;
+import org.limewire.setting.FileSetting;
+import org.limewire.util.FileUtils;
+
+import javax.swing.*;
+import java.io.File;
+import java.util.*;
 
 /**
  * 
@@ -74,7 +68,7 @@ public class SavedFilesDirectoryHolder extends FileSettingDirectoryHolder {
             return Collections.emptySet();
         }
 
-        Set<File> results = new HashSet<File>();
+        Set<File> results = new HashSet<>();
 
         for (File f : listFiles) {
             if (f.exists()) {
@@ -110,9 +104,9 @@ public class SavedFilesDirectoryHolder extends FileSettingDirectoryHolder {
         _hideFiles = TorrentUtil.getIgnorableFiles();
 
         Set<File> directoriesToNotInclude = LibrarySettings.DIRECTORIES_NOT_TO_INCLUDE.getValue();
-        Set<File> directoriesToInclude = new HashSet<File>(Arrays.asList(SharingSettings.TORRENT_DATA_DIR_SETTING.getValue()));//LibrarySettings.DIRECTORIES_TO_INCLUDE.getValue();
+        Set<File> directoriesToInclude = new HashSet<>(Collections.singletonList(SharingSettings.TORRENT_DATA_DIR_SETTING.getValue()));//LibrarySettings.DIRECTORIES_TO_INCLUDE.getValue();
 
-        Set<File> files = new HashSet<File>();
+        Set<File> files = new HashSet<>();
 
         for (File directory : directoriesToInclude) {
             files.addAll(getFilesRecursively(directory, directoriesToNotInclude));

@@ -572,7 +572,11 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
 
         //in case it's a single picked .torrent/magnet download
         if (saveLocation != null && saveLocation.isDirectory() && LibraryUtils.directoryContainsASinglePlayableFile(saveLocation, 4)) {
-            saveLocation = saveLocation.listFiles()[0];
+            try {
+                saveLocation = saveLocation.listFiles()[0];
+            } catch (Throwable t) {
+                saveLocation = null;
+            }
         }
 
         boolean hasPlayableFiles = saveLocation != null && (LibraryUtils.directoryContainsPlayableExtensions(saveLocation, 4) || (saveLocation.isFile() && MediaPlayer.isPlayableFile(saveLocation)));
@@ -687,7 +691,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
                     }
 
                     if (saveDir == null) {
-                        BTEngine.getInstance().download(torrentFile, saveDir, filesSelection);
+                        BTEngine.getInstance().download(torrentFile, null, filesSelection);
                     } else {
                         GUIMediator.instance().openTorrentForSeed(torrentFile, saveDir);
                     }

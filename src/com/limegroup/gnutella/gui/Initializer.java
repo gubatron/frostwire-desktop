@@ -41,7 +41,6 @@ import javax.swing.plaf.basic.BasicHTML;
 import java.awt.*;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
-import java.net.URL;
 
 /**
  * Initializes (creates, starts, & displays) the LimeWire Core & UI.

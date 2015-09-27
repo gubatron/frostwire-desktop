@@ -17,9 +17,6 @@
 
 package com.limegroup.gnutella.gui.options.panes;
 
-import java.io.File;
-import java.io.IOException;
-
 import com.frostwire.bittorrent.BTEngine;
 import com.frostwire.gui.bittorrent.TorrentSaveFolderComponent;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -28,7 +25,9 @@ import com.limegroup.gnutella.gui.options.OptionsConstructor;
 import com.limegroup.gnutella.gui.options.OptionsMediator;
 import com.limegroup.gnutella.settings.LibrarySettings;
 import com.limegroup.gnutella.settings.SharingSettings;
-import org.limewire.concurrent.ExecutorsHelper;
+
+import java.io.File;
+import java.io.IOException;
 
 /**
  * 

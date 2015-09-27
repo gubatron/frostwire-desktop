@@ -15,22 +15,17 @@
 
 package com.limegroup.gnutella.gui;
 
-import java.awt.Frame;
-import java.awt.Image;
-import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.Method;
-import java.net.URL;
-import java.util.StringTokenizer;
-
-import javax.imageio.ImageIO;
-import javax.swing.JPopupMenu;
-import javax.swing.ToolTipManager;
-
+import com.frostwire.gui.theme.ThemeMediator;
 import com.limegroup.gnutella.util.FrostWireUtils;
 import org.limewire.util.OSUtils;
 
-import com.frostwire.gui.theme.ThemeMediator;
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.util.StringTokenizer;
 
 /**
  * This class constructs an <tt>Initializer</tt> instance that constructs

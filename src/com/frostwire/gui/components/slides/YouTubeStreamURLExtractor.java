@@ -238,7 +238,7 @@ class YouTubeStreamURLExtractor {
 
         String param = youtubePageUrl;
 
-        String parameter = param.toString().replace("watch#!v", "watch?v");
+        String parameter = param.replace("watch#!v", "watch?v");
         parameter = parameter.replaceFirst("(verify_age\\?next_url=\\/?)", "");
         parameter = parameter.replaceFirst("(%3Fv%3D)", "?v=");
         parameter = parameter.replaceFirst("(watch\\?.*?v)", "watch?v");

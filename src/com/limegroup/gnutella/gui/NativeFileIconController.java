@@ -1,5 +1,17 @@
 package com.limegroup.gnutella.gui;
 
+import com.limegroup.gnutella.MediaType;
+import com.limegroup.gnutella.settings.UISettings;
+import org.apache.commons.io.FilenameUtils;
+import org.limewire.collection.FixedsizeForgetfulHashMap;
+import org.limewire.collection.FixedsizeForgetfulHashSet;
+import org.limewire.concurrent.ExecutorsHelper;
+import org.limewire.util.OSUtils;
+
+import javax.swing.*;
+import javax.swing.filechooser.FileSystemView;
+import javax.swing.filechooser.FileView;
+import javax.swing.plaf.FileChooserUI;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -8,23 +20,6 @@ import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
-
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileSystemView;
-import javax.swing.filechooser.FileView;
-import javax.swing.plaf.FileChooserUI;
-
-import org.apache.commons.io.FilenameUtils;
-import org.limewire.collection.FixedsizeForgetfulHashMap;
-import org.limewire.collection.FixedsizeForgetfulHashSet;
-import org.limewire.concurrent.ExecutorsHelper;
-import org.limewire.util.FileUtils;
-import org.limewire.util.OSUtils;
-
-import com.limegroup.gnutella.MediaType;
-import com.limegroup.gnutella.settings.UISettings;
 
 /** A FileIconController that attempts to return native icons. */
 public class NativeFileIconController implements FileIconController {

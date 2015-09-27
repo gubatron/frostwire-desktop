@@ -21,6 +21,7 @@ import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -30,11 +31,11 @@ import java.util.List;
  */
 class TagsParserFactory {
 
-    private static final List<String> MP3_EXTENSIONS = Arrays.asList("mp3");
-    private static final List<String> M4A_EXTENSIONS = Arrays.asList("m4a");
+    private static final List<String> MP3_EXTENSIONS = Collections.singletonList("mp3");
+    private static final List<String> M4A_EXTENSIONS = Collections.singletonList("m4a");
     private static final List<String> MP4_EXTENSIONS = Arrays.asList("mp4", "m4v", "mov", "3gp");
-    private static final List<String> OGG_EXTENSIONS = Arrays.asList("ogg");
-    private static final List<String> FLAC_EXTENSIONS = Arrays.asList("flac");
+    private static final List<String> OGG_EXTENSIONS = Collections.singletonList("ogg");
+    private static final List<String> FLAC_EXTENSIONS = Collections.singletonList("flac");
     private static final List<String> JAUDIOTAGGER_EXTENSIONS = Arrays.asList("wma", "wav");
 
     public TagsParser getInstance(File file) {

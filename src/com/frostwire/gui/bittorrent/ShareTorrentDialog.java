@@ -17,43 +17,26 @@
 
 package com.frostwire.gui.bittorrent;
 
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import com.frostwire.jlibtorrent.TorrentInfo;
+import com.frostwire.util.HttpClientFactory;
+import com.frostwire.util.http.HttpClient;
+import com.frostwire.util.http.HttpClient.HttpClientListenerAdapter;
+import com.limegroup.gnutella.gui.ButtonRow;
+import com.limegroup.gnutella.gui.GUIMediator;
+import com.limegroup.gnutella.gui.GUIUtils;
+import com.limegroup.gnutella.gui.I18n;
+import com.limegroup.gnutella.gui.actions.LimeAction;
+import org.gudy.azureus2.core3.util.UrlUtils;
+import org.limewire.concurrent.ThreadExecutor;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JDialog;
-import javax.swing.JEditorPane;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.ToolTipManager;
-
-import com.frostwire.jlibtorrent.TorrentInfo;
-import org.gudy.azureus2.core3.util.UrlUtils;
-import org.limewire.concurrent.ThreadExecutor;
-
-import com.frostwire.util.http.HttpClient;
-import com.frostwire.util.http.HttpClient.HttpClientListenerAdapter;
-import com.frostwire.util.HttpClientFactory;
-import com.limegroup.gnutella.gui.ButtonRow;
-import com.limegroup.gnutella.gui.GUIMediator;
-import com.limegroup.gnutella.gui.GUIUtils;
-import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.actions.LimeAction;
 
 /**
  * @author gubatron
@@ -80,7 +63,7 @@ public class ShareTorrentDialog extends JDialog {
 				System.out.println(">>> URLShortnerHttpClientListener ERROR >>>");
 				e.printStackTrace();
 				System.out.println();
-				System.out.println("Try shortening with URL: [" + _shortenerUri.toString() + "]");
+				System.out.println("Try shortening with URL: [" + _shortenerUri + "]");
 				System.out.println(">>> URLShortnerHttpClientListener ERROR >>>");
 			}
 		}

@@ -1,11 +1,8 @@
 package com.limegroup.gnutella.gui;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.Timer;
-
-import com.limegroup.gnutella.settings.ApplicationSettings;
 
 /**
  * This class handles the timer that refreshes the gui after every 

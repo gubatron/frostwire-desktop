@@ -39,7 +39,7 @@ public final class IconAndNameRenderer extends DefaultTableBevelledCellRenderer 
             name = in.getName();
 
             if (name != null) {
-                String strValue = name.toString();
+                String strValue = name;
                 strValue = strValue.replace("<html>", "<html><div width=\"1000000px\">");
                 strValue = strValue.replace("</html>", "</div></html>");
                 name = strValue;

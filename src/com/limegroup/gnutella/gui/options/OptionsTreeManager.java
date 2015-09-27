@@ -15,20 +15,15 @@
 
 package com.limegroup.gnutella.gui.options;
 
-import java.awt.Component;
-import java.awt.Dimension;
-import java.util.Enumeration;
-
-import javax.swing.JScrollPane;
-import javax.swing.JTree;
-import javax.swing.tree.TreePath;
-import javax.swing.tree.TreeSelectionModel;
-
-import com.limegroup.gnutella.settings.ApplicationSettings;
+import com.limegroup.gnutella.gui.trees.FilteredTreeModel;
 import org.limewire.util.I18NConvert;
 import org.limewire.util.StringUtils;
 
-import com.limegroup.gnutella.gui.trees.FilteredTreeModel;
+import javax.swing.*;
+import javax.swing.tree.TreePath;
+import javax.swing.tree.TreeSelectionModel;
+import java.awt.*;
+import java.util.Enumeration;
 
 /**
  * Manages the <code>JTree</code> instance of the options window.  This

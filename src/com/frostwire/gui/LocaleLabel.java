@@ -79,7 +79,7 @@ public class LocaleLabel extends JLabel {
 
         @Override
         public String toString() {
-            return value.toString();
+            return value;
         }
 
         private Font getDefaultFont() {

@@ -1,13 +1,10 @@
 package com.limegroup.gnutella.gui;
 
-import java.io.File;
-
-import javax.swing.Icon;
-import javax.swing.SwingUtilities;
-
 import org.apache.commons.io.FilenameUtils;
-import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
+
+import javax.swing.*;
+import java.io.File;
 
 /**
  * Manages finding native icons for files and file types.

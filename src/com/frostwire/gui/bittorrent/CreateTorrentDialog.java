@@ -700,7 +700,7 @@ public class CreateTorrentDialog extends JDialog {
         if (isMultiFile) {
             final file_storage files = torrent.files();
             //path should be <http://mirror-url/> + torrentName + "/" + relativeFilePath
-            urlPath = mirror + new String(files.name()) + "/" + files.file_path(0);//torrent.getFiles()[0].getRelativePath();
+            urlPath = mirror + files.name() + "/" + files.file_path(0);//torrent.getFiles()[0].getRelativePath();
         } else {
             //url-list should point straight to the file.
             urlPath = mirror;

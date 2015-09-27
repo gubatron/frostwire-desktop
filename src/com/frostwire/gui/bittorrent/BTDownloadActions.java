@@ -502,10 +502,14 @@ final class BTDownloadActions {
             File file = BTDownloadMediator.instance().getSelectedDownloaders()[0].getSaveLocation();
 
             if (file.isDirectory() && LibraryUtils.directoryContainsASinglePlayableFile(file, 4)) {
-                file = file.listFiles()[0];
+                try {
+                    file = file.listFiles()[0];
+                } catch (Throwable t) {
+                    file = null;
+                }
             }
 
-            if (MediaPlayer.isPlayableFile(file)) {
+            if (file != null && MediaPlayer.isPlayableFile(file)) {
                 MediaPlayer.instance().loadMedia(new MediaSource(file), true, false, false);
             }
         }

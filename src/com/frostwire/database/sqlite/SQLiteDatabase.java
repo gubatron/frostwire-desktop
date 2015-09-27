@@ -310,7 +310,7 @@ public class SQLiteDatabase {
         PreparedStatement statement = null;
         try {
             synchronized (connection) {
-                statement = prepareStatement(connection, sql.toString(), bindArgs);
+                statement = prepareStatement(connection, sql, bindArgs);
 
                 return statement.executeUpdate();
             }

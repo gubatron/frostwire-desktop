@@ -173,7 +173,7 @@ public final class BugManager {
         }
         
         //Get the classpath
-        String classPath = new String();
+        String classPath = "";
         ClassLoader sysClassLoader = ClassLoader.getSystemClassLoader();
         URL[] urls = ((URLClassLoader)sysClassLoader).getURLs();
         for(int i=0; i< urls.length; i++) {

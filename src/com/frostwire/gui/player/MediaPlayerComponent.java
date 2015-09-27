@@ -695,7 +695,7 @@ public final class MediaPlayerComponent implements MediaPlayerListener, RefreshL
         } else {
             res = "stopped";
         }
-        return res.toString();
+        return res;
     }
 
     // private String getName(String url) {

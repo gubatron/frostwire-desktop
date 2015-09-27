@@ -18,9 +18,7 @@
 
 package com.limegroup.gnutella.settings;
 
-import com.frostwire.bittorrent.BTEngine;
 import com.limegroup.gnutella.util.FrostWireUtils;
-import org.limewire.setting.BooleanSetting;
 import org.limewire.setting.FileSetSetting;
 import org.limewire.setting.FileSetting;
 import org.limewire.util.CommonUtils;

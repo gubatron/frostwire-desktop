@@ -15,22 +15,18 @@
 
 package com.limegroup.gnutella.util;
 
-import java.awt.Desktop;
-import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.List;
-
+import com.limegroup.gnutella.MediaType;
+import com.limegroup.gnutella.settings.URLHandlerSettings;
 import org.apache.commons.io.FilenameUtils;
-import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 import org.limewire.util.StringUtils;
 import org.limewire.util.SystemUtils;
 
-import com.limegroup.gnutella.MediaType;
-import com.limegroup.gnutella.settings.URLHandlerSettings;
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 
 /**

@@ -18,15 +18,11 @@
 
 package com.frostwire.gui.library;
 
-import java.awt.Color;
-import java.awt.Component;
-
-import javax.swing.Icon;
-import javax.swing.JTree;
-import javax.swing.tree.DefaultTreeCellRenderer;
-
 import com.frostwire.gui.theme.ThemeMediator;
-import com.limegroup.gnutella.gui.I18n;
+
+import javax.swing.*;
+import javax.swing.tree.DefaultTreeCellRenderer;
+import java.awt.*;
 
 /**
  * 

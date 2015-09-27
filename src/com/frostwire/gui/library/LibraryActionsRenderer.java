@@ -22,8 +22,6 @@ import java.util.List;
 
 import com.frostwire.gui.player.MediaPlayer;
 import com.frostwire.gui.player.MediaSource;
-import com.frostwire.uxstats.UXAction;
-import com.frostwire.uxstats.UXStats;
 import com.limegroup.gnutella.gui.tables.AbstractActionsRenderer;
 
 /**

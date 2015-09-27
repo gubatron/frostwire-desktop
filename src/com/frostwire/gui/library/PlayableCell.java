@@ -18,8 +18,6 @@
 
 package com.frostwire.gui.library;
 
-import org.limewire.util.StringUtils;
-
 import com.frostwire.gui.LocaleLabel.LocaleString;
 
 /**

@@ -121,8 +121,10 @@ final class BTDownloadTransferHandler extends LimeTransferHandler {
             }
         } else if (saveLocation.isDirectory()) {
             File[] listFiles = saveLocation.listFiles();
-            for (File f : listFiles) {
-                addFilesRecursively(files, f, ignore);
+            if (listFiles != null) {
+                for (File f : listFiles) {
+                    addFilesRecursively(files, f, ignore);
+                }
             }
         }
     }

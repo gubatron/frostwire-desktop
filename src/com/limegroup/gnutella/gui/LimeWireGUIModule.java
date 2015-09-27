@@ -1,7 +1,5 @@
 package com.limegroup.gnutella.gui;
 
-import com.limegroup.gnutella.ActivityCallback;
-
 public class LimeWireGUIModule {
     
     private static LimeWireGUIModule INSTANCE;
