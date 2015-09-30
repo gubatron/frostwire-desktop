@@ -254,7 +254,9 @@
         <root url="jar://$PROJECT_DIR$/lib/jars/okio-1.6.0.jar!/" />
       </CLASSES>
       <JAVADOC />
-      <SOURCES />
+      <SOURCES>
+        <root url="jar://$USER_HOME$/.ideaLibSources/okio-1.6.0-sources.jar!/" />
+      </SOURCES>
     </library>
     <library name="re2j-1.0">
       <CLASSES>
