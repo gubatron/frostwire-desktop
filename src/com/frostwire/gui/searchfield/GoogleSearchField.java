@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011-2014, FrostWire(R). All rights reserved.
+ * Copyright (c) 2011-2015, FrostWire(R). All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,13 +19,13 @@
 package com.frostwire.gui.searchfield;
 
 import com.frostwire.gui.theme.ThemeMediator;
-import com.frostwire.util.http.HttpClient;
 import com.frostwire.util.HttpClientFactory;
+import com.frostwire.util.http.HttpClient;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.ApplicationSettings;
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.limewire.util.LCS;
 import org.limewire.util.OSUtils;
 import org.limewire.util.StringUtils;
@@ -154,7 +154,8 @@ public class GoogleSearchField extends SearchField {
                 String json = stripJs(js);
 
                 if (!isCancelled()) {
-                    final List<String> suggestions = readSuggestions((JSONArray) new JSONArray(json).get(1));
+                    JsonArray arr = new JsonParser().parse(json).getAsJsonArray();
+                    final List<String> suggestions = readSuggestions(arr.get(1).getAsJsonArray());
 
                     GUIMediator.safeInvokeLater(new Runnable() {
                         public void run() {
@@ -172,15 +173,15 @@ public class GoogleSearchField extends SearchField {
             }
         }
 
-        private List<String> readSuggestions(JSONArray array) {
+        private List<String> readSuggestions(JsonArray array) {
             String t = input.getText();
-            List<String> suggestions = new ArrayList<String>(array.length());
+            List<String> suggestions = new ArrayList<String>(array.size());
             if (!StringUtils.isNullOrEmpty(t, true)) {
-                for (int i = 0; i < array.length(); i++) {
+                for (int i = 0; i < array.size(); i++) {
                     try {
-                        String s = LCS.lcsHtml(t, array.getJSONArray(i).getString(0));
+                        String s = LCS.lcsHtml(t, array.get(i).getAsJsonArray().get(0).getAsString());
                         suggestions.add(s);
-                    } catch (JSONException e) {
+                    } catch (Throwable e) {
                         //e.printStackTrace();
                     }
                 }
