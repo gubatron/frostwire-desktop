@@ -45,7 +45,6 @@ sourceSets {
         java {
             // frostwire-common
             srcDir '../frostwire-common/apache'
-            srcDir '../frostwire-common/jdownloader'
             srcDir '../frostwire-common/core'
 
             // jars-src (other third parties dependencies, we keep their sources
