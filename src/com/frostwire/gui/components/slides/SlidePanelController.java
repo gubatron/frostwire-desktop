@@ -100,6 +100,8 @@ class SlidePanelController {
     public void previewVideo() {
         final String mediaURL = slide.videoURL;
         if (mediaURL != null && mediaURL.contains("youtube.com")) {
+            GUIMediator.openURL(slide.videoURL);
+            /*
             if (slide.hasFlag(Slide.PREVIEW_VIDEO_USING_BROWSER)) {
                 GUIMediator.openURL(slide.videoURL);
             } else {
@@ -116,7 +118,7 @@ class SlidePanelController {
                         }
                     }
                 }.start();
-            }
+            }*/
         } else {
             previewMedia(mediaURL, true, Slide.PREVIEW_VIDEO_USING_FWPLAYER);
         }
