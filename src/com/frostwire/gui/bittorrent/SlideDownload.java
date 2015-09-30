@@ -1,6 +1,6 @@
 /*
  * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
- * Copyright (c) 2011-2014, FrostWire(R). All rights reserved.
+ * Copyright (c) 2011-2015, FrostWire(R). All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,8 +27,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.frostwire.transfers.TransferState;
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.IOUtils;
-import org.appwork.utils.encoding.Base64;
 import org.limewire.util.SystemUtils;
 
 import com.frostwire.gui.components.slides.Slide;
@@ -97,7 +97,7 @@ public class SlideDownload extends HttpDownload {
     	try {
     		String certificateInBase64 = httpClient.get(certificateURL);
     		certificateInBase64 = certificateInBase64.replace("-----BEGIN CERTIFICATE-----\r\n","").replace("-----END CERTIFICATE-----\r\n", "");
-    		byte[] decodedCertificate = Base64.decode(certificateInBase64);
+    		byte[] decodedCertificate = Base64.decodeBase64(certificateInBase64);
     		return SystemUtils.verifyExecutableSignature(saveLocation.getAbsolutePath(), decodedCertificate);
     	} catch (Exception e) {
     		LOG.error("Could not verify executable signature:\n" + e.getMessage(), e);
