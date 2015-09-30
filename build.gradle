@@ -46,7 +46,6 @@ sourceSets {
             // frostwire-common
             srcDir '../frostwire-common/apache'
             srcDir '../frostwire-common/jdownloader'
-            srcDir '../frostwire-common/json'
             srcDir '../frostwire-common/core'
 
             // jars-src (other third parties dependencies, we keep their sources
@@ -87,10 +86,6 @@ sourceSets {
             include '**/*.dat'
             include '**/*.icc'
             exclude '**/*.DS_Store'
-
-            srcDir '../frostwire-common/mp4parser'
-            include '**/*.properties'
-            exclude '**/*.java'
         }
     }
 }
