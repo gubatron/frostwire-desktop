@@ -70,7 +70,7 @@ public final class UpdateMessage extends Object implements Serializable {
     public void setLanguage(String lang) { _lang = lang; }
 
     public String getRemoteMD5() { return _md5; }
-    public void setRemoteMD5(String md5) { _md5 = md5.toUpperCase(); } // convert xml to upper case because builded function uses uppercase
+    public void setRemoteMD5(String md5) { _md5 = md5.trim().toUpperCase(); } // convert xml to upper case because builded function uses uppercase
 
     public String getMessageType() { return _messageType; }
 
