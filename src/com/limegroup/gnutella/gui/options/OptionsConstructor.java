@@ -18,75 +18,25 @@
 
 package com.limegroup.gnutella.gui.options;
 
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.io.IOException;
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-import java.util.LinkedHashMap;
-import java.util.Map;
-
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JComponent;
-import javax.swing.JDialog;
-import javax.swing.WindowConstants;
-
+import com.frostwire.gui.searchfield.SearchField;
+import com.limegroup.gnutella.gui.*;
+import com.limegroup.gnutella.gui.options.panes.*;
+import com.limegroup.gnutella.gui.shell.FrostAssociations;
 import com.limegroup.gnutella.settings.ApplicationSettings;
+import com.limegroup.gnutella.settings.UISettings;
 import org.limewire.setting.IntSetting;
 import org.limewire.setting.SettingsGroupManager;
 import org.limewire.util.CommonUtils;
 import org.limewire.util.OSUtils;
 
-import com.frostwire.gui.searchfield.SearchField;
-import com.limegroup.gnutella.gui.BoxPanel;
-import com.limegroup.gnutella.gui.DialogOption;
-import com.limegroup.gnutella.gui.GUIMediator;
-import com.limegroup.gnutella.gui.GUIUtils;
-import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.PaddedPanel;
-import com.limegroup.gnutella.gui.options.panes.AbstractPaneItem;
-import com.limegroup.gnutella.gui.options.panes.AssociationPreferencePaneItem;
-import com.limegroup.gnutella.gui.options.panes.AudioPlayerPaneItem;
-import com.limegroup.gnutella.gui.options.panes.AutoCompletePaneItem;
-import com.limegroup.gnutella.gui.options.panes.AutomaticInstallerDownloadPaneItem;
-import com.limegroup.gnutella.gui.options.panes.BrowserPaneItem;
-import com.limegroup.gnutella.gui.options.panes.BugsPaneItem;
-import com.limegroup.gnutella.gui.options.panes.DetailsPaneItem;
-import com.limegroup.gnutella.gui.options.panes.ForceIPPaneItem;
-import com.limegroup.gnutella.gui.options.panes.IgnoreResultsPaneItem;
-import com.limegroup.gnutella.gui.options.panes.ImageViewerPaneItem;
-import com.limegroup.gnutella.gui.options.panes.LibraryFoldersPaneItem;
-import com.limegroup.gnutella.gui.options.panes.MaximumSearchesPaneItem;
-import com.limegroup.gnutella.gui.options.panes.NetworkInterfacePaneItem;
-import com.limegroup.gnutella.gui.options.panes.PlayerPaneItem;
-import com.limegroup.gnutella.gui.options.panes.PopupsPaneItem;
-import com.limegroup.gnutella.gui.options.panes.ProxyLoginPaneItem;
-import com.limegroup.gnutella.gui.options.panes.ProxyPaneItem;
-import com.limegroup.gnutella.gui.options.panes.SearchEnginesPaneItem;
-import com.limegroup.gnutella.gui.options.panes.ShowFrostWireRecommendationsPaneItem;
-import com.limegroup.gnutella.gui.options.panes.ShowPromoOverlaysPaneItem;
-import com.limegroup.gnutella.gui.options.panes.ShutdownPaneItem;
-import com.limegroup.gnutella.gui.options.panes.SmartSearchDBPaneItem;
-import com.limegroup.gnutella.gui.options.panes.StartupPaneItem;
-import com.limegroup.gnutella.gui.options.panes.StatusBarBandwidthPaneItem;
-import com.limegroup.gnutella.gui.options.panes.StatusBarConnectionQualityPaneItem;
-import com.limegroup.gnutella.gui.options.panes.StatusBarFirewallPaneItem;
-import com.limegroup.gnutella.gui.options.panes.TorrentConnectionPaneItem;
-import com.limegroup.gnutella.gui.options.panes.TorrentGlobalSpeedPaneItem;
-import com.limegroup.gnutella.gui.options.panes.TorrentSaveFolderPaneItem;
-import com.limegroup.gnutella.gui.options.panes.TorrentSeedingSettingPaneItem;
-import com.limegroup.gnutella.gui.options.panes.UXStatsPaneItem;
-import com.limegroup.gnutella.gui.options.panes.VideoPlayerPaneItem;
-import com.limegroup.gnutella.gui.options.panes.iTunesPreferencePaneItem;
-import com.limegroup.gnutella.gui.shell.FrostAssociations;
-import com.limegroup.gnutella.settings.UISettings;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.io.IOException;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * This class constructs the options tree on the left side of the options dialog.
@@ -95,9 +45,9 @@ import com.limegroup.gnutella.settings.UISettings;
  * lazily in {@link OptionsPaneFactory}.
  * <p>
  * If you want to add a new {@link OptionsPane}, 
- * add a call to {@link #addOption(String, String)} in the constructor here
+ * add a call to {@link OptionsConstructor#addOption} in the constructor here
  * and add the construction of the pane to 
- * {@link OptionsPaneFactory#createOptionsPane(String)}.
+ * {@link OptionsPaneFactory#createOptionsPane(OptionsTreeNode)}.
  */
 public final class OptionsConstructor {
     /**
@@ -120,57 +70,32 @@ public final class OptionsConstructor {
 
     private final SearchField filterTextField;
 
-    static final String SAVE_KEY = "OPTIONS_SAVE_MAIN_TITLE";
     static final String SAVE_BASIC_KEY = "OPTIONS_SAVE_BASIC_MAIN_TITLE";
-    static final String SAVE_ADVANCED_KEY = "OPTIONS_SAVE_ADVANCED_MAIN_TITLE";
     public static final String SHARED_KEY = "OPTIONS_SHARED_MAIN_TITLE";
     static final String SHARED_BASIC_KEY = "OPTIONS_SHARED_BASIC_TITLE";
-    static final String SHARED_ADVANCED_KEY = "OPTIONS_SHARED_ADVANCED_MAIN_TITLE";
-    static final String SHARED_TYPES_KEY = "OPTIONS_SHARED_TYPES_MAIN_TITLE";
-    static final String SPEED_KEY = "OPTIONS_SPEED_MAIN_TITLE";
-    static final String DOWNLOAD_KEY = "OPTIONS_DOWNLOAD_MAIN_TITLE";
-    static final String UPLOAD_KEY = "OPTIONS_UPLOAD_MAIN_TITLE";
-    static final String UPLOAD_BASIC_KEY = "OPTIONS_UPLOAD_BASIC_MAIN_TITLE";
-    static final String UPLOAD_SLOTS_KEY = "OPTIONS_UPLOAD_SLOTS_MAIN_TITLE";
-    static final String CONNECTIONS_KEY = "OPTIONS_CONNECTIONS_MAIN_TITLE";
     static final String BITTORRENT_KEY = "OPTIONS_BITTORRENT_MAIN_TITLE";
     public static final String BITTORRENT_BASIC_KEY = "OPTIONS_BITTORRENT_BASIC_TITLE";
     static final String BITTORRENT_ADVANCED_KEY = "OPTIONS_BITTORRENT_ADVANCED_TITLE";
     static final String SHUTDOWN_KEY = "OPTIONS_SHUTDOWN_MAIN_TITLE";
-    static final String UPDATE_KEY = "OPTIONS_UPDATE_MAIN_TITLE";
-    static final String CHAT_KEY = "OPTIONS_CHAT_MAIN_TITLE";
     public static final String LIBRARY_KEY = "OPTIONS_LIBRARY_MAIN_TITLE";
     static final String PLAYER_KEY = "OPTIONS_PLAYER_MAIN_TITLE";
     static final String STATUS_BAR_KEY = "OPTIONS_STATUS_BAR_MAIN_TITLE";
     static final String ITUNES_KEY = "OPTIONS_ITUNES_MAIN_TITLE";
     static final String ITUNES_IMPORT_KEY = "OPTIONS_ITUNES_PREFERENCE_MAIN_TITLE";
-    static final String ITUNES_DAAP_KEY = "OPTIONS_ITUNES_DAAP_MAIN_TITLE";
-    static final String POPUPS_KEY = "OPTIONS_POPUPS_MAIN_TITLE";
     static final String BUGS_KEY = "OPTIONS_BUGS_MAIN_TITLE";
     static final String APPS_KEY = "OPTIONS_APPS_MAIN_TITLE";
     static final String SEARCH_KEY = "OPTIONS_SEARCH_MAIN_TITLE";
-    static final String SEARCH_LIMIT_KEY = "OPTIONS_SEARCH_LIMIT_MAIN_TITLE";
-    static final String SEARCH_QUALITY_KEY = "OPTIONS_SEARCH_QUALITY_MAIN_TITLE";
-    static final String SEARCH_SPEED_KEY = "OPTIONS_SEARCH_SPEED_MAIN_TITLE";
-    public static final String CONTENT_FILTER_KEY = "OPTIONS_CONTENT_FILTER_MAIN_TITLE";
-    static final String SEARCH_JUNK_KEY = "OPTIONS_SEARCH_JUNK_MAIN_TITLE";
     static final String FILTERS_KEY = "OPTIONS_FILTERS_MAIN_TITLE";
     static final String RESULTS_KEY = "OPTIONS_RESULTS_MAIN_TITLE";
-    static final String MESSAGES_KEY = "OPTIONS_MESSAGES_MAIN_TITLE";
     static final String ADVANCED_KEY = "OPTIONS_ADVANCED_MAIN_TITLE";
     static final String PREFERENCING_KEY = "OPTIONS_PREFERENCING_MAIN_TITLE";
     static final String FIREWALL_KEY = "OPTIONS_FIREWALL_MAIN_TITLE";
     static final String GUI_KEY = "OPTIONS_GUI_MAIN_TITLE";
-    static final String AUTOCOMPLETE_KEY = "OPTIONS_AUTOCOMPLETE_MAIN_TITLE";
     static final String STARTUP_KEY = "OPTIONS_STARTUP_MAIN_TITLE";
     static final String UXSTATS_KEY = "OPTIONS_UXSTATS_MAIN_TITLE";
     static final String PROXY_KEY = "OPTIONS_PROXY_MAIN_TITLE";
     static final String NETWORK_INTERFACE_KEY = "OPTIONS_NETWORK_INTERFACE_MAIN_TITLE";
     static final String ASSOCIATIONS_KEY = "OPTIONS_ASSOCIATIONS_MAIN_TITLE";
-    static final String PERFORMANCE_KEY = "OPTIONS_PERFORMANCE_MAIN_TITLE";
-    static final String STORE_KEY = "OPTIONS_STORE_MAIN_TITLE";
-    static final String STORE_BASIC_KEY = "OPTIONS_STORE_BASIC_MAIN_TITLE";
-    static final String STORE_ADVANCED_KEY = "OPTIONS_STORE_ADVANCED_MAIN_TITLE";
 
     private final Map<String, OptionsTreeNode> keysToNodes;
 
@@ -188,7 +113,7 @@ public final class OptionsConstructor {
     public OptionsConstructor(final OptionsTreeManager treeManager, final OptionsPaneManager paneManager) {
         TREE_MANAGER = treeManager;
         PANE_MANAGER = paneManager;
-        keysToNodes = new LinkedHashMap<String, OptionsTreeNode>();
+        keysToNodes = new LinkedHashMap<>();
         final String title = I18n.tr("Options");
         final boolean shouldBeModal = !OSUtils.isMacOSX();
 
@@ -363,7 +288,7 @@ public final class OptionsConstructor {
      * @param childKey the key of the new parent node that is a child of
      *                 the <tt>parentKey</tt> argument
      */
-    private final void addGroupTreeNode(final String parentKey, final String childKey, String label) {
+    private void addGroupTreeNode(final String parentKey, final String childKey, String label) {
         TREE_MANAGER.addNode(parentKey, childKey, label, label);
     }
 
@@ -374,13 +299,8 @@ public final class OptionsConstructor {
      * 
      * @param parentKey the key of the parent node to add the new node to
      */
-    private final OptionsTreeNode addOption(final String parentKey, final String childKey, final String label, @SuppressWarnings("unchecked") Class<? extends AbstractPaneItem>... clazzes) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(label);
-        sb.append(" ");
-        sb.append(extractLabels(clazzes));
-
-        OptionsTreeNode node = TREE_MANAGER.addNode(parentKey, childKey, label, sb.toString());
+    private OptionsTreeNode addOption(final String parentKey, final String childKey, final String label, @SuppressWarnings("unchecked") Class<? extends AbstractPaneItem>... clazzes) {
+        OptionsTreeNode node = TREE_MANAGER.addNode(parentKey, childKey, label, label + " " + extractLabels(clazzes));
         node.setClasses(clazzes);
         keysToNodes.put(childKey, node);
         return node;
