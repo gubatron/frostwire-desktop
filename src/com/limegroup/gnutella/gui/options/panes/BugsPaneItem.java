@@ -1,29 +1,19 @@
 package com.limegroup.gnutella.gui.options.panes;
 
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.IOException;
-
-import javax.swing.BorderFactory;
-import javax.swing.ButtonGroup;
-import javax.swing.ButtonModel;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.GUIUtils.SizePolicy;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LimeWireModule;
 import com.limegroup.gnutella.gui.LocalClientInfoFactory;
-import com.limegroup.gnutella.gui.MessageService;
+import com.limegroup.gnutella.gui.bugs.BugManager;
 import com.limegroup.gnutella.gui.bugs.LocalClientInfo;
 import com.limegroup.gnutella.settings.BugSettings;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
 
 /**
  * This class defines the panel in the options window that allows
@@ -65,9 +55,6 @@ public final class BugsPaneItem extends AbstractPaneItem {
 	/**
 	 * The constructor constructs all of the elements of this 
 	 * <tt>AbstractPaneItem</tt>.
-	 *
-	 * @param key the key for this <tt>AbstractPaneItem</tt> that the
-	 *            superclass uses to generate locale-specific keys
 	 */
 	public BugsPaneItem() {
         super(
@@ -83,13 +70,7 @@ public final class BugsPaneItem extends AbstractPaneItem {
                 Exception e = new Exception("Example Bug");
                 LocalClientInfo info = localClientInfoFactory.
                     createLocalClientInfo(e, Thread.currentThread().getName(), "Example", false);
-                JTextArea textArea = new JTextArea(info.toBugReport());
-                textArea.setColumns(50);
-                textArea.setEditable(false);
-                JScrollPane scroller = new JScrollPane(textArea);
-                scroller.setBorder(BorderFactory.createEtchedBorder());
-                scroller.setPreferredSize( new Dimension(500, 200) );
-                MessageService.instance().showMessage(scroller);
+                BugManager.instance().handleBug(e, "test-bug-report-thread", info.toBugReport());
             }
         });
         
