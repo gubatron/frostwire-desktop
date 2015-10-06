@@ -49,3 +49,5 @@ GTAGS
 GRTAGS
 .meta
 *.iws
+*.iml
+*.ipr
