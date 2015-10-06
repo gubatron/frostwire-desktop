@@ -152,6 +152,8 @@ public class SetupManager {
             windows.add(new AssociationsWindow(this));
         }
 
+        windows.add(new SocialRecommendationsWindow(this));
+
         //THIS HAS TO GO LAST
         IntentWindow intentWindow = new IntentWindow(this);
         if (!intentWindow.isConfirmedWillNot()) {

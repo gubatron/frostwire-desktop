@@ -32,10 +32,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class displays a setup window for allowing the user to choose
- * the directory for saving their files.
+ * This class displays a setup window that recommends users to
+ * follow FrostWire on different social networks.
+ * @author gubatron
+ * @author aldenml
  */
-class BitTorrentSettingsWindow extends SetupWindow {
+class SocialRecommendationsWindow extends SetupWindow {
 
     private static final String LEARN_MORE_URL = "http://support.frostwire.com/hc/en-us/articles/200302295-What-is-seeding-";
 
@@ -45,7 +47,7 @@ class BitTorrentSettingsWindow extends SetupWindow {
     /**
      * Creates the window and its components
      */
-    BitTorrentSettingsWindow(SetupManager manager) {
+    SocialRecommendationsWindow(SetupManager manager) {
         super(manager, I18n.tr("BitTorrent Sharing Settings"), describeText(), LEARN_MORE_URL);
     }
 

@@ -20,12 +20,12 @@ package com.frostwire.content;
 //import android.os.Parcelable;
 //import android.util.Log;
 
+import com.frostwire.logging.Logger;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-
-import com.frostwire.logging.Logger;
 
 /**
  * This class is used to store a set of values that the {@link ContentResolver}
