@@ -14,14 +14,6 @@ if (!System.getenv('ANT_HOME')?.trim()) {
     //throw new GradleException("ERROR: ANT_HOME environment variable not set.\n\n(e.g. on MacOSX: /usr/local/Cellar/ant/1.9.3/libexec\n      on Linux:  /usr/share/ant)")
 }
 
-if (!new File("../frostwire-common").exists()) {
-    //throw new GradleException("ERROR: You need to checkout the dependency frostwire-common")
-}
-
-if (!new File("../frostwire-jlibtorrent").exists()) {
-    //throw new GradleException("ERROR: You need to checkout the dependency frostwire-jlibtorrent")
-}
-
 sourceCompatibility = 1.7
 
 compileJava {
@@ -44,7 +36,7 @@ sourceSets {
     main {
         java {
             // frostwire-common
-            srcDir '../frostwire-common/src/main/java'
+            srcDir 'frostwire-common/src/main/java'
 
             // jars-src (other third parties dependencies, we keep their sources
             // so that we can properly create the .deb sources for debian based mantainers
