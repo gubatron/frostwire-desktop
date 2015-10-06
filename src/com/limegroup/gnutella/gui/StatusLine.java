@@ -21,6 +21,7 @@ import com.frostwire.gui.theme.SkinCheckBoxMenuItem;
 import com.frostwire.gui.theme.SkinPopupMenu;
 import com.frostwire.jlibtorrent.Session;
 import com.limegroup.gnutella.gui.options.OptionsConstructor;
+import com.limegroup.gnutella.gui.util.Constants;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.settings.StatusBarSettings;
@@ -154,6 +155,17 @@ public final class StatusLine {
         // Set the bars to not be connected.
         setConnectionQuality(0);
 
+        /*
+         The refresh listener for updating the bandwidth usage every second.
+        */
+        RefreshListener REFRESH_LISTENER = new RefreshListener() {
+            public void refresh() {
+                if (StatusBarSettings.BANDWIDTH_DISPLAY_ENABLED.getValue()) {
+                    updateBandwidth();
+                }
+                updateCenterPanel();
+            }
+        };
         GUIMediator.addRefreshListener(REFRESH_LISTENER);
 
         refresh();
@@ -165,18 +177,18 @@ public final class StatusLine {
 
     private void createTwitterButton() {
         _twitterButton = new IconButton("TWITTER");
-        initSocialButton(_twitterButton, I18n.tr("Follow us @frostwire"), "https://twitter.com/frostwire");
+        initSocialButton(_twitterButton, I18n.tr("Follow us @frostwire"), Constants.TWITTER_FROSTWIRE_URL);
     }
 
     private void createFacebookButton() {
         _facebookButton = new IconButton("FACEBOOK");
-        initSocialButton(_facebookButton, I18n.tr("Like FrostWire on Facebook and stay in touch with the community. Get Help and Help Others."), "https://www.facebook.com/FrostwireOfficial");
+        initSocialButton(_facebookButton, I18n.tr("Like FrostWire on Facebook and stay in touch with the community. Get Help and Help Others."), Constants.FACEBOOK_FROSTWIRE_URL);
     }
 
     private void createGooglePlusButton() {
         _googlePlusButton = new IconButton("GOOGLEPLUS");
         _googlePlusButton.setPreferredSize(new Dimension(19, 16));
-        initSocialButton(_googlePlusButton, I18n.tr("Circle FrostWire on G+"), "https://plus.google.com/+frostwire/posts");
+        initSocialButton(_googlePlusButton, I18n.tr("Circle FrostWire on G+"), Constants.GPLUS_FROSTWIRE_URL);
     }
 
     private void initSocialButton(IconButton socialButton, String toolTipText, final String url) {
@@ -199,8 +211,7 @@ public final class StatusLine {
             public String getToolTipText() {
                 boolean seedingStatus = SharingSettings.SEED_FINISHED_TORRENTS.getValue();
 
-                String tooltip = "<html>"+(seedingStatus ? I18n.tr("<b>Seeding</b><p>completed torrent downloads.</p>") : I18n.tr("<b>Not Seeding</b><p>File chunks might be shared only during a torrent download.</p>")+"</html>");
-                return tooltip;
+                return "<html>"+(seedingStatus ? I18n.tr("<b>Seeding</b><p>completed torrent downloads.</p>") : I18n.tr("<b>Not Seeding</b><p>File chunks might be shared only during a torrent download.</p>")+"</html>");
             }
         };
 
@@ -282,7 +293,7 @@ public final class StatusLine {
                 BAR.add(_bandwidthUsageUp, gbc);
                 BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 2), gbc);
                 BAR.add(createSeparator(), gbc);
-                remainingWidth -= indicatorWidth;
+                //remainingWidth -= indicatorWidth;
             }
 
             gbc = new GridBagConstraints();
@@ -317,7 +328,7 @@ public final class StatusLine {
                 //some macosx versions are throwing a deep NPE when this is invoked all the way down at 
                 //sun.lwawt.macosx.LWCToolkit.getScreenResolution(Unknown Source)
                 BAR.validate();
-            } catch (Throwable t) {}
+            } catch (Throwable ignored) {}
             
             BAR.repaint();
         }
@@ -493,8 +504,7 @@ public final class StatusLine {
         try {
             BTEngine engine = BTEngine.getInstance();
             updateFirewallLabel(!engine.isFirewalled());
-        } catch (Throwable t) {
-
+        } catch (Throwable ignored) {
         }
     }
 
@@ -513,8 +523,7 @@ public final class StatusLine {
 
             _bandwidthUsageDown.setText(downloads + " @ " + sDown);
             _bandwidthUsageUp.setText(uploads + " @ " + sUp);
-        } catch (Throwable t) {
-
+        } catch (Throwable ignored) {
         }
     }
 
@@ -543,8 +552,6 @@ public final class StatusLine {
 
     /**
      * Alters the displayed connection quality.
-     *
-     * @modifies this
      */
     public void setConnectionQuality(int quality) {
         // make sure we don't go over our bounds.
@@ -599,8 +606,7 @@ public final class StatusLine {
                     });
                 }
             }
-        } catch (Throwable t) {
-
+        } catch (Throwable ignored) {
         }
     }
 
@@ -617,18 +623,6 @@ public final class StatusLine {
         }
         return BAR;
     }
-
-    /**
-     * The refresh listener for updating the bandwidth usage every second.
-     */
-    private final RefreshListener REFRESH_LISTENER = new RefreshListener() {
-        public void refresh() {
-            if (StatusBarSettings.BANDWIDTH_DISPLAY_ENABLED.getValue()) {
-                updateBandwidth();
-            }
-            updateCenterPanel();
-        }
-    };
 
     private BooleanSetting getLanguageSetting() {
         if (GUIMediator.isEnglishLocale()) {
@@ -835,11 +829,20 @@ public final class StatusLine {
             int uploads = GUIMediator.instance().getCurrentUploads();
 
             //  create good-looking table tooltip
-            StringBuilder tooltip = new StringBuilder(100);
-            tooltip.append("<html><table>").append("<tr><td>").append(I18n.tr("Downloads:")).append("</td><td>").append(downloads).append("</td><td>@</td><td align=right>").append(sDown).append("</td></tr>").append("<tr><td>").append(I18n.tr("Uploads:")).append("</td><td>").append(uploads)
-                    .append("</td><td>@</td><td align=right>").append(sUp).append("</td></tr>").append("<tr><td>").append(I18n.tr("Total Downstream:")).append("</td><td>").append(totalDown).append("</td></tr>").append("<tr><td>").append(I18n.tr("Total Upstream:")).append("</td><td>")
-                    .append(totalUp).append("</td></tr>").append("</table></html>");
-            return tooltip.toString();
+            return "<html><table>" +
+                    "<tr><td>" +
+                    I18n.tr("Downloads:") +
+                    "</td><td>" + downloads +
+                    "</td><td>@</td><td align=right>" +
+                    sDown + "</td></tr>" + "<tr><td>" +
+                    I18n.tr("Uploads:") + "</td><td>" +
+                    uploads + "</td><td>@</td><td align=right>" +
+                    sUp + "</td></tr>" + "<tr><td>" +
+                    I18n.tr("Total Downstream:") +
+                    "</td><td>" + totalDown + "</td></tr>" +
+                    "<tr><td>" + I18n.tr("Total Upstream:") +
+                    "</td><td>" + totalUp +
+                    "</td></tr>" + "</table></html>";
         }
     }
 }
