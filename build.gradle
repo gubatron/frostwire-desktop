@@ -9,6 +9,7 @@
 
 */
 apply plugin: 'java'
+apply from: "$rootDir/frostwire-common/build.gradle"
 
 sourceCompatibility = 1.7
 
@@ -22,8 +23,9 @@ repositories {
 
 // add third party jars to classpath.
 dependencies {
+    compile 'com.googlecode.gettext-commons:gettext-commons:0.9.8'
+
     compile fileTree(dir: 'lib/jars', include: ['*.jar'])
-    compile 'org.apache.ant:ant:1.9.6'
 }
 
 sourceSets {
@@ -31,12 +33,6 @@ sourceSets {
         java {
             // frostwire-common
             srcDir 'frostwire-common/src/main/java'
-
-            // jars-src (other third parties dependencies, we keep their sources
-            // so that we can properly create the .deb sources for debian based mantainers
-            // to corroborate we build entirely from source.)
-            srcDir 'lib/jars-src/gettext-commons-0_9_5/src/java'
-            exclude "**/ant/gettext/*.java"
 
             srcDir 'lib/jars-src/lucene-3.5.0'
             srcDir 'lib/jars-src/h2-1.4.186/src/main'
@@ -48,18 +44,6 @@ sourceSets {
 
         resources {
             srcDir 'frostwire-common/src/main/resources'
-
-            srcDir 'src'
-            include '**/*.properties'
-            include '**/*.png'
-            include '**/*.gif'
-            include '**/*.jpg'
-            include '**/*.html'
-            include '**/*.js'
-            include '**/*.sh'
-            include '**/*.dat'
-            include '**/*.icc'
-            exclude '**/*.DS_Store'
 
             srcDir 'resources'
             include '**/*.properties'
@@ -94,10 +78,10 @@ task gettextInit {
     description 'Loads and define the ant gettext related tasks'
 
     doLast {
-        ant.taskdef(name: 'gettextExtract', classname: 'org.xnap.commons.ant.gettext.GettextExtractKeysTask', classpath: 'lib/jars/gettext-commons.jar')
-        ant.taskdef(name: 'gettextMerge', classname: 'org.xnap.commons.ant.gettext.GettextMergeKeysTask', classpath: 'lib/jars/gettext-commons.jar')
-        ant.taskdef(name: 'gettextGenerateDefault', classname: 'org.xnap.commons.ant.gettext.GenerateDefaultBundleTask', classpath: 'lib/jars/gettext-commons.jar')
-        ant.taskdef(name: 'gettextDist', classname: 'org.xnap.commons.ant.gettext.GettextDistTask', classpath: 'lib/jars/gettext-commons.jar')
+        ant.taskdef(name: 'gettextExtract', classname: 'org.xnap.commons.ant.gettext.GettextExtractKeysTask', classpath: 'lib/jars/gettext-ant-tasks-0.9.7.jar')
+        ant.taskdef(name: 'gettextMerge', classname: 'org.xnap.commons.ant.gettext.GettextMergeKeysTask', classpath: 'lib/jars/gettext-ant-tasks-0.9.7.jar')
+        ant.taskdef(name: 'gettextGenerateDefault', classname: 'org.xnap.commons.ant.gettext.GenerateDefaultBundleTask', classpath: 'lib/jars/gettext-ant-tasks-0.9.7.jar')
+        ant.taskdef(name: 'gettextDist', classname: 'org.xnap.commons.ant.gettext.GettextDistTask', classpath: 'lib/jars/gettext-ant-tasks-0.9.7.jar')
     }
 }
 
