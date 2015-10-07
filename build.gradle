@@ -47,6 +47,8 @@ sourceSets {
         }
 
         resources {
+            srcDir 'frostwire-common/src/main/resources'
+
             srcDir 'src'
             include '**/*.properties'
             include '**/*.png'

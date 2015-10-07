@@ -18,23 +18,18 @@
 
 package com.frostwire.gui.player;
 
-import com.coremedia.iso.BoxParser;
-import com.coremedia.iso.IsoFile;
-import com.coremedia.iso.PropertyBoxParserImpl;
-import com.coremedia.iso.boxes.Box;
-import com.coremedia.iso.boxes.Container;
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.gui.library.LibraryMediator;
 import com.frostwire.gui.library.tags.TagsReader;
 import com.frostwire.gui.mplayer.MPlayer;
+import com.frostwire.mp4.*;
+import com.frostwire.mp4.Box;
+import com.frostwire.mp4.Container;
 import com.frostwire.mplayer.IcyInfoListener;
 import com.frostwire.mplayer.MediaPlaybackState;
 import com.frostwire.mplayer.PositionListener;
 import com.frostwire.mplayer.StateListener;
-import com.googlecode.mp4parser.AbstractBox;
-import com.googlecode.mp4parser.DataSource;
-import com.googlecode.mp4parser.FileDataSourceImpl;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.MPlayerMediator;
@@ -51,6 +46,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
+import java.lang.Math;
 import java.util.*;
 import java.util.List;
 import java.util.Queue;

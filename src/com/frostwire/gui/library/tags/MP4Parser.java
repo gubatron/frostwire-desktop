@@ -26,31 +26,10 @@ import java.util.List;
 import javax.imageio.IIOException;
 import javax.imageio.ImageIO;
 
+import com.frostwire.mp4.*;
 import org.apache.commons.io.IOUtils;
 
-import com.coremedia.iso.BoxParser;
-import com.coremedia.iso.IsoFile;
-import com.coremedia.iso.PropertyBoxParserImpl;
-import com.coremedia.iso.boxes.Box;
-import com.coremedia.iso.boxes.Container;
-import com.coremedia.iso.boxes.MovieHeaderBox;
-import com.coremedia.iso.boxes.apple.AppleItemListBox;
 import com.frostwire.logging.Logger;
-import com.googlecode.mp4parser.AbstractBox;
-import com.googlecode.mp4parser.DataSource;
-import com.googlecode.mp4parser.FileDataSourceImpl;
-import com.googlecode.mp4parser.boxes.apple.AppleAlbumBox;
-import com.googlecode.mp4parser.boxes.apple.AppleArtistBox;
-import com.googlecode.mp4parser.boxes.apple.AppleCommentBox;
-import com.googlecode.mp4parser.boxes.apple.AppleCoverBox;
-import com.googlecode.mp4parser.boxes.apple.AppleGenreBox;
-import com.googlecode.mp4parser.boxes.apple.AppleGenreIDBox;
-import com.googlecode.mp4parser.boxes.apple.AppleNameBox;
-import com.googlecode.mp4parser.boxes.apple.AppleRecordingYear2Box;
-import com.googlecode.mp4parser.boxes.apple.AppleTrackNumberBox;
-import com.googlecode.mp4parser.boxes.apple.AppleVariableSignedIntegerBox;
-import com.googlecode.mp4parser.boxes.apple.Utf8AppleDataBox;
-import com.googlecode.mp4parser.util.Path;
 
 /**
  * 
