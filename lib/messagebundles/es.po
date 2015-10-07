@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: frostwire\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-05-11 19:46+0300\n"
-"PO-Revision-Date: 2015-09-26 00:25-0300\n"
+"PO-Revision-Date: 2015-10-07 12:30-0300\n"
 "Last-Translator: Alejandro Martinez <bloghogwarts@gmail.com>\n"
 "Language-Team: FTA <saintrecall@gmail.com>\n"
 "Language: es\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Launchpad-Export-Date: 2008-09-16 15:59+0000\n"
-"X-Generator: Poedit 1.8.4\n"
+"X-Generator: Poedit 1.8.5\n"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/HideExitDialog.java:57
 msgid "Do you want to hide FrostWire?"
@@ -978,7 +978,7 @@ msgstr "Seleccione un solo archivo o un directorio"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:320
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:333
 msgid "Select a single file"
-msgstr "Seleccionar/Des-seleccionar todos los archivos"
+msgstr "Seleccionar/Deseleccionar todos los archivos"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:322
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:338
@@ -1043,7 +1043,7 @@ msgstr "Editar trackers"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:592
 msgid "Calculating piece hashes..."
-msgstr "Calculando trozos de los haches…"
+msgstr "Calculando trozos de los hashes…"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:596
 #, fuzzy
@@ -1104,7 +1104,7 @@ msgstr "Extensión"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/PartialFilesDialog.java:225
 msgid "Select/Unselect all files"
-msgstr "Seleccionar/Des-seleccionar todos los archivos"
+msgstr "Seleccionar/Deseleccionar todos los archivos"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/frostwire/gui/bittorrent/PartialFilesDialog.java:504
 msgid "Unknown"
@@ -2530,7 +2530,7 @@ msgstr "Y también a los colaboradores voluntarios:"
 #. azureus/vuze devs.
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/AboutWindow.java:229
 msgid "Thanks to the Azureus Core Developers"
-msgstr "Gracias a los antiguos Desarrolladores de FrostWire"
+msgstr "Gracias a los Desarrolladores de Azureus Core"
 
 #. developers
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/AboutWindow.java:236
@@ -3312,9 +3312,10 @@ msgid ""
 "etc. The torrents you are seeding are accesible by everyone on the network "
 "as long as they have the .torrent or a (magnet) link to it."
 msgstr ""
-"Ten cuidado y no compartas información delicada como documentos privados, "
-"claves secretas, etc. Los torrents que compartes están accesibles para "
-"cualquier usuario en la red mientras tengan el .torrent o un enlace a estos."
+"Ten cuidado y no compartas información delicada tales como documentos "
+"privados, claves secretas, etc. Los torrents que compartes están accesibles "
+"para cualquier usuario en la red mientras tengan el .torrent o un enlace a "
+"estos."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:35
 msgid ""
@@ -3416,7 +3417,7 @@ msgstr ""
 "¿Detesta los consejos? ¿Ama los consejos?, Puede desactivarlos o activarlos "
 "nuevamente en la mayoría de las tablas que aparecen haciendo clic con el "
 "botón secundario y posteriormente seleccionando 'Más Opciones'. Puede "
-"activar/desactivar opciones adicionales desde allí como ordenar las columnas."
+"activar/desactivar opciones adicionales desde allí cómo ordenar las columnas."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:55
 msgid ""
@@ -3503,7 +3504,7 @@ msgstr ""
 "Puedes ordenar las subidas, descargas, etc..., haciendo clic en una columna. "
 "La tabla permanece re-ordenada en la medida que la información cambia. "
 "Puedes desactivar esta re-organización-automática haciendo clic en la "
-"cabecera de la columna, seleccionando 'Mas Opciones' y des-seleccionando "
+"cabecera de la columna, seleccionando 'Mas Opciones' y deseleccionando "
 "'Ordenar Automáticamente'."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:73
@@ -3944,16 +3945,12 @@ msgstr "Acerca de..."
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/init/IntentPanel.java:74
 #, java-format
 msgid "I <b>will not</b> use FrostWire {0} for copyright infringement."
-msgstr ""
-"<div display=\"block\" color=\"#515151\" size=\"13\"> <b>No utilizaré</b> "
-"FrostWire {0} para infringir derechos de autor.</div>"
+msgstr "<b>No utilizaré</b> FrostWire {0} para infringir derechos de autor."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/init/IntentPanel.java:82
 #, java-format
 msgid "I <b>might use</b> FrostWire {0} for copyright infringement."
-msgstr ""
-"<div display=\"block\" color=\"#515151\" size=\"13\"> <b>Puede que use</b> "
-"FrostWire {0} para infringir derechos de autor.</div>"
+msgstr "<b>Puede que use</b> FrostWire {0} para infringir derechos de autor."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/init/IntentWindow.java:43
 msgid "State Your Intent"
@@ -4086,7 +4083,9 @@ msgstr "FrostWire para Android"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/HelpMenu.java:50
 msgid "Get FrostWire on your Android phone, tablet or google tv, all free."
-msgstr "Obtén FrostWire para tu teléfono Android, Tablet o Google Tv gratis."
+msgstr ""
+"Obtén FrostWire para tu teléfono Android, Tablet o Google Tv, totalmente "
+"gratis."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/HelpMenu.java:52
 msgid "Learn about BitTorrent Seeding"
@@ -4100,7 +4099,7 @@ msgstr "¿Qué es un VPN?"
 msgid ""
 "Learn about how to protect your internet connection and your privacy online"
 msgstr ""
-"Aprende sobre como proteger tu conexión de internet y tu privacidad en línea"
+"Aprende sobre cómo proteger tu conexión de internet y tu privacidad en línea"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/menu/HelpMenu.java:58
 msgid "Order FrostWire Stickers"
