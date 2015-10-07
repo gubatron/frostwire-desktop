@@ -19,11 +19,18 @@ compileJava {
 
 repositories {
     mavenCentral()
+
+    maven {
+        url  "http://dl.bintray.com/ijabz/maven"
+    }
 }
 
 // add third party jars to classpath.
 dependencies {
     compile 'com.googlecode.gettext-commons:gettext-commons:0.9.8'
+    compile 'com.h2database:h2:1.4.186'
+    compile 'org.apache.lucene:lucene-core:3.5.0'
+    compile 'net.jthink:jaudiotagger:2.2.4'
 
     compile fileTree(dir: 'lib/jars', include: ['*.jar'])
 }
@@ -33,12 +40,6 @@ sourceSets {
         java {
             // frostwire-common
             srcDir 'frostwire-common/src/main/java'
-
-            srcDir 'lib/jars-src/lucene-3.5.0'
-            srcDir 'lib/jars-src/h2-1.4.186/src/main'
-            srcDir 'lib/jars-src/jaudiotagger/src'
-            srcDir 'lib/jars-src/metadata-extractor-2.6.2-src/Source'
-
             srcDir 'src'
         }
 
