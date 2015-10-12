@@ -126,9 +126,9 @@ If the build is not broken, hit us up at the [Developer Forum](http://forum.fros
 
 * Keep it simple. ([KISS](https://en.wikipedia.org/wiki/KISS_principle))
 * Do not repeat yourself. ([DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself)) Re-use your own code and our code. It'll be faster to code, and easier to maintain.
-* If you want to help, Issue tracker is a good place to take a look at.
+* If you want to help, the [Issue tracker](https://github.com/frostwire/frostwire-desktop/issues) is a good place to take a look at.
 * Try to follow our coding style and formatting before submitting a patch.
-* All pull requests should come from a feature branch created on your git fork. We'll review your code and will only merge it to the master branch if it doesn't break the build. If you can include tests for your pull request you get extra bonus points ;)
+* **All pull requests should come from a feature branch created on your git fork**. We'll review your code and will only merge it to the master branch if it doesn't break the build. If you can include tests for your pull request you get extra bonus points ;)
 * When you submit a pull request try to explain what issue you're fixing in detail and how you're fixing in detail it so it's easier for us to read your patches. If it's too hard to explain what you're doing, you're probably making things more complex than they already are. Look and test your code well before submitting patches.
 * We prefer well named methods and code re-usability than a lot of comments. Code should be self-explanatory.
 
