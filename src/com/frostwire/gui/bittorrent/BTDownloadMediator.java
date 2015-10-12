@@ -614,7 +614,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     }
 
     public void openTorrentURI(final String uri, final boolean partialDownload) {
-        GUIMediator.safeInvokeLater(new Runnable() {
+        SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 BTDownload downloader = new TorrentFetcherDownload(uri, partialDownload);
                 add(downloader);
@@ -661,7 +661,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     }
 
     public void openTorrentFile(final File torrentFile, final boolean partialDownload, final Runnable onOpenRunnableForUIThread) {
-        GUIMediator.safeInvokeLater(new Runnable() {
+        SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 try {
 
