@@ -82,7 +82,7 @@ git submodule update —init
 
 **If you plan on hacking FrostWire**, fork the repository on github, and then add your fork's uri as a remote
 
-`git remote add myusername https://github.com/myGithubAccount/frostwire-desktop`
+`git remote add myGithubAccount https://github.com/myGithubAccount/frostwire-desktop`
 
 If you issue a `git remote -v` it should look something like this (where `myGithubAccount` is your user account):
 ```
