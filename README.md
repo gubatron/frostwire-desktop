@@ -56,7 +56,7 @@ Pre-requisites:
 * [Gradle](http://www.gradle.org/)
 * [Git](http://www.git-scm.com/) to clone, check out the project to your machine.
 
-Make sure your `CLASSPATH`, `JAVA_HOME`, `ANT_HOME` and your `PATH` environment variables are set correctly.
+Make sure your `CLASSPATH`, `JAVA_HOME` and your `PATH` environment variables are set correctly.
 
 Example on a Ubuntu system's .bashrc file:
 
@@ -65,19 +65,33 @@ Example on a Ubuntu system's .bashrc file:
     PATH=${PATH}:${JAVA_HOME}/bin
     export JAVA_HOME CLASSPATH PATH
 
-In some cases, you may need to set the `ANT_HOME` environment variable to the location of your ant binary.
-
 Most build problems are usually solved by having those environment variables set
 correctly. If you are a Windows or Mac user the process is fairly similar.
 
-The frostwire-desktop project also depends on the frostwire-common and frostwire-jlibtorrent projects.
-
-    git clone https://github.com/frostwire/frostwire-common.git
-    git clone https://github.com/frostwire/frostwire-jlibtorrent.git
-    git clone https://github.com/frostwire/frostwire-desktop.git
-
 We recommend using [IntelliJ Idea](http://www.jetbrains.com/idea/) as your development environment.
 
+# Git cloning instructions
+
+We recommend you first clone the repository to your machine from the `origin` repository at https://github.com/frostwire/frostwire-desktop
+
+```
+git clone https://github.com/frostwire/frostwire-desktop
+cd frostwire-desktop
+git submodule update —init
+```
+
+**If you plan on hacking FrostWire**, fork the repository on github, and then add your fork's uri as a remote
+
+`git remote add myusername https://github.com/myGithubAccount/frostwire-desktop`
+
+If you issue a `git remote -v` it should look something like this (where `myGithubAccount` is your user account):
+```
+$ git remote -v
+origin          https://github.com/frostwire/frostwire-desktop (fetch)
+origin          https://github.com/frostwire/frostwire-desktop (push)
+myGithubAccount https://github.com/myGithubAccount/frostwire-desktop (fetch)
+myGithubAccount https://github.com/myGithubAccount/frostwire-desktop (push)
+```
 
 # Build Instructions
 
