@@ -1,9 +1,9 @@
 frostwire (6.1.6) stable; urgency=high
   * Fixes drag and drop freezes introduced by new Java Runtime Environment 1.8.0_60.
   * Fixes SoundCloud search.
-  * Updates to Spanish translation.
+  * Updates to Spanish and Romanian translations.
 	
- -- FrostWire Team <contact@frostwire.com>  Oct, 13 Sep 2015 23:31:00 -0500
+ -- FrostWire Team <contact@frostwire.com>  Oct, 15 Sep 2015 23:17:00 -0500
 
 frostwire (6.1.5) stable; urgency=high
   * New http engine based on okhttp, uses pooled connections, less threads,
