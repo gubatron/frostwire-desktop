@@ -9,7 +9,7 @@
 
 */
 apply plugin: 'java'
-apply from: "$rootDir/frostwire-common/build.gradle"
+apply from: "$rootDir/frostwire-common/dependencies.gradle"
 
 sourceCompatibility = 1.7
 
