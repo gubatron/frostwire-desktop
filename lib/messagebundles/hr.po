@@ -4499,7 +4499,8 @@ msgid ""
 "You can choose whether to be warned about downloading a file without a "
 "license."
 msgstr ""
-"Možete izabrati želite li biti upozoreni o preuzimanju datoteka bez licence."
+"Možete izabrati želite li biti upozoreni o preuzimanju datoteka bez "
+"licence."
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/DownloadLicenseWarningPaneItem.java:29
 msgid "Show License Warning:"
@@ -4528,19 +4529,19 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:63
 msgid "Use random port (Recommended)"
-msgstr "Koristi nasumični port (preporučeno)"
+msgstr "Koristi nasumična vrata (preporučeno)"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:64
 msgid "Manual port range"
-msgstr "Ručni domet porta"
+msgstr "Ručni domet vrata"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:89
 msgid "TCP port start:"
-msgstr "početak TCP porta:"
+msgstr "početak TCP vrata:"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:99
 msgid "TCP port end:"
-msgstr "kraj TCP porta:"
+msgstr "kraj TCP vrata:"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:169
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:173
@@ -4557,8 +4558,7 @@ msgstr "Filtriraj rezultate"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/IgnoreResultsPaneItem.java:24
 msgid "You can filter out search results containing specific words."
-msgstr ""
-"Možete filtrirati rezultate traženja koje sadržavaju specifične riječi."
+msgstr "Možete filtrirati rezultate traženja koje sadržavaju specifične riječi."
 
 #. *
 #. * Key for the locale-specifis string for the adult content check box
@@ -4673,7 +4673,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/NotificationsPaneItem.java:23
 msgid "Show Notifications:"
-msgstr "Pokaži obavijesti:"
+msgstr "Pokazuj obavijesti:"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/PartialFileSharingPaneItem.java:17
 msgid "Partial Files"
@@ -4725,7 +4725,7 @@ msgstr ""
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/PopupsPaneItem.java:28
 msgid "Revert to Default:"
-msgstr "Vrati na osnovne:"
+msgstr "Vrati na osnovne postavke:"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/ProxyLoginPaneItem.java:38
 msgid "Login Details"
@@ -4873,6 +4873,9 @@ msgid ""
 "{0} torrents that FrostWire has learned to speed up your search results.\n"
 "Do you wish to continue?"
 msgstr ""
+"Ako nastavite, obrisat ćete sve informacije vezane uz\n"
+"{0} torrenata koje je FrostWire naučio da ubrzavaju rezultate pretraga.\n"
+"Želite li nastaviti?"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/StartupPaneItem.java:23
 msgid ""
@@ -5035,7 +5038,7 @@ msgstr "Video postavke"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/options/panes/VideoPlayerPaneItem.java:28
 msgid "You can choose which video player to use."
-msgstr "Možete odabrati koji video izvođač želite koristiti"
+msgstr "Možete odabrati koji video izvođač želite koristiti."
 
 #. *
 #. * Constant for the key of the locale-specific <code>String</code> for the
@@ -5068,7 +5071,7 @@ msgstr "Uključi iTunes uvoz:"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchOptionsPanel.java:122
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchOptionsPanel.java:124
 msgid "Max"
-msgstr "Maksimalno"
+msgstr "Maksimum"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SchemaBox.java:116
 msgid "No results so far..."
@@ -5131,7 +5134,7 @@ msgstr "Ponovi pretragu"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchMediator.java:88
 msgid "Download Partial Files"
-msgstr "Preuzimaj djelomične datoteke"
+msgstr "Preuzmi djelomične datoteke"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchMediator.java:90
 msgid "Torrent Details"
@@ -5199,7 +5202,7 @@ msgstr "Traži više"
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchResultMediator.java:699
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchResultMediator.java:700
 msgid "Search tools"
-msgstr "Pretražni alati"
+msgstr "Alati za traženje"
 
 #: /Users/gubatron/workspace.frostwire/frostwire-desktop/src/com/limegroup/gnutella/gui/search/SearchTableColumns.java:50
 msgid "Source"
